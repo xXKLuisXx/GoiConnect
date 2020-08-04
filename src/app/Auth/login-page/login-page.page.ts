@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { User } from  '../user';
+import { AuthResponse } from '../auth-response';
+import { AuthService } from '../auth.service';
 
 
 @Component({
@@ -11,22 +13,57 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
   styleUrls: ['./login-page.page.scss'],
 })
 export class LoginPagePage implements OnInit {
-
+  private UserData: User = {
+    name: "",
+    email: "",
+    password:"",
+    password_confirmation: ""
+  };
+  private authResponse : AuthResponse;
   constructor(
     private router : Router,
     private nativeStorage : NativeStorage,
-    public httpClient : HttpClient,
     public loadingController : LoadingController,
-    public alertController : AlertController
-    ) { }
-
-  UserData = { }
+    public alertController : AlertController,
+    public authService : AuthService
+  ) { }
 
   ngOnInit(){
+    console.log("Se crea login");
     this.nativeStorage.getItem('AccessDataUser').then(
-      data => console.log(data),
+      data => {
+        this.UserData = data;
+        console.log(this.UserData);
+      },
       error => console.error(error)
     );
+  }
+
+  private initializeAuthResponse() {
+    this.authResponse = {
+      response :{
+        name: "",
+        status: 0,
+        statusText: "",
+        accessUserData : {
+          token_type:"",
+          expires_in:0,
+          access_token:"",
+          refresh_token:""
+        },
+        errors : {
+          formErrors : {
+            name : [],
+            email : [],
+            password : []
+          },
+          dbErrors : {
+            error : "",
+            message : ""
+          }
+        }
+      }
+    };
   }
 
   async presentAlertConfirm(messageAlert) {
@@ -49,50 +86,68 @@ export class LoginPagePage implements OnInit {
     await loading.present();
   }
 
-  async loginForm() {
-    // Cuando se manda el formulario se crea un loading
-    //console.log(this.UserData);
+  async loginForm(){
+    this.initializeAuthResponse();
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Please wait...'
-    });
-    // fin creacion loading 
-
-    // Se ejecuta el loading 
+    }); 
     await this.presentLoading(loading);
 
-    const headers = new HttpHeaders().set("Content-Type", "application/json");
-    let json = this.UserData;
-    this.httpClient.post("http://192.168.108.1:8000/api/login", json, {headers}).subscribe(
-      val => {
-        console.log("Post call successful value returned in body", val);
-        this.router.navigate(['/home']);
+    this.authService.login(this.UserData).subscribe(
+      async ( Response : (any) ) => {
+        this.authResponse.response.name = "";
+        this.authResponse.response.status = 200;
+        this.authResponse.response.statusText = "Ok";
+        this.authResponse.response.accessUserData = Response;
+        console.log(this.authResponse);
+        
+        await this.nativeStorage.setItem('AccessDataUser', this.authResponse.response.accessUserData ).then(
+          () => console.log('Stored item!'),
+          error => console.error('Error storing item', error)
+        );
+        
+       loading.dismiss();
       },
-      response => {
+      ( Errors : (any) ) => {
+        var ErrorsHTML = "";
         loading.dismiss();
-        //console.log(response["message"]);
-        var ErrorsHTML = "<strong>Errors: </strong>";
-        if(response['error'].email != null){
-          ErrorsHTML = ErrorsHTML + "<li>"+ response['error'].email +"</li>";
+        console.log(Errors);
+        this.authResponse.response.name = Errors.name;
+        this.authResponse.response.status = Errors.status;
+        this.authResponse.response.statusText = Errors.statusText;
+        if(Errors.error.error != null && Errors.error.error == "invalid_grant"){
+          this.authResponse.response.errors.dbErrors = Errors.error;
+          ErrorsHTML = ErrorsHTML + "<li>"+ "Invalid credentials" +"</li>";
+        }else {
+          this.authResponse.response.errors.formErrors = Errors.error;
+          if(this.authResponse.response.errors.formErrors.name != null){
+            this.authResponse.response.errors.formErrors.name.forEach(element => {
+              ErrorsHTML = ErrorsHTML + "<li>"+ element +"</li>";
+              //console.log(element);
+            });
+          }
+          if(this.authResponse.response.errors.formErrors.email != null){
+            this.authResponse.response.errors.formErrors.email.forEach(element => {
+              ErrorsHTML = ErrorsHTML + "<li>"+ element +"</li>";
+              //console.log(element);
+            });
+          }
+          if(this.authResponse.response.errors.formErrors.password != null){
+            this.authResponse.response.errors.formErrors.password.forEach(element => {
+              ErrorsHTML = ErrorsHTML + "<li>"+ element +"</li>";
+              //console.log(element);
+            });
+          }
         }
-        if(response['error'].password != null){
-          ErrorsHTML = ErrorsHTML + "<li>"+ response['error'].password +"</li>";
-        }
-        if(response['error'].error == "invalid_grant"){
-          ErrorsHTML = ErrorsHTML + "<li>"+ response['error'].message +"</li>";
-        }
-        ErrorsHTML = ErrorsHTML + "<br>" + "<strong> Error Request: </strong>" + response['statusText'];
+        //ErrorsHTML = ErrorsHTML + "<br>" + "<strong> Error Request: </strong>" + response['statusText'];
         this.presentAlertConfirm(ErrorsHTML);
-
-        //console.log("Errors: ", response['error']);
-        //console.log("Mesagge: ", response['statusText']);
-        //console.log("Post call in error", response);
+        console.log(this.authResponse);
       },
       () => {
         loading.dismiss();
-
-        console.log("The Post observable is now completed.");
-      }
+        console.log("Termino")
+      } 
     );
   }
 

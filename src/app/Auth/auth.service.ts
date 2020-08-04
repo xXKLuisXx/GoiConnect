@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from  'rxjs';
+import { BehaviorSubject, Observable } from  'rxjs';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from  './user';
@@ -16,10 +16,14 @@ export class AuthService {
     public httpClient : HttpClient
     ) { }
 
-  register(user: User) {
+  register(user: User): Observable<AuthResponse> {
     const headers = new HttpHeaders().set("Content-Type", "application/json");
-    //let json = this.UserData;
-    console.log("entra");
-    return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}/api/register`, user, {headers});
+    return this.httpClient.post<AuthResponse>(`${this.AUTH_SERVER_ADDRESS}/api/register`, user, {headers});
   }
+
+  login(user: User): Observable<AuthResponse> {
+    const headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.httpClient.post<AuthResponse>(`${this.AUTH_SERVER_ADDRESS}/api/login`, user, {headers});
+  }
+
 }
