@@ -1,7 +1,8 @@
 {
   "name": "GoiConnect",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }

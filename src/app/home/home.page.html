@@ -13,8 +13,71 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-slides pager="true" [options]="slideOpts">
+    <ion-slide>
+      <div id="container">
+        <ion-item>
+          <ion-button slot="start">
+            Start
+          </ion-button>
+          <ion-label>Button Start/End</ion-label>
+          <ion-button slot="end">
+            End
+          </ion-button>
+        </ion-item>
+        
+        <ion-item>
+          <ion-button slot="start">
+            Start Icon
+            <ion-icon name="home" slot="end"></ion-icon>
+          </ion-button>
+          <ion-label>Buttons with Icons</ion-label>
+          <ion-button slot="end">
+            <ion-icon name="star" slot="end"></ion-icon>
+            End Icon
+          </ion-button>
+        </ion-item>
+        
+        <ion-item>
+          <ion-button slot="start">
+            <ion-icon slot="icon-only" name="navigate"></ion-icon>
+          </ion-button>
+          <ion-label>Icon only Buttons</ion-label>
+          <ion-button slot="end">
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <h1>Slide 2</h1>
+      <ion-tabs>
+        <ion-tab-bar slot="bottom">
+          <ion-tab-button tab="schedule">
+            <ion-icon name="calendar"></ion-icon>
+            <ion-label>Schedule</ion-label>
+            <ion-badge>6</ion-badge>
+          </ion-tab-button>
+      
+          <ion-tab-button tab="speakers">
+            <ion-icon name="person-circle"></ion-icon>
+            <ion-label>Speakers</ion-label>
+          </ion-tab-button>
+      
+          <ion-tab-button tab="map">
+            <ion-icon name="map"></ion-icon>
+            <ion-label>Map</ion-label>
+          </ion-tab-button>
+      
+          <ion-tab-button tab="about">
+            <ion-icon name="information-circle"></ion-icon>
+            <ion-label>About</ion-label>
+          </ion-tab-button>
+        </ion-tab-bar>
+      </ion-tabs>
+    </ion-slide>
+    <ion-slide>
+      <h1>Slide 3</h1>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
