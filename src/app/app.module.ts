@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
+import { SuperTabsModule} from '@ionic-super-tabs/angular'
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -22,6 +24,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    SuperTabsModule.forRoot()
   ],
   providers: [
     StatusBar,

@@ -1,83 +1,43 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      GoiConnect
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-slides pager="true" [options]="slideOpts">
-    <ion-slide>
-      <div id="container">
-        <ion-item>
-          <ion-button slot="start">
-            Start
-          </ion-button>
-          <ion-label>Button Start/End</ion-label>
-          <ion-button slot="end">
-            End
-          </ion-button>
-        </ion-item>
-        
-        <ion-item>
-          <ion-button slot="start">
-            Start Icon
-            <ion-icon name="home" slot="end"></ion-icon>
-          </ion-button>
-          <ion-label>Buttons with Icons</ion-label>
-          <ion-button slot="end">
-            <ion-icon name="star" slot="end"></ion-icon>
-            End Icon
-          </ion-button>
-        </ion-item>
-        
-        <ion-item>
-          <ion-button slot="start">
-            <ion-icon slot="icon-only" name="navigate"></ion-icon>
-          </ion-button>
-          <ion-label>Icon only Buttons</ion-label>
-          <ion-button slot="end">
-            <ion-icon slot="icon-only" name="star"></ion-icon>
-          </ion-button>
-        </ion-item>
-      </div>
-    </ion-slide>
-    <ion-slide>
-      <h1>Slide 2</h1>
-      <ion-tabs>
-        <ion-tab-bar slot="bottom">
-          <ion-tab-button tab="schedule">
-            <ion-icon name="calendar"></ion-icon>
-            <ion-label>Schedule</ion-label>
-            <ion-badge>6</ion-badge>
-          </ion-tab-button>
-      
-          <ion-tab-button tab="speakers">
-            <ion-icon name="person-circle"></ion-icon>
-            <ion-label>Speakers</ion-label>
-          </ion-tab-button>
-      
-          <ion-tab-button tab="map">
-            <ion-icon name="map"></ion-icon>
-            <ion-label>Map</ion-label>
-          </ion-tab-button>
-      
-          <ion-tab-button tab="about">
-            <ion-icon name="information-circle"></ion-icon>
-            <ion-label>About</ion-label>
-          </ion-tab-button>
-        </ion-tab-bar>
-      </ion-tabs>
-    </ion-slide>
-    <ion-slide>
-      <h1>Slide 3</h1>
-    </ion-slide>
-  </ion-slides>
+  <super-tabs (tabChange)="OnTabChange($event)">
+    <super-tabs-toolbar>
+      <super-tab-button>
+        <ion-icon name="paper" color="light"></ion-icon>
+        <ion-label> Apps</ion-label>
+      </super-tab-button>
+      <super-tab-button>
+        <ion-icon name="contact" color="light"></ion-icon>
+        <ion-label> Social </ion-label>
+      </super-tab-button>
+      <super-tab-button>
+        <ion-icon name="information-circle-contact" color="light"></ion-icon>
+        <ion-label> Professional</ion-label>
+      </super-tab-button>
+    </super-tabs-toolbar>
+    <super-tabs-container>
+      <super-tab>
+        <ion-content>
+          <ion-nav [root]="profilePage" [rootParams]="rootPageParams"></ion-nav>
+        </ion-content>
+      </super-tab>
+      <super-tab>
+        <ion-content>
+          <ion-nav [root]="socialPage" [rootParams]="rootPageParams"></ion-nav>
+        </ion-content>
+      </super-tab>
+      <super-tab>
+        <ion-content>
+          <ion-nav [root]="professionalPage" [rootParams]="rootPageParams"></ion-nav>
+        </ion-content>
+      </super-tab>
+    </super-tabs-container>
+  </super-tabs>
 </ion-content>

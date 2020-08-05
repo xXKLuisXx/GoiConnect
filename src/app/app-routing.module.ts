@@ -19,6 +19,18 @@ const routes: Routes = [
     path: 'register-page',
     loadChildren: () => import('./Auth/register-page/register-page.module').then( m => m.RegisterPagePageModule)
   },
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'social',
+    loadChildren: () => import('./social/social.module').then( m => m.SocialPageModule)
+  },
+  {
+    path: 'profesional',
+    loadChildren: () => import('./profesional/profesional.module').then( m => m.ProfesionalPageModule)
+  },
 ];
 
 @NgModule({

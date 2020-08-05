@@ -29,14 +29,12 @@ export class LoginPagePage implements OnInit {
   ) { }
 
   ngOnInit(){
-    console.log("Se crea login");
-    this.nativeStorage.getItem('AccessDataUser').then(
-      data => {
-        this.UserData = data;
-        console.log(this.UserData);
-      },
-      error => console.error(error)
-    );
+    this.initializeAuthResponse();
+    this.getAccessDataUser();
+  }
+
+  ionViewWillEnter(){
+    
   }
 
   private initializeAuthResponse() {
@@ -66,6 +64,18 @@ export class LoginPagePage implements OnInit {
     };
   }
 
+  private async getAccessDataUser(){
+    await this.nativeStorage.getItem('AccessDataUser').then(
+      data => {
+        this.authResponse.response.accessUserData = data;
+      },
+      error => console.error(error)
+    );
+  }
+
+  private printAccessDataUser(){
+    console.log(this.authResponse.response.accessUserData);
+  }
   async presentAlertConfirm(messageAlert) {
     const alert = await this.alertController.create({
       header: 'Errors',
@@ -106,8 +116,7 @@ export class LoginPagePage implements OnInit {
           () => console.log('Stored item!'),
           error => console.error('Error storing item', error)
         );
-        
-       loading.dismiss();
+        loading.dismiss();
       },
       ( Errors : (any) ) => {
         var ErrorsHTML = "";
