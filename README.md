@@ -1,11 +1,11 @@
-##Welcome to the official GoiConnect repository!
+## Welcome to the official GoiConnect repository!
 
 <br>
-###Cloning a repository
+## Cloning a repository
 When you create a repository on GitHub, it exists as a remote repository. You can clone your repository to create a local copy on your computer and sync between the two locations.
 
 <br>
-###Cloning a repository using command line
+## Cloning a repository using command line
 **1** On GitHub, navigate to the main page of the repository.
 
 **2** Above the list of files, click <i class="fa fa-download"></i>  Code.
@@ -41,7 +41,7 @@ When you create a repository on GitHub, it exists as a remote repository. You ca
 
 <br>
 <br>
-###Cloning a repository to GitHub Desktop
+## Cloning a repository to GitHub Desktop
 
 **1** On GitHub, navigate to the main page of the repository.
 
@@ -58,7 +58,7 @@ When you create a repository on GitHub, it exists as a remote repository. You ca
 
 <br>
 <br>
-###Troubleshooting cloning errors
+## Troubleshooting cloning errors
 When cloning a repository it is possible that you might encounter some errors.
 
 If you are unable to clone a repository, check that:
@@ -71,7 +71,7 @@ If you are unable to clone a repository, check that:
 
 
 <br>
-###Install packages with npm
+## Install packages with npm
 
 `$ npm install`
 
@@ -79,7 +79,7 @@ npm will read the package.json file to se what dependencies the project has and 
 
 
 <br>
-###Serve the app
+## Serve the app
 `$  ionic serve`
 
 with this we managed to transpile the TypeScript code and the application will run for the first time in our browser, it will also generate the www and build folders that are necessary in the Ionic project.
