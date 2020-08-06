@@ -7,22 +7,26 @@ const routes: Routes = [
   {
     path: '',
     component: SocialPage,
-    children: [
-      {
-        path: 'profile',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('../profile/profile.module').then( m => m.ProfilePageModule)
-          }
-        ]
-      },
-      {
-        path: '',
-        redirectTo: '/app/tabs/schedule',
-        pathMatch: 'full'
-      }
-    ]
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('../Social/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'market',
+    loadChildren: () => import('../Social/market/market.module').then( m => m.MarketPageModule)
+  },
+  {
+    path: 'stories',
+    loadChildren: () => import('../Social/stories/stories.module').then( m => m.StoriesPageModule)
+  },
+  {
+    path: 'chat',
+    loadChildren: () => import('../Social/chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('../Social/profile/profile.module').then( m => m.ProfilePageModule)
   }
 
 ];

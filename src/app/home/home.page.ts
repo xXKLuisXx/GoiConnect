@@ -15,7 +15,6 @@ export class HomePage {
   profilePage = ProfilePage;
   socialPage = SocialPage;
   professionalPage = ProfesionalPage;
-  rootPageParams = {  'Titulo' : ''};
   @ViewChild('newsNav', {static: false}) newsNav: IonNav;
 
   constructor(public NavCtrl:NavController) { }
