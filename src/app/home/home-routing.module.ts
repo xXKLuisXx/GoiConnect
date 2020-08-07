@@ -8,55 +8,55 @@ const routes: Routes = [
     component: HomePage,
     children: [
       {
-        path: 'home',
+        path: 'social',
         children: [
           {
-            path: '',
-            loadChildren: () => import('../social/home/home.module').then( m => m.HomePageModule)
+            path: 'home',
+            loadChildren: () => import('../social/shome/shome.module').then( m => m.ShomePageModule)
+          },
+          {
+            path: 'market',
+            loadChildren: () => import('../social/smarket/smarket.module').then( m => m.SmarketPageModule)
+          },
+          {
+            path: 'stories',
+            loadChildren: () => import('../social/sstories/sstories.module').then( m => m.SstoriesPageModule)
+          },
+          {
+            path: 'chat',
+            loadChildren: () => import('../social/schat/schat.module').then( m => m.SchatPageModule)
+          },
+          {
+            path: 'profile',
+            loadChildren: () => import('../social/sprofile/sprofile.module').then( m => m.SprofilePageModule)
           }
         ]
       },
       {
-        path: 'market',
+        path: 'profesional',
         children: [
           {
-            path: '',
-            loadChildren: () => import('../social/market/market.module').then( m => m.MarketPageModule)
+            path: 'profile',
+            loadChildren: () => import('../profesional/pprofile/pprofile.module').then( m => m.PprofilePageModule)
+          },
+          {
+            path: 'market',
+            loadChildren: () => import('../profesional/pmarket/pmarket.module').then( m => m.PmarketPageModule)
+          },
+          {
+            path: 'chat',
+            loadChildren: () => import('../profesional/pchat/pchat.module').then( m => m.PchatPageModule)
+          },
+          {
+            path: 'home',
+            loadChildren: () => import('../profesional/phome/phome.module').then( m => m.PhomePageModule)
+          },
+          {
+            path: 'stories',
+            loadChildren: () => import('../profesional/pstories/pstories.module').then( m => m.PstoriesPageModule)
           }
         ]
       },
-      {
-        path: 'stories',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('../social/stories/stories.module').then( m => m.StoriesPageModule)
-          }
-        ]
-      },
-      {
-        path: 'chat',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('../social/chat/chat.module').then( m => m.ChatPageModule)
-          }
-        ]
-      },
-      {
-        path: 'profile',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('../social/profile/profile.module').then( m => m.ProfilePageModule)
-          }
-        ]
-      },
-      {
-        path: 'profile1',
-        redirectTo: '/app/tabs/schedule',
-        pathMatch: 'full'
-      }
     ]
   }
 ];

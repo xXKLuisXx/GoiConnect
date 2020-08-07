@@ -8,27 +8,28 @@ const routes: Routes = [
     path: '',
     component: SocialPage,
   },
+  /*
   {
     path: 'home',
-    loadChildren: () => import('../Social/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('../social/shome/shome.module').then( m => m.ShomePageModule)
   },
   {
     path: 'market',
-    loadChildren: () => import('../Social/market/market.module').then( m => m.MarketPageModule)
+    loadChildren: () => import('../social/smarket/smarket.module').then( m => m.SmarketPageModule)
   },
   {
     path: 'stories',
-    loadChildren: () => import('../Social/stories/stories.module').then( m => m.StoriesPageModule)
+    loadChildren: () => import('../social/sstories/sstories.module').then( m => m.SstoriesPageModule)
   },
   {
     path: 'chat',
-    loadChildren: () => import('../Social/chat/chat.module').then( m => m.ChatPageModule)
+    loadChildren: () => import('../social/schat/schat.module').then( m => m.SchatPageModule)
   },
   {
     path: 'profile',
-    loadChildren: () => import('../Social/profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () => import('../social/sprofile/sprofile.module').then( m => m.SprofilePageModule)
   }
-
+  */
 ];
 
 @NgModule({
