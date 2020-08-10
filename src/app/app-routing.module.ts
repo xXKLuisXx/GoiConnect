@@ -4,33 +4,69 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./Principal/Social/social-home/social-home.module').then( m => m.SocialHomePageModule)
   },
   {
     path: '',
-    redirectTo: 'login-page',
+    redirectTo: 'social-home',
     pathMatch: 'full'
   },
   {
-    path: 'login-page',
+    path: 'login',
     loadChildren: () => import('./Auth/login-page/login-page.module').then( m => m.LoginPagePageModule)
   },
   {
-    path: 'register-page',
+    path: 'register',
     loadChildren: () => import('./Auth/register-page/register-page.module').then( m => m.RegisterPagePageModule)
   },
   {
-    path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+    path: 'social/home',
+    loadChildren: () => import('./Pages/Social/home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: 'social',
-    loadChildren: () => import('./social/social.module').then( m => m.SocialPageModule)
+    path: 'social/market',
+    loadChildren: () => import('./Pages/Social/market/market.module').then( m => m.MarketPageModule)
   },
   {
-    path: 'profesional',
-    loadChildren: () => import('./profesional/profesional.module').then( m => m.ProfesionalPageModule)
+    path: 'social/stories',
+    loadChildren: () => import('./Pages/Social/stories/stories.module').then( m => m.StoriesPageModule)
   },
+  {
+    path: 'social/chat',
+    loadChildren: () => import('./Pages/Social/chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'social/profile',
+    loadChildren: () => import('./Pages/Social/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'profesional/home',
+    loadChildren: () => import('./Pages/Profesional/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'profesional/business',
+    loadChildren: () => import('./Pages/Profesional/business/business.module').then( m => m.BusinessPageModule)
+  },
+  {
+    path: 'profesional/stories',
+    loadChildren: () => import('./Pages/Profesional/stories/stories.module').then( m => m.StoriesPageModule)
+  },
+  {
+    path: 'profesional/chat',
+    loadChildren: () => import('./Pages/Profesional/chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'profesional/profile',
+    loadChildren: () => import('./Pages/Profesional/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'profesional-home',
+    loadChildren: () => import('./Principal/Profesional/profesional-home/profesional-home.module').then( m => m.ProfesionalHomePageModule)
+  },
+  {
+    path: 'social-home',
+    loadChildren: () => import('./Principal/Social/social-home/social-home.module').then( m => m.SocialHomePageModule)
+  }
 ];
 
 @NgModule({

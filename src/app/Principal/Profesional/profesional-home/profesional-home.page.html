@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-searchbar></ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <super-tabs (tabChange)="OnTabChange($event)">
+    <super-tabs-toolbar slot="bottom" color="dark">
+      <super-tab-button>
+        <ion-icon name="home-outline" color="light"></ion-icon>
+      </super-tab-button>
+      <super-tab-button>
+        <ion-icon name="cash-outline" color="light"></ion-icon>
+      </super-tab-button>
+      <super-tab-button>
+        <ion-icon name="chevron-forward-circle-outline" color="light"></ion-icon>
+      </super-tab-button>
+      <super-tab-button>
+        <ion-icon name="chatbubbles-outline" color="light"></ion-icon>
+      </super-tab-button>
+      <super-tab-button>
+        <ion-icon name="person-outline" color="light"></ion-icon>
+      </super-tab-button>
+    </super-tabs-toolbar>
+    <super-tabs-container>
+      <super-tab>
+        <ion-content>
+          <ion-nav [root]="homePage"></ion-nav>
+        </ion-content>
+      </super-tab>
+      <super-tab>
+        <ion-content>
+          <ion-nav [root]="businessPage"></ion-nav>
+        </ion-content>
+      </super-tab>
+      <super-tab>
+        <ion-content>
+          <ion-nav [root]="storiesPage"></ion-nav>
+        </ion-content>
+      </super-tab>
+      <super-tab>
+        <ion-content>
+          <ion-nav [root]="chatPage"></ion-nav>
+        </ion-content>
+      </super-tab>
+      <super-tab>
+        <ion-content>
+          <ion-nav [root]="profilePage"></ion-nav>
+        </ion-content>
+      </super-tab>
+    </super-tabs-container>
+  </super-tabs>
+</ion-content>
