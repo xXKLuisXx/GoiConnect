@@ -21,6 +21,7 @@ export class StoriesPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }
