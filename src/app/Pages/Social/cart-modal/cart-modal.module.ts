@@ -4,18 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ProfilePageRoutingModule } from './profile-routing.module';
+import { CartModalPageRoutingModule } from './cart-modal-routing.module';
 
-import { ProfilePage } from './profile.page';
-import {AutosizeModule} from 'ngx-autosize';
+import { CartModalPage } from './cart-modal.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProfilePageRoutingModule
+    CartModalPageRoutingModule
   ],
-  declarations: [ProfilePage]
+  declarations: [CartModalPage]
 })
-export class ProfilePageModule {}
+export class CartModalPageModule {}

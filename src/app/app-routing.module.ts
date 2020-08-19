@@ -66,7 +66,15 @@ const routes: Routes = [
   {
     path: 'social-home',
     loadChildren: () => import('./Principal/Social/social-home/social-home.module').then( m => m.SocialHomePageModule)
+  },  {
+    path: 'cart-modal',
+    loadChildren: () => import('./Pages/Social/cart-modal/cart-modal.module').then( m => m.CartModalPageModule)
+  },
+  {
+    path: 'market',
+    loadChildren: () => import('./Pages/Social/market/market.module').then( m => m.MarketPageModule)
   }
+
 ];
 
 @NgModule({

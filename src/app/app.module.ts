@@ -14,6 +14,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 import { SuperTabsModule} from '@ionic-super-tabs/angular'
+import { IonicStorageModule } from '@ionic/storage';
+import { Camera } from '@capacitor/core';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +25,7 @@ import { SuperTabsModule} from '@ionic-super-tabs/angular'
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    IonicStorageModule.forRoot(),
     FormsModule,
     HttpClientModule,
     SuperTabsModule.forRoot()
