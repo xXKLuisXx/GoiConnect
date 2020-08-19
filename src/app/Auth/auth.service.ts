@@ -9,7 +9,7 @@ import { AuthResponse } from  './auth-response';
   providedIn: 'root'
 })
 export class AuthService {
-  AUTH_SERVER_ADDRESS:  string  =  'http://192.168.0.5:8000';
+  AUTH_SERVER_ADDRESS:  string  =  'http://192.168.100.100:8000';
   authSubject  =  new  BehaviorSubject(false);
   authResponse : AuthResponse;
   constructor(
