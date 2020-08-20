@@ -1,20 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Pipe, PipeTransform } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-
-
-@Pipe({
-  name: 'safe'
-})
-
-export class SafePipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) { }
-  transform(url) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
-}
-
 
 export interface Product {
   id: number;
@@ -23,16 +8,14 @@ export interface Product {
   ciudad: string;
   amount: number;
 }
-
 @Injectable({
   providedIn: 'root'
 })
-export class CartService {
-
+export class CartmService {
   data: Product[] = [
-    { id: 0, name: 'user10', price: 200,  ciudad: 'Guadalajara, Jalisco', amount: 1 },
-    { id: 1, name: 'userS10', price: 250, ciudad: 'Zapopan, Jalisco', amount: 1 },
-    { id: 2, name: 'userS12', price: 220, ciudad: 'Tlajomulco, Jalisco', amount: 1 }
+    { id: 0, name: 'Headphones', price: 220, ciudad: 'Guadalajara, Jalisco', amount: 0 },
+    { id: 1, name: 'Headphones- Bluetooth', price: 250, ciudad: 'Zapopan, Jalisco', amount: 0 },
+    { id: 2, name: 'Bocina', price: 350, ciudad: 'Guadalajara, Jalisco', amount: 0 }
   ];
 
   private cart = [];
@@ -62,6 +45,7 @@ export class CartService {
       }
     }
     if (!added) {
+      product.amount += product.unit;
       this.cart.push(product);
     }
     this.cartItemCount.next(this.cartItemCount.value + 1);
@@ -76,7 +60,6 @@ export class CartService {
         }
       }
     }
-
     this.cartItemCount.next(this.cartItemCount.value - 1);
   }
 

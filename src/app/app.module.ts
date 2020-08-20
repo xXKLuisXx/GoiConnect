@@ -16,6 +16,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { SuperTabsModule} from '@ionic-super-tabs/angular'
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@capacitor/core';
+import { CartModalPageModule } from './Pages/Social/cart-modal/cart-modal.module';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { Camera } from '@capacitor/core';
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     FormsModule,
+    CartModalPageModule,
     HttpClientModule,
     SuperTabsModule.forRoot()
   ],

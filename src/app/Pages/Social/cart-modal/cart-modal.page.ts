@@ -1,5 +1,5 @@
-import { CartService, Product } from './../../../services/cart.service';
 import { Component, OnInit } from '@angular/core';
+import { Product, CartmService } from '../../../services/cartm.service';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -8,9 +8,9 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./cart-modal.page.scss'],
 })
 export class CartModalPage implements OnInit {
-  cart: Product[] = [];
 
-  constructor(private cartService: CartService, private modalCtrl: ModalController) { }
+  cart: Product[] = [];
+  constructor(private cartService: CartmService, private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.cart = this.cartService.getCart();
@@ -32,7 +32,7 @@ export class CartModalPage implements OnInit {
     return this.cart.reduce((i, j) => i + j.price * j.amount, 0);
   }
 
-  close() {
+  close(){
     this.modalCtrl.dismiss();
   }
 
