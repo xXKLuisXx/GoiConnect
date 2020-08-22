@@ -13,9 +13,9 @@ export interface Product {
 })
 export class CartmService {
   data: Product[] = [
-    { id: 0, name: 'Headphones', price: 220, ciudad: 'Guadalajara, Jalisco', amount: 0 },
-    { id: 1, name: 'Headphones- Bluetooth', price: 250, ciudad: 'Zapopan, Jalisco', amount: 0 },
-    { id: 2, name: 'Bocina', price: 350, ciudad: 'Guadalajara, Jalisco', amount: 0 }
+    { id: 0, name: 'Headphones', price: 220, ciudad: 'Guadalajara, Jalisco', amount: 1 },
+    { id: 1, name: 'Headphones- Bluetooth', price: 250, ciudad: 'Zapopan, Jalisco', amount: 1 },
+    { id: 2, name: 'Bocina', price: 350, ciudad: 'Guadalajara, Jalisco', amount: 1 }
   ];
 
   private cart = [];
@@ -45,7 +45,6 @@ export class CartmService {
       }
     }
     if (!added) {
-      product.amount += product.unit;
       this.cart.push(product);
     }
     this.cartItemCount.next(this.cartItemCount.value + 1);
