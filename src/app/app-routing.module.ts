@@ -70,6 +70,23 @@ const routes: Routes = [
   {
     path: 'cart-modal',
     loadChildren: () => import('./Pages/Social/cart-modal/cart-modal.module').then( m => m.CartModalPageModule)
+  },
+  {
+    path: 'description',
+    loadChildren: () => import('./Pages/Profesional/description/description.module').then( m => m.DescriptionPageModule)
+  },
+  {
+    path: 'createcamp',
+    loadChildren: () => import('./Pages/Profesional/createcamp/createcamp.module').then( m => m.CreatecampPageModule)
+  },
+  {
+    path: 'socialproyect',
+    loadChildren: () => import('./Pages/Profesional/socialproyect/socialproyect.module').then( m => m.SocialproyectPageModule)
+  },
+  {
+    path: 'entrepreneurproyect',
+    // tslint:disable-next-line: max-line-length
+    loadChildren: () => import('./Pages/Profesional/entrepreneurproyect/entrepreneurproyect.module').then( m => m.EntrepreneurproyectPageModule)
   }
 
 ];

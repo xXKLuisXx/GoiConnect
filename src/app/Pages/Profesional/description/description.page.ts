@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChildren, QueryList, ViewChild, ElementRef, Rend
 import data from './../../../../assets/feed.json';
 
 @Component({
-  selector: 'app-business',
-  templateUrl: './business.page.html',
-  styleUrls: ['./business.page.scss'],
+  selector: 'app-description',
+  templateUrl: './description.page.html',
+  styleUrls: ['./description.page.scss'],
 })
-export class BusinessPage implements OnInit {
+export class DescriptionPage implements OnInit {
   feed = data;
   @ViewChildren('player')videoPlayers: QueryList<any>;
   currentPlaying = null;

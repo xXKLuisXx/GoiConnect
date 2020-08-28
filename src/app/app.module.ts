@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
-import { SuperTabsModule} from '@ionic-super-tabs/angular'
+import { SuperTabsModule} from '@ionic-super-tabs/angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@capacitor/core';
 import { CartModalPageModule } from './Pages/Social/cart-modal/cart-modal.module';

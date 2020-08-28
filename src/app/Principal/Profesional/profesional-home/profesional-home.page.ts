@@ -14,27 +14,27 @@ import { BusinessPage } from 'src/app/Pages/Profesional/business/business.page';
 })
 export class ProfesionalHomePage implements OnInit {
   homePage = HomePage;
-  businessPage = BusinessPage;
   storiesPage = StoriesPage;
+  businessPage = BusinessPage;
   chatPage = ChatPage;
   profilePage = ProfilePage;
-  
+
   @ViewChild('newsNav', {static: false}) newsNav: IonNav;
-  constructor(public NavCtrl:NavController) { }
+  constructor(public NavCtrl: NavController) { }
 
   ngOnInit() {
   }
-  
+
   OnTabChange(ev: CustomEvent<SuperTabChangeEventDetail>){
-    switch(ev.detail.index){
+    switch (ev.detail.index){
       case 0:
-        //console.log("Estas en apps");
+        // console.log("Estas en apps");
         break;
       case 1:
-        //console.log("Estas en social");
+        // console.log("Estas en social");
         break;
       case 2:
-        //console.log("Estas en profesional")
+        // console.log("Estas en profesional")
         break;
     }
   }
