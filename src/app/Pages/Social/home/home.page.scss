@@ -2,24 +2,56 @@ ion-slides{
     height: 75px;
 }
 
-ion-avatar{
-    border:2px solid #044e7f;
+.avatarHistory{
+    border:3px solid;
     margin-left: 9px;
+    color: #79c6b7 !important;
 }
 
 .btnup {
-    --background: var(--ion-color-medium-tint);
+    // --background: var(--ion-color-medium-tint);
+    --background: #83daca !important;
 }
 
 .btnvi {
-    --background: var(--ion-color-medium-tint);
+    // --background: var(--ion-color-medium-tint);
+    --background: #83daca !important;
 }
 
 .btnpost {
     width: 130px;
     float: right;
+    --background: #5d9789 !important;
 }
 .inppost{
     color: var(--ion-color-secondary-tint);
     font-size: 1.2em;
+}
+
+.cardHome{
+    padding: 0%;
+}
+
+ion-card-content{
+    background-color: black;
+}
+
+ion-card{
+    --ion-background-color: black;
+}
+
+ion-content{
+    --ion-background-color: black;
+}
+
+.chatIcon{
+    color: #79c6b7 !important;
+}
+
+.heartBtn{
+    color: #79c6b7 !important;
+}
+
+.bookBtn{
+    color: #79c6b7 !important;
 }

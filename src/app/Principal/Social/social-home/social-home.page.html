@@ -12,6 +12,9 @@
   <super-tabs (tabChange)="OnTabChange($event)">
     <super-tabs-toolbar slot="bottom">
       <super-tab-button>
+        <ion-icon name="grid-outline" color="light"></ion-icon>
+      </super-tab-button>
+      <super-tab-button>
         <ion-icon name="home-outline" color="light"></ion-icon>
       </super-tab-button>
       <super-tab-button>
@@ -28,6 +31,11 @@
       </super-tab-button>
     </super-tabs-toolbar>
     <super-tabs-container>
+      <super-tab>
+        <ion-content>
+          <ion-nav [root]="menuAppsPage"></ion-nav>
+        </ion-content>
+      </super-tab>
       <super-tab>
         <ion-content>
           <ion-nav [root]="homePage"></ion-nav>

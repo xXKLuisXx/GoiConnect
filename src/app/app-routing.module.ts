@@ -87,7 +87,28 @@ const routes: Routes = [
     path: 'entrepreneurproyect',
     // tslint:disable-next-line: max-line-length
     loadChildren: () => import('./Pages/Profesional/entrepreneurproyect/entrepreneurproyect.module').then( m => m.EntrepreneurproyectPageModule)
+  },
+  {
+    path: 'register-file',
+    loadChildren: () => import('./Auth/register-file/register-file.module').then( m => m.RegisterFilePageModule)
+  },  {
+    path: 'sell',
+    loadChildren: () => import('./Pages/Social/sell/sell.module').then( m => m.SellPageModule)
+  },
+  {
+    path: 'product-description',
+    loadChildren: () => import('./Pages/Social/product-description/product-description.module').then( m => m.ProductDescriptionPageModule)
+  },
+  {
+    path: 'menu-apps',
+    loadChildren: () => import('./Pages/Social/menu-apps/menu-apps.module').then( m => m.MenuAppsPageModule)
+  },
+  {
+    path: 'invite-friends',
+    loadChildren: () => import('./Pages/Social/invite-friends/invite-friends.module').then( m => m.InviteFriendsPageModule)
   }
+
+
 
 ];
 

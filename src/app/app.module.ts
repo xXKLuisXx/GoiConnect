@@ -15,8 +15,8 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 import { SuperTabsModule} from '@ionic-super-tabs/angular';
 import { IonicStorageModule } from '@ionic/storage';
-import { Camera } from '@capacitor/core';
 import { CartModalPageModule } from './Pages/Social/cart-modal/cart-modal.module';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 
 @NgModule({
@@ -36,6 +36,7 @@ import { CartModalPageModule } from './Pages/Social/cart-modal/cart-modal.module
     StatusBar,
     SplashScreen,
     NativeStorage,
+    Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

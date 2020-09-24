@@ -1,4 +1,10 @@
 <ion-content>
+  <ion-fab-button (click)="takePhoto()" vertical="top" horizontal="center" slot="fixed">
+    <ion-icon name="camera"></ion-icon>
+  </ion-fab-button>
+
+  <img *ngIf="myphoto" src="myphoto">
+  <br><br>
   <ion-card style="height: 600px;">
     <ion-card-content>
       <img src="https://www.yaencontre.com/noticias/wp-content/uploads/2018/08/passivhaus-palacio-vitoria-1024x414.jpg" width="100%" height="250px">

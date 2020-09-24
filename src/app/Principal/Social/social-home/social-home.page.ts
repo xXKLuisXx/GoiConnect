@@ -1,3 +1,4 @@
+import { MenuAppsPage } from './../../../Pages/Social/menu-apps/menu-apps.page';
 import { Component, OnInit } from '@angular/core';
 import { HomePage } from 'src/app/Pages/Social/home/home.page';
 import { MarketPage } from 'src/app/Pages/Social/market/market.page';
@@ -16,6 +17,7 @@ export class SocialHomePage implements OnInit {
   storiesPage = StoriesPage;
   chatPage = ChatPage;
   profilePage = ProfilePage;
+  menuAppsPage = MenuAppsPage;
   constructor() { }
 
   ngOnInit() {

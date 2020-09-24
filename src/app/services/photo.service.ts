@@ -45,7 +45,7 @@ export class PhotoService {
                 delete photoCopy.base64;
                 return photoCopy;
             }))
-          })
+          });
   }
 
 

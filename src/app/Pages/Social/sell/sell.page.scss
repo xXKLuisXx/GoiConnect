@@ -1,0 +1,89 @@
+.cardheaderArticle{
+    text-align: center;
+}
+
+ion-card-header{
+    background-color: #e4e4e4;
+}
+
+.imgHead{
+    width: 65%;
+    height: 40%;
+}
+
+.divMore{
+    width: 115%;
+    padding: 0px;
+    height: 100px;
+}
+
+ion-card-content{
+    padding: 0%;
+}
+
+ion-card{
+    padding: 0%;
+}
+
+.imgMore{
+    margin-top: 15px;
+    margin-left:10px;
+}
+
+.addicon{
+    margin-top: 50px;
+}
+
+.title{
+    border-radius: 35px;
+    --ion-background-color: #e7eaed;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.price{
+    border-radius: 35px;
+    --ion-background-color: #e7eaed;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.category{
+    border-radius: 35px;
+    --ion-background-color: #e7eaed;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.location{
+    border-radius: 35px;
+    --ion-background-color: #e7eaed;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.description{
+    border-radius: 20px;
+    --ion-background-color: #e7eaed;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.envio{
+    margin-left: 10%;
+}
+
+.disponible{
+    margin-left: 8%;
+}
+.free{
+    margin-left: 8%;
+}
+.nodisponible{
+    margin-left: 8%;
+}
+
+.btnPublic{
+    margin-top: 20%;
+    text-align: center;
+}

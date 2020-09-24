@@ -12,4 +12,8 @@ export class HomePage implements OnInit {
   ngOnInit() {
   }
 
+  loadData(){
+    console.log('Datos');
+  }
+
 }
