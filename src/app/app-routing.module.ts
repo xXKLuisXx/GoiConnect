@@ -3,13 +3,13 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./Principal/Social/social-home/social-home.module').then( m => m.SocialHomePageModule)
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
   },
   {
-    path: '',
-    redirectTo: 'social-home',
-    pathMatch: 'full'
+    path: 'home',
+    loadChildren: () => import('./Principal/Social/social-home/social-home.module').then( m => m.SocialHomePageModule)
   },
   {
     path: 'login',
@@ -91,7 +91,8 @@ const routes: Routes = [
   {
     path: 'register-file',
     loadChildren: () => import('./Auth/register-file/register-file.module').then( m => m.RegisterFilePageModule)
-  },  {
+  },
+  {
     path: 'sell',
     loadChildren: () => import('./Pages/Social/sell/sell.module').then( m => m.SellPageModule)
   },

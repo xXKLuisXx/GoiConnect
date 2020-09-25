@@ -117,6 +117,7 @@ export class LoginPagePage implements OnInit {
           error => console.error('Error storing item', error)
         );
         loading.dismiss();
+        this.router.navigate(['/home'], { replaceUrl: true });
       },
       ( Errors: (any) ) => {
         let ErrorsHTML = '';
@@ -162,7 +163,7 @@ export class LoginPagePage implements OnInit {
   }
 
   public RegisterPage(){
-    this.router.navigate(['/register-page']);
+    this.router.navigate(['/register'], { replaceUrl: true });
   }
 
 }
