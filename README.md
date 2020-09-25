@@ -107,4 +107,4 @@ npx jetify
 npx cap sync android
 
 
-npm cap run android -l --external
+ionic cap run android -l --external
