@@ -16,7 +16,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { SuperTabsModule} from '@ionic-super-tabs/angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { CartModalPageModule } from './Pages/Social/cart-modal/cart-modal.module';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Camera } from '@ionic-native/Camera/ngx';
 
 
 @NgModule({

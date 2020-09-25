@@ -15,13 +15,13 @@
         <ion-input placeholder="¿Qué estás pensando?" class="inppost"></ion-input>
       </ion-toolbar>
       <ion-toolbar color="secondary">
-        <ion-button shape="round" class="btnup" size="small">
+        <ion-button shape="round" class="btnup" size="small" (click)="selectImage()">
           <ion-text>Subir foto</ion-text>
         </ion-button>
         <ion-button shape="round" class="btnvi" size="small">
           <ion-text>Subir video</ion-text>
         </ion-button>
-        <ion-button shape="round" size="small" horizontal="end" class="btnpost" (click)="loadData()">
+        <ion-button shape="round" size="small" horizontal="end" class="btnpost">
           <ion-text>Publicar</ion-text>
         </ion-button>
   
@@ -51,7 +51,7 @@
         <p>New York City</p>
       </ion-label>
     </ion-item>
-    <img src="https://i.pinimg.com/originals/f3/fe/ea/f3feea254243c033741574d589a01800.webp" alt="ion">
+    <img src="{{ croppedImagePath }}" alt="ion">
     <ion-card-content>
       <ion-icon name="heart-outline" size="large" class="heartBtn"></ion-icon>
     
