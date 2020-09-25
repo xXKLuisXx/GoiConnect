@@ -36,6 +36,7 @@
     "cordova-browser": "6.0.0",
     "cordova-plugin-nativestorage": "^2.3.2",
     "firebase": "^7.20.0",
+    "jetifier": "^1.6.6",
     "ngx-autosize": "^1.8.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
