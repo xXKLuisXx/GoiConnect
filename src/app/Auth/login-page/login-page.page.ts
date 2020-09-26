@@ -157,12 +157,18 @@ export class LoginPagePage implements OnInit {
       () => {
         loading.dismiss();
         console.log('Termino');
+        this.HomePage();
+
       }
     );
   }
 
   public RegisterPage(){
-    this.router.navigate(['/register-page']);
+    this.router.navigate(['/register']);
+  }
+
+  public HomePage(){
+    this.router.navigate(['/social-home']);
   }
 
 }

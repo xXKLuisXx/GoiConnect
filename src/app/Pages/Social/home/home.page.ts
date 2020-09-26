@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/Camera/ngx';
-
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { ActionSheetController } from '@ionic/angular';
 import { PublicationService } from '../../../services/publication/publication.service';
 import { AuthResponse } from 'src/app/Auth/auth-response';
 import { AlertController } from '@ionic/angular';
+import { Publication } from 'src/app/services/publication/publication';
 
 @Component({
   selector: 'app-home',
@@ -22,10 +23,11 @@ export class HomePage implements OnInit {
     quality: 50
   };
 
-  publication = JSON.stringify({
+  publication: Publication = {
     title: "Titulo de la publicacion",
-    description: "Descrpccion 24 de septiembre"
-  });
+    description: "Descrpccion 24 de septiembre",
+    image: "c://"
+  };
   publication2 = {}
 
 
@@ -35,7 +37,9 @@ export class HomePage implements OnInit {
     private camera: Camera,
     public actionSheetController: ActionSheetController,
     private http: PublicationService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public publicationService: PublicationService,
+    private nativeStorage: NativeStorage
   ) { }
 
   ngOnInit() {
@@ -75,7 +79,7 @@ export class HomePage implements OnInit {
 
     //this.presentAlert( JSON.stringify( this.publication2));
 
-    this.http.postPublication(this.publication2).subscribe(
+    /*this.http.postPublication(this.publication2).subscribe(
       async ( Response : (any) ) => {
         this.presentAlert( JSON.stringify( Response));
       },
@@ -86,7 +90,7 @@ export class HomePage implements OnInit {
         console.log("Termino");
         
       } 
-    );
+    );*/
 
     
   }
@@ -113,6 +117,79 @@ export class HomePage implements OnInit {
       ]
     });
     await actionSheet.present();
+  }
+
+  private initializeAuthResponse() {
+    this.authResponse = {
+      response: {
+        name: '',
+        status: 0,
+        statusText: '',
+        accessUserData : {
+          token_type: '',
+          expires_in: 0,
+          access_token: '',
+          refresh_token: ''
+        },
+        errors : {
+          formErrors : {
+            name : [],
+            email : [],
+            password : []
+          },
+          dbErrors : {
+            error : '',
+            message : ''
+          }
+        }
+      }
+    };
+  }
+
+  private async getAccessDataUser(){
+    await this.nativeStorage.getItem('AccessDataUser').then(
+      data => {
+        this.authResponse.response.accessUserData = data;
+        
+        this.token = this.authResponse.response.accessUserData.access_token; 
+        this.presentAlert( JSON.stringify(this.token) );
+      },
+      error => console.error(error)
+    );
+  }
+
+  public post() {
+
+  this.initializeAuthResponse();
+
+  this.getAccessDataUser();
+    
+    const auth = this.authResponse.response;
+    //this.presentAlert( auth );
+
+    this.publicationService.post( this.publication, this.token ).subscribe(
+      async ( Response: (any) ) => {
+        this.authResponse.response.name = '';
+        this.authResponse.response.status = 200;
+        this.authResponse.response.statusText = 'Ok';
+        this.authResponse.response.accessUserData = Response;
+        //this.presentAlert(JSON.stringify( this.authResponse.response.accessUserData ));
+
+        /*await this.nativeStorage.setItem('AccessDataUser', this.authResponse.response.accessUserData ).then(
+          () => console.log('Stored item!'),
+          error => console.error('Error storing item', error)
+        );*/
+        //loading.dismiss();
+      },
+      ( Errors: (any) ) => {
+        this.presentAlert(JSON.stringify(Errors));
+      },
+      () => {
+        //loading.dismiss();
+        this.presentAlert('termino');
+      }
+    );
+
   }
 
 }

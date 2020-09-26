@@ -8,7 +8,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'social-home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -91,7 +91,8 @@ const routes: Routes = [
   {
     path: 'register-file',
     loadChildren: () => import('./Auth/register-file/register-file.module').then( m => m.RegisterFilePageModule)
-  },  {
+  },
+  {
     path: 'sell',
     loadChildren: () => import('./Pages/Social/sell/sell.module').then( m => m.SellPageModule)
   },
