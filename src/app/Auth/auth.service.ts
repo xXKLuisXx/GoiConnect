@@ -18,11 +18,11 @@ export class AuthService {
 	) { }
 
 	register(user: User): Observable<AuthResponse> {
-		return this.request.createRequest(user, 'register');
+		return this.request.createRequest(user, 'register', true);
 	}
 
 	login(user: User): Observable<AuthResponse> {
-		return this.request.createRequest(user, 'login');
+		return this.request.createRequest(user, 'login', true);
 	}
 
 }
