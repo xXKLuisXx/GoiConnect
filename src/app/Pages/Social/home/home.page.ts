@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
 import { PublicationService } from '../../../services/publication.service';
-
+import { AuthResponse } from '../../../Auth/auth-response';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Publication } from '../../../services/publication';
 import { AlertController } from '@ionic/angular';
 
@@ -28,15 +29,48 @@ export class HomePage implements OnInit {
     quality: 50
   };
 
+  private authResponse : AuthResponse;
+  private token: string;
+
   constructor(
     private camera: Camera,
     public actionSheetController: ActionSheetController,
     public authService: PublicationService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private nativeStorage : NativeStorage
   ) { }
 
   ngOnInit() {
+    this.initializeAuthResponse();
+    this.getAccessDataUser();
   } 
+
+  private initializeAuthResponse() {
+    this.authResponse = {
+      response :{
+        name: "",
+        status: 0,
+        statusText: "",
+        accessUserData : {
+          token_type:"",
+          expires_in:0,
+          access_token:"",
+          refresh_token:""
+        },
+        errors : {
+          formErrors : {
+            name : [],
+            email : [],
+            password : []
+          },
+          dbErrors : {
+            error : "",
+            message : ""
+          }
+        }
+      }
+    };
+  }
 
 
   pickImage(sourceType) {
@@ -92,9 +126,19 @@ export class HomePage implements OnInit {
     await alert.present();
   }
 
+  private async getAccessDataUser(){
+    await this.nativeStorage.getItem('AccessDataUser').then(
+      data => {
+        this.authResponse.response.accessUserData = data;
+        this.token = 'Bearer ' + this.authResponse.response.accessUserData.access_token;
+        this.presentAlert( this.token );
+      },
+      error => console.error(error)
+    );
+  }
+
   public post() {
-    
-    this.authService.post(this.publication).subscribe(
+    this.authService.post(this.publication, this.token).subscribe(
       async ( Response: (any) ) => {
         this.presentAlert( "Publicación realizada con exito" );
         
@@ -102,7 +146,7 @@ export class HomePage implements OnInit {
           title : "Titulo de la publicacion",
           description : "",
           image : "",
-          content_type:2
+          content_type: 2
         }
       },
       ( Errors: (any) ) => {
@@ -113,5 +157,6 @@ export class HomePage implements OnInit {
       }
     );
   }
+  
 
 }
