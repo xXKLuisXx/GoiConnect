@@ -30,7 +30,7 @@ export class LoginPagePage implements OnInit {
 
   ngOnInit(){
     this.initializeAuthResponse();
-    //this.getAccessDataUser();
+    // this.getAccessDataUser();
   }
 
   ionViewWillEnter(){
@@ -113,7 +113,7 @@ export class LoginPagePage implements OnInit {
       ( Errors: (any) ) => {
         let ErrorsHTML = '';
         loading.dismiss();
-        //console.log(Errors);
+        // console.log(Errors);
         this.authResponse.response.name = Errors.name;
         this.authResponse.response.status = Errors.status;
         this.authResponse.response.statusText = Errors.statusText;
