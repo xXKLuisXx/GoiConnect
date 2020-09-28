@@ -12,17 +12,19 @@ import { RequestService } from '../services/request.service'
 export class AuthService {
 	authSubject = new BehaviorSubject(false);
 	authResponse: AuthResponse;
+	postOff = false;
+
 	constructor(
 		public httpClient: HttpClient,
 		private request: RequestService
 	) { }
 
 	register(user: User): Observable<AuthResponse> {
-		return this.request.createRequest(user, 'register', true);
+		return this.request.createRequest(user, 'register', this.postOff);
 	}
 
 	login(user: User): Observable<AuthResponse> {
-		return this.request.createRequest(user, 'login', true);
+		return this.request.createRequest(user, 'login', this.postOff);
 	}
 
 }
