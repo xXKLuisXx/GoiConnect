@@ -12,7 +12,7 @@
         <ion-avatar slot="start" style="margin-top: 20px; margin-left: 5px;">
           <img src="https://www.aconsciousrethink.com/wp-content/uploads/2019/05/reserved-person-line.jpg" style="width: 100%; height:100%">
         </ion-avatar>
-        <ion-input placeholder="¿Qué estás pensando?" class="inppost"></ion-input>
+        <ion-input placeholder="¿Qué estás pensando?" class="inppost" [(ngModel)]='publication.description' name="description"></ion-input>
       </ion-toolbar>
       <ion-toolbar color="secondary">
         <ion-button shape="round" class="btnup" size="small" (click)="selectImage()">
@@ -21,7 +21,7 @@
         <ion-button shape="round" class="btnvi" size="small">
           <ion-text>Subir video</ion-text>
         </ion-button>
-        <ion-button shape="round" size="small" horizontal="end" class="btnpost" (click)="loadData()">
+        <ion-button shape="round" size="small" horizontal="end" class="btnpost" (click)="post()">
           <ion-text>Publicar</ion-text>
         </ion-button>
   
@@ -51,7 +51,7 @@
         <p>New York City</p>
       </ion-label>
     </ion-item>
-    <img src="https://i.pinimg.com/originals/f3/fe/ea/f3feea254243c033741574d589a01800.webp" alt="ion">
+    <img src="{{ croppedImagepath }}" alt="ion">
     <ion-card-content>
       <ion-icon name="heart-outline" size="large" class="heartBtn"></ion-icon>
     

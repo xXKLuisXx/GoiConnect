@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController } from '@ionic/angular';
+import { PublicationService } from '../../../services/publication.service';
+
+import { Publication } from '../../../services/publication';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -9,12 +13,11 @@ import { ActionSheetController } from '@ionic/angular';
 })
 export class HomePage implements OnInit {
 
-  constructor(
-    private camera: Camera,
-    public actionSheetController: ActionSheetController
-  ) { }
-
-  ngOnInit() {
+  public publication: Publication = {
+    title : "Titulo de la publicacion",
+    description : "",
+    image : "",
+    content_type: 2
   }
 
   croppedImagepath = "";
@@ -25,7 +28,15 @@ export class HomePage implements OnInit {
     quality: 50
   };
 
-  
+  constructor(
+    private camera: Camera,
+    public actionSheetController: ActionSheetController,
+    public authService: PublicationService,
+    public alertController: AlertController
+  ) { }
+
+  ngOnInit() {
+  } 
 
 
   pickImage(sourceType) {
@@ -39,6 +50,7 @@ export class HomePage implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       this.croppedImagepath = 'data:image/jpeg;base64,' + imageData;
+      this.publication.image = this.croppedImagepath;
     }, (err) => {
       // Handle error 
     });
@@ -66,6 +78,40 @@ export class HomePage implements OnInit {
       ]
     });
     await actionSheet.present();
+  }
+
+  async presentAlert( message ) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Alert',
+      subHeader: 'Subtitle',
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  public post() {
+    
+    this.authService.post(this.publication).subscribe(
+      async ( Response: (any) ) => {
+        this.presentAlert( "Publicación realizada con exito" );
+        
+        this.publication = {
+          title : "Titulo de la publicacion",
+          description : "",
+          image : "",
+          content_type:2
+        }
+      },
+      ( Errors: (any) ) => {
+        this.presentAlert(JSON.stringify(Errors));
+      },
+      () => {
+        //this.presentAlert('Termino');
+      }
+    );
   }
 
 }
