@@ -91,10 +91,6 @@ const routes: Routes = [
     loadChildren: () => import('./Pages/Profesional/entrepreneurproyect/entrepreneurproyect.module').then( m => m.EntrepreneurproyectPageModule)
   },
   {
-    path: 'register-file',
-    loadChildren: () => import('./Auth/register-file/register-file.module').then( m => m.RegisterFilePageModule)
-  },
-  {
     path: 'sell',
     loadChildren: () => import('./Pages/Social/sell/sell.module').then( m => m.SellPageModule)
   },

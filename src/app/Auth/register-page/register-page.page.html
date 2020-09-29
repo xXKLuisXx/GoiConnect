@@ -1,35 +1,48 @@
-<ion-content class="bg" color="dark">
+<ion-header>
+	<ion-toolbar>
+		<ion-title>RegisterPage</ion-title>
+	</ion-toolbar>
+</ion-header>
 
-    <form (ngSubmit)="registerForm()" class="formRegister">
-      
-        <ion-item class="emailform">
-          <ion-icon name="mail-outline" slot="start"></ion-icon>
-          <ion-input type="email" [(ngModel)]="UserData.email" name="email" placeholder="Correo" required></ion-input>
-        </ion-item>
-      
-      <br>
-      
-        <ion-item class="pwdForm">
-          <ion-icon name="key-outline" slot="start"></ion-icon>
-          <ion-input type="password" [(ngModel)]="UserData.password" name="password" placeholder="Contraseña" required></ion-input>
-        </ion-item>
-      
-      <br>
-      
-        <ion-item class="pwdForm">
-          <ion-icon name="key-outline" slot="start"></ion-icon>
-          <ion-input type="password" [(ngModel)]="UserData.password_confirmation" placeholder="Confirmar contraseña" name="password_confirmation" required></ion-input>
-        </ion-item>
-      <br>
+<ion-content>
+	<ion-card>
+		<form (ngSubmit)="registerForm()">
+			
+			<ion-item lines="full">
+				<ion-icon name="person-circle-outline" slot="start"></ion-icon>
+				<ion-label position="floating">Name</ion-label>
+				<ion-input type="text" [(ngModel)]='UserData.name' name="name" required></ion-input>
+			</ion-item>
+			<ion-item lines="full">
+				<ion-icon name="mail-outline" slot="start"></ion-icon>
+				<ion-label position="floating">Email</ion-label>
+				<ion-input type="text" [(ngModel)]='UserData.email' name="email" required></ion-input>
+			</ion-item>
+			<ion-item lines="full">
+				<ion-icon name="key-outline" slot="start"></ion-icon>
+				<ion-label position="floating">Password</ion-label>
+				<ion-input type="password" [(ngModel)]='UserData.password' name="password" required></ion-input>
+			</ion-item>
+			<ion-item lines="full">
+				<ion-icon name="key-outline" slot="start"></ion-icon>
+				<ion-label position="floating">Confirm Password</ion-label>
+				<ion-input type="password" [(ngModel)]='UserData.password_confirmation' name="password_confirmation" required></ion-input>
+			</ion-item>
 
-      <div style="text-align: center;">
-        <ion-button style="text-align: center;" shape="round" class="btnContinue" routerLink="/register-file">
-          <ion-text color="secondary">
-            CONTINUAR
-          </ion-text>
-        </ion-button>
-      </div>
 
-    </form>
-
+			<ion-card-content>
+				<ion-row>
+					<ion-col>
+						<ion-button type="submit" color="primary" expand="block">Sing Up</ion-button>
+						<a [routerLink]="['/forgot-password']" class="small-text">Forgot Password?</a>
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col>
+						<ion-button color="danger" expand="block" (click)="LoginPage()">Login</ion-button>
+					</ion-col>
+				</ion-row>
+			</ion-card-content>
+		</form>
+	</ion-card>
 </ion-content>
