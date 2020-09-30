@@ -9,22 +9,25 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'home',
-    loadChildren: () => import('./Principal/Social/social-home/social-home.module').then( m => m.SocialHomePageModule)
-  },
-  {
     path: 'login',
     loadChildren: () => import('./Auth/login-page/login-page.module').then( m => m.LoginPagePageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'register',
-    loadChildren: () => import('./Auth/register-page/register-page.module').then( m => m.RegisterPagePageModule)
+    loadChildren: () => import('./Auth/register-page/register-page.module').then( m => m.RegisterPagePageModule),
+    canActivate: [AuthGuard]
   },
   {
-    path: 'social/home',
-    loadChildren: () => import('./Pages/Social/home/home.module').then( m => m.HomePageModule)
+    path: 'profesional',
+    loadChildren: () => import('./Principal/Profesional/profesional-home/profesional-home.module').then( m => m.ProfesionalHomePageModule)
   },
+  {
+    path: 'social',
+    loadChildren: () => import('./Principal/Social/social-home/social-home.module').then( m => m.SocialHomePageModule)
+  },
+
+  /*
   {
     path: 'social/market',
     loadChildren: () => import('./Pages/Social/market/market.module').then( m => m.MarketPageModule)
@@ -60,14 +63,6 @@ const routes: Routes = [
   {
     path: 'profesional/profile',
     loadChildren: () => import('./Pages/Profesional/profile/profile.module').then( m => m.ProfilePageModule)
-  },
-  {
-    path: 'profesional-home',
-    loadChildren: () => import('./Principal/Profesional/profesional-home/profesional-home.module').then( m => m.ProfesionalHomePageModule)
-  },
-  {
-    path: 'social-home',
-    loadChildren: () => import('./Principal/Social/social-home/social-home.module').then( m => m.SocialHomePageModule)
   },
   {
     path: 'cart-modal',
@@ -106,8 +101,7 @@ const routes: Routes = [
     path: 'invite-friends',
     loadChildren: () => import('./Pages/Social/invite-friends/invite-friends.module').then( m => m.InviteFriendsPageModule)
   }
-
-
+  */
 
 ];
 
