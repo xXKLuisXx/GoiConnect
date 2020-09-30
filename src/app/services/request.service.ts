@@ -15,7 +15,7 @@ export class RequestService {
 		public httpClient : HttpClient
 	) { 
 		this.AUTH_SERVER_ADDRESS = 'http://192.168.0.15:8000/api/';
-		this.HEADERS = [['Content-Type', 'application/json'], ['Authorization', '']];
+		this.HEADERS = [['Content-Type', 'application/json'], ['Authorization', ''], ['responseType','text']];
 		this.END_POINTS = ['login', 'register', 'publications'];
 		this.headers = new HttpHeaders();
 	}
@@ -44,6 +44,7 @@ export class RequestService {
 					this.headers = this.headers.set(Header[0], token);
 				}
 				else this.headers = this.headers.set(Header[0], Header[1]);	
+
 			});
 		}
 		
@@ -52,13 +53,13 @@ export class RequestService {
 	}
 
 	public createRequest(object: any, endPoint: string, post: boolean, token?: string) : any {
-		const headers = this.createHeaders( post, token );
+		const headers = this.createHeaders( post, token);
 		return this.httpClient.post<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint), object,  { headers } );
 	}
 
-	/*public createRequestGet(endPoint: string) : any {
-		const headers = this.createHeaders();
+	public createRequestGet(endPoint: string, post: boolean, token?: string) : any {
+		const headers = this.createHeaders( post, token);
 		return this.httpClient.get<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint), { headers } );
-	}*/
+	}
 
 }

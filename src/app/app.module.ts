@@ -17,6 +17,7 @@ import { SuperTabsModule} from '@ionic-super-tabs/angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { CartModalPageModule } from './Pages/Social/cart-modal/cart-modal.module';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
     SplashScreen,
     NativeStorage,
     Camera,
+    ImagePicker,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

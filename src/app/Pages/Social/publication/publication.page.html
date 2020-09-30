@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Nueva Publicación</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img src={{src}}/>
+
+  <ion-item lines="full">
+    <ion-icon name="text-outline" slot="start"></ion-icon>
+    <ion-label position="floating">Título</ion-label>
+    <ion-input type="text" [(ngModel)]='publication.title' name="title" required></ion-input>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-icon name="document-text-outline" slot="start"></ion-icon>
+    <ion-label position="floating">Descripcción</ion-label>
+    <ion-input type="text" [(ngModel)]='publication.description' name="description" required></ion-input>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-icon name="cash-outline" slot="start"></ion-icon>
+    <ion-toggle></ion-toggle><ion-label>Monetizar</ion-label>
+  </ion-item>
+
+  <ion-button type="submit" color="primary" expand="block" (click)="post()">Publicar</ion-button>
+  
+</ion-content>

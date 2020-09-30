@@ -109,7 +109,12 @@ const routes: Routes = [
   {
     path: 'invite-friends',
     loadChildren: () => import('./Pages/Social/invite-friends/invite-friends.module').then( m => m.InviteFriendsPageModule)
+  },
+  {
+    path: 'publication',
+    loadChildren: () => import('./Pages/Social/publication/publication.module').then( m => m.PublicationPageModule)
   }
+
 
 
 
