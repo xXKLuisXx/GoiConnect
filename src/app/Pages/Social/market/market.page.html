@@ -6,7 +6,9 @@
       </ion-text>
     </ion-button>
     <ion-fab-button (click)="openCart()" #cart class="animate__animated animate_bounceOutLeft" horizontal="end">
-      <div class="cart-length">{{ cartItemCount | async}} </div>
+      
+      <div class="cart-length">{{ cartItemCount }} </div>
+      
       <ion-icon name="heart" class="icon-heart"></ion-icon>
     </ion-fab-button>
   </ion-toolbar>

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from  'rxjs';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthResponse } from  '../Auth/auth-response';
+import { HttpClient } from '@angular/common/http';
 import { RequestService } from '../services/request.service';
 import { Publication } from './publication';
 import { auth } from 'firebase';

@@ -9,22 +9,25 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'home',
-    loadChildren: () => import('./Principal/Social/social-home/social-home.module').then( m => m.SocialHomePageModule)
-  },
-  {
     path: 'login',
     loadChildren: () => import('./Auth/login-page/login-page.module').then( m => m.LoginPagePageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'register',
-    loadChildren: () => import('./Auth/register-page/register-page.module').then( m => m.RegisterPagePageModule)
+    loadChildren: () => import('./Auth/register-page/register-page.module').then( m => m.RegisterPagePageModule),
+    canActivate: [AuthGuard]
   },
   {
-    path: 'social/home',
-    loadChildren: () => import('./Pages/Social/home/home.module').then( m => m.HomePageModule)
+    path: 'profesional',
+    loadChildren: () => import('./Principal/Profesional/profesional-home/profesional-home.module').then( m => m.ProfesionalHomePageModule)
   },
+  {
+    path: 'social',
+    loadChildren: () => import('./Principal/Social/social-home/social-home.module').then( m => m.SocialHomePageModule)
+  },
+
+  /*
   {
     path: 'social/market',
     loadChildren: () => import('./Pages/Social/market/market.module').then( m => m.MarketPageModule)
@@ -62,14 +65,6 @@ const routes: Routes = [
     loadChildren: () => import('./Pages/Profesional/profile/profile.module').then( m => m.ProfilePageModule)
   },
   {
-    path: 'profesional-home',
-    loadChildren: () => import('./Principal/Profesional/profesional-home/profesional-home.module').then( m => m.ProfesionalHomePageModule)
-  },
-  {
-    path: 'social-home',
-    loadChildren: () => import('./Principal/Social/social-home/social-home.module').then( m => m.SocialHomePageModule)
-  },
-  {
     path: 'cart-modal',
     loadChildren: () => import('./Pages/Social/cart-modal/cart-modal.module').then( m => m.CartModalPageModule)
   },
@@ -91,10 +86,6 @@ const routes: Routes = [
     loadChildren: () => import('./Pages/Profesional/entrepreneurproyect/entrepreneurproyect.module').then( m => m.EntrepreneurproyectPageModule)
   },
   {
-    path: 'register-file',
-    loadChildren: () => import('./Auth/register-file/register-file.module').then( m => m.RegisterFilePageModule)
-  },
-  {
     path: 'sell',
     loadChildren: () => import('./Pages/Social/sell/sell.module').then( m => m.SellPageModule)
   },
@@ -114,8 +105,7 @@ const routes: Routes = [
     path: 'publication',
     loadChildren: () => import('./Pages/Social/publication/publication.module').then( m => m.PublicationPageModule)
   }
-
-
+  */
 
 
 ];

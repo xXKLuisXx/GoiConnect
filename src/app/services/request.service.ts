@@ -1,5 +1,4 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -24,7 +23,6 @@ export class RequestService {
 		switch (endPoint) {
 			case 'login':
 				return this.END_POINTS[0];
-				break;
 			case 'register':
 				return this.END_POINTS[1];
 			case 'publication':
@@ -35,8 +33,8 @@ export class RequestService {
 		return 
 	}
 
-	private createHeaders( post: boolean, token?: string ) : HttpHeaders {
-		if( !post ) this.headers = this.headers.set(this.HEADERS[0][0], this.HEADERS[0][1]);
+	private createHeaders( tokenRequired: boolean, token?: string ) : HttpHeaders {
+		if( !tokenRequired ) this.headers = this.headers.set(this.HEADERS[0][0], this.HEADERS[0][1]);
 		
 		else{
 			this.HEADERS.forEach(Header => {
@@ -47,8 +45,6 @@ export class RequestService {
 
 			});
 		}
-		
-		console.log( this.headers );
 		return this.headers;
 	}
 

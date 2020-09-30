@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
 				}
 			);
 		}).then(() => {
-			return this.router.parseUrl('home');
+			return this.router.parseUrl('social');
 		}).catch(() => {
 			return true;
 		});

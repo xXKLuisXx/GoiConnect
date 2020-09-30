@@ -10,9 +10,9 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+	selector: 'app-home',
+	templateUrl: './home.page.html',
+	styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
 
@@ -27,13 +27,18 @@ export class HomePage implements OnInit {
   croppedImagepath = "";
   isLoading = false;
 
-  imagePickerOptions = {
-    maximumImagesCount: 1,
-    quality: 50
-  };
+	imagePickerOptions = {
+		maximumImagesCount: 1,
+		quality: 50
+	};
+	private token: string;
 
-  private authResponse : AuthResponse;
-  private token: string;
+	constructor(
+		private camera: Camera,
+		public actionSheetController: ActionSheetController,
+		public authService: PublicationService,
+		public alertController: AlertController,
+	) { }
 
   constructor(
     private camera: Camera,
@@ -52,32 +57,40 @@ export class HomePage implements OnInit {
     console.log(this.token);
   } 
 
-  private initializeAuthResponse() {
-    this.authResponse = {
-      response :{
-        name: "",
-        status: 0,
-        statusText: "",
-        accessUserData : {
-          token_type:"",
-          expires_in:0,
-          access_token:"",
-          refresh_token:""
-        },
-        errors : {
-          formErrors : {
-            name : [],
-            email : [],
-            password : []
-          },
-          dbErrors : {
-            error : "",
-            message : ""
-          }
-        }
-      }
-    };
-  }
+	async selectImage() {
+		const actionSheet = await this.actionSheetController.create({
+			header: "Select Image source",
+			buttons: [{
+				text: 'Load from Library',
+				handler: () => {
+					this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+				}
+			},
+			{
+				text: 'Use Camera',
+				handler: () => {
+					this.pickImage(this.camera.PictureSourceType.CAMERA);
+				}
+			},
+			{
+				text: 'Cancel',
+				role: 'cancel'
+			}
+			]
+		});
+		await actionSheet.present();
+	}
+	public post() {
+		this.authService.post(this.publication, this.token).subscribe(
+			async (Response: (any)) => {
+				this.publication = {
+					title: "Titulo de la publicacion",
+					description: "",
+					image: "",
+					content_type: 2
+				}
+			},
+			(Errors: (any)) => {
 
   async presentLoading(loading) {
     await loading.present();

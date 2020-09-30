@@ -1,7 +1,6 @@
-import { CartmService } from './../../../services/cartm.service';
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { BehaviorSubject } from 'rxjs';
+import { CartmService } from 'src/app/services/cartm.service';
 import { CartModalPage } from '../cart-modal/cart-modal.page';
 
 @Component({
@@ -10,19 +9,29 @@ import { CartModalPage } from '../cart-modal/cart-modal.page';
   styleUrls: ['./market.page.scss'],
 })
 export class MarketPage implements OnInit {
-  cart = [];
+  /*
+  carts = [];
   products = [];
-  cartItemCount: BehaviorSubject<number>;
+  //cartItemCount: BehaviorSubject<number>;
+  cartItemCount:number = 0;
+  */
 
+  constructor(private cartService: CartmService, private modalCtrl: ModalController){
+    console.log("entra")
+  }
   @ViewChild('cart', {static: false, read: ElementRef}) fab: ElementRef;
-  constructor(private cartService: CartmService, private modalCtrl: ModalController) { }
+  //constructor(private cartService: CartmService, private modalCtrl: ModalController) { }
 
   ngOnInit() {
+    console.log("entra2")
+    /*
     this.products = this.cartService.getProducts();
-    this.cart = this.cartService.getCart();
-    this.cartItemCount = this.cartService.getCartItemCount();
+    this.carts = this.cartService.getCart();
+    //this.cartItemCount = this.cartService.getCartItemCount();
+    */
   }
 
+  /*
   addToCart(product) {
     this.animateCSS('tada');
     this.cartService.addProduct(product);
@@ -55,5 +64,5 @@ export class MarketPage implements OnInit {
     }
     node.addEventListener('animationend', handleAnimationEnd);
   }
-
+  */
 }
