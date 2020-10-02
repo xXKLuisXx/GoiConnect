@@ -18,12 +18,14 @@ import { IonicStorageModule } from '@ionic/storage';
 import { CartModalPageModule } from './Pages/Social/cart-modal/cart-modal.module';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
+    CommonModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,

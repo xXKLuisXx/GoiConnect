@@ -17,15 +17,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SocialHomePage implements OnInit {
 	homePage = HomePage;
-	
 	marketPage = MarketPage;
-	
-	/*
 	storiesPage = StoriesPage;
 	chatPage = ChatPage;
 	profilePage = ProfilePage;
-	*/
 	menuAppsPage = MenuAppsPage;
+
+	
 	public accessdata: Object;
 
 	constructor(private router: ActivatedRoute) { }

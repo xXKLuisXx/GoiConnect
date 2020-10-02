@@ -9,14 +9,13 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Utils } from 'src/app/Models/Classes/utils';
 
+
 @Component({
 	selector: 'app-home',
 	templateUrl: './home.page.html',
 	styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  constructor(){}
-  ngOnInit(){}
 
 	public publication: Publication = {
 		title: "",

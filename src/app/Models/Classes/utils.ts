@@ -14,6 +14,7 @@ export class Utils {
         this.loadingController = new LoadingController();
         this.alertController = new AlertController();
         this.requestResponse = new RequestResponse();
+        this.nativeStorage = new NativeStorage();
     }
 
     public buildErrors(Errors: any): string {

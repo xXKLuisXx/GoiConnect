@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
@@ -20,53 +21,70 @@ const routes: Routes = [
 	},
 	{
 		path: 'profesional',
-		loadChildren: () => import('./Principal/Profesional/profesional-home/profesional-home.module').then(m => m.ProfesionalHomePageModule)
+		//loadChildren: () => import('./Principal/Profesional/profesional-home/profesional-home.module').then(m => m.ProfesionalHomePageModule)
+		children: [
+			{
+				path: '',
+				loadChildren: () => import('./Principal/Profesional/profesional-home/profesional-home.module').then(m => m.ProfesionalHomePageModule)
+			},
+			{
+				path: 'profesional-home',
+				loadChildren: () => import('./Pages/Profesional/home/home.module').then(m => m.HomePageModule)
+			},
+			{
+				path: 'profesional-business',
+				loadChildren: () => import('./Pages/Profesional/business/business.module').then(m => m.BusinessPageModule)
+			},
+			{
+				path: 'profesional-stories',
+				loadChildren: () => import('./Pages/Profesional/stories/stories.module').then(m => m.StoriesPageModule)
+			},
+			{
+				path: 'profesional-chat',
+				loadChildren: () => import('./Pages/Profesional/chat/chat.module').then(m => m.ChatPageModule)
+			},
+			{
+				path: 'profesional-profile',
+				loadChildren: () => import('./Pages/Profesional/profile/profile.module').then(m => m.ProfilePageModule)
+			},
+		]
 	},
 	{
 		path: 'social',
-		loadChildren: () => import('./Principal/Social/social-home/social-home.module').then(m => m.SocialHomePageModule)
+		//loadChildren: () => import('./Principal/Social/social-home/social-home.module').then(m => m.SocialHomePageModule),
+		children: [
+			{
+				path: '',
+				loadChildren: () => import('./Principal/Social/social-home/social-home.module').then(m => m.SocialHomePageModule),
+			},
+			{
+				path: 'social-home',
+				loadChildren: () => import('./Pages/Social/home/home.module').then(m => m.HomePageModule),
+			},
+			{
+				path: 'social-market',
+				loadChildren: () => import('./Pages/Social/market/market.module').then(m => m.MarketPageModule)
+			},
+			{
+				path: 'social-stories',
+				loadChildren: () => import('./Pages/Social/stories/stories.module').then(m => m.StoriesPageModule)
+			},
+			{
+				path: 'social-profile',
+				loadChildren: () => import('./Pages/Social/profile/profile.module').then(m => m.ProfilePageModule)
+			},
+			{
+				path: 'social-publication',
+				loadChildren: () => import('./Pages/Social/publication/publication.module').then(m => m.PublicationPageModule)
+			},
+			{
+				path: 'social-chat',
+				loadChildren: () => import('./Pages/Social/chat/chat.module').then(m => m.ChatPageModule)
+			}
+		]
 	},
-	{
-		path: 'publication',
-		loadChildren: () => import('./Pages/Social/publication/publication.module').then(m => m.PublicationPageModule)
-	}
 	/*
-	{
-	  path: 'social/market',
-	  loadChildren: () => import('./Pages/Social/market/market.module').then( m => m.MarketPageModule)
-	},
-	{
-	  path: 'social/stories',
-	  loadChildren: () => import('./Pages/Social/stories/stories.module').then( m => m.StoriesPageModule)
-	},
-	{
-	  path: 'social/chat',
-	  loadChildren: () => import('./Pages/Social/chat/chat.module').then( m => m.ChatPageModule)
-	},
-	{
-	  path: 'social/profile',
-	  loadChildren: () => import('./Pages/Social/profile/profile.module').then( m => m.ProfilePageModule)
-	},
-	{
-	  path: 'profesional/home',
-	  loadChildren: () => import('./Pages/Profesional/home/home.module').then( m => m.HomePageModule)
-	},
-	{
-	  path: 'profesional/business',
-	  loadChildren: () => import('./Pages/Profesional/business/business.module').then( m => m.BusinessPageModule)
-	},
-	{
-	  path: 'profesional/stories',
-	  loadChildren: () => import('./Pages/Profesional/stories/stories.module').then( m => m.StoriesPageModule)
-	},
-	{
-	  path: 'profesional/chat',
-	  loadChildren: () => import('./Pages/Profesional/chat/chat.module').then( m => m.ChatPageModule)
-	},
-	{
-	  path: 'profesional/profile',
-	  loadChildren: () => import('./Pages/Profesional/profile/profile.module').then( m => m.ProfilePageModule)
-	},
+	
 	{
 	  path: 'cart-modal',
 	  loadChildren: () => import('./Pages/Social/cart-modal/cart-modal.module').then( m => m.CartModalPageModule)
@@ -103,15 +121,16 @@ const routes: Routes = [
 	{
 	  path: 'invite-friends',
 	  loadChildren: () => import('./Pages/Social/invite-friends/invite-friends.module').then( m => m.InviteFriendsPageModule)
-	},*/
+	}
 	
-	
+	*/
 
 
 ];
 
 @NgModule({
 	imports: [
+		CommonModule,
 		RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
 	],
 	exports: [RouterModule]
