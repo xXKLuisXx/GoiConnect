@@ -10,6 +10,7 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Utils } from 'src/app/Models/Classes/utils';
 import { HttpErrorResponse } from '@angular/common/http';
 
+
 @Component({
 	selector: 'app-home',
 	templateUrl: './home.page.html',

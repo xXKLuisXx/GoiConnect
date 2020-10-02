@@ -13,6 +13,7 @@ import { Utils } from 'src/app/Models/Classes/utils';
 export class LoginPagePage implements OnInit {
     private UserData: User;
     private utils: Utils;
+    public numeros = [1,2,3,4,7,8];
     constructor(
         private router: Router,
         private authService: AuthService,
@@ -22,6 +23,7 @@ export class LoginPagePage implements OnInit {
     }
 
     async ngOnInit() {
+
     }
 
     async ionViewDidEnter(){
