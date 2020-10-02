@@ -8,6 +8,7 @@ import { AlertController } from '@ionic/angular';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Utils } from 'src/app/Models/Classes/utils';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
 	selector: 'app-home',
@@ -22,6 +23,10 @@ export class HomePage implements OnInit {
 		monetized: false,
 		multimedia: []
 	}
+	public heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado'];
+	public numHeroes:number = this.heroes.length;
+
+	public publications:any = [];
 
 	public multis: Multimedia;
 	private accesData: any;
@@ -47,10 +52,9 @@ export class HomePage implements OnInit {
 
 	ngOnInit() {
 		this.route.queryParams.subscribe(params => {
-			console.log('home');
-			console.log(params);
 			this.accesData = params;
 		});
+
 		//this.getPublications();
 	}
 	
@@ -77,7 +81,7 @@ export class HomePage implements OnInit {
 			if(this.publication.multimedia.length != 0){
 				this.router.navigate(['/publication'], navigationExtras);
 			  }
-			//loading.dismiss();
+			//this.utils.loadingdismiss();
 		}, (err) => {
 			console.log(err);
 		});
@@ -202,10 +206,13 @@ export class HomePage implements OnInit {
 		);
 	}
 	
-	public getPublications() {
+	public async getPublications() {
 		this.publicationService.getPublications(JSON.parse(this.accesData['accessdata']).token_type + ' ' + JSON.parse(this.accesData['accessdata']).access_token).subscribe(
 			async (Response: (any)) => {
-				console.log(Response);
+				//console.log(Response);
+				//this.publications = Response;
+				//console.log(this.publications[0].title);
+
 			},
 			(Errors: (any)) => {
 				console.log(Errors);

@@ -32,8 +32,6 @@ export class SocialHomePage implements OnInit {
 
 	ngOnInit() {
 		this.router.queryParams.subscribe(params => {
-			console.log('social-home');
-			console.log(params);
 		});
 	}
 

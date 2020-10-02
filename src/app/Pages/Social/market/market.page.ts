@@ -17,13 +17,11 @@ export class MarketPage implements OnInit {
   */
 
   constructor(private cartService: CartmService, private modalCtrl: ModalController){
-    console.log("entra")
   }
   @ViewChild('cart', {static: false, read: ElementRef}) fab: ElementRef;
   //constructor(private cartService: CartmService, private modalCtrl: ModalController) { }
 
   ngOnInit() {
-    console.log("entra2")
     /*
     this.products = this.cartService.getProducts();
     this.carts = this.cartService.getCart();

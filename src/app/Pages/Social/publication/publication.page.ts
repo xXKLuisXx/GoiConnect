@@ -36,10 +36,8 @@ export class PublicationPage implements OnInit {
 	ngOnInit() {
 		this.route.queryParams.subscribe(params => {
 			this.accessdata = new AccessUserData(JSON.parse(params['accessdata']).token_type, JSON.parse(params['accessdata']).expires_in, JSON.parse(params['accessdata']).access_token, JSON.parse(params['accessdata']).refresh_token);
-			console.log('publications');
-			console.log(params);
-			//this.accessdata = params;
 		});
+		console.log(this.accessdata);
 		this.publication = this.publicationService.publication;
 		this.src = this.publication.multimedia[0].base;
 
@@ -48,16 +46,17 @@ export class PublicationPage implements OnInit {
 	public  home() {
 		let navigationExtras: NavigationExtras = {
 			queryParams: {
-				accessdata: this.accessdata['accessdata'],
+				accessdata: JSON.stringify(this.accessdata),
 			},
 			replaceUrl: true,
 		};
-		console.log(this.accessdata);
+		//console.log(this.accessdata);
 		this.router.navigate(['/social'], navigationExtras);
 	}
 
 	public async post() {
-		/*await this.utils.loadingPresent();
+		this.home();
+		await this.utils.loadingPresent();
 		this.publicationService.post(this.publication, this.accessdata.getAuthorization()).subscribe(
 			async (Response: (any)) => {
 				this.publication={
@@ -77,7 +76,7 @@ export class PublicationPage implements OnInit {
 			},
 			() => {		
 			}
-		);*/
+		);
 	}
 
 }
