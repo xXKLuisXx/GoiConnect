@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from  'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { RequestService } from '../services/request.service';
 import { Publication } from './publication';
-import { auth } from 'firebase';
+import { RequestResponse } from '../Models/Classes/request-response';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +13,12 @@ import { auth } from 'firebase';
 export class PublicationService {
 
   authSubject  =  new  BehaviorSubject(false);
-  authResponse : AuthResponse;
   private postValue: boolean;
 
   public publication: Publication = {
     title : "",
     description : "",
+    monetized:false,
     multimedia : []
   }
   
@@ -29,14 +29,12 @@ export class PublicationService {
     this.postValue = true;
   }
 
-  post(publication: Publication, authorization: string): Observable<AuthResponse> {
+  post(publication: Publication, authorization?: string): Observable<RequestResponse> {
     return this.request.createRequest(publication, 'publication', this.postValue, authorization);
   }
 
-  getPublications( authorization: string): Observable<AuthResponse> {
+  getPublications( authorization: string): Observable<RequestResponse> {
     return this.request.createRequestGet('publication', this.postValue, authorization);
   }
-
   
-
 }
