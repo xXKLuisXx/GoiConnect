@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Product, CartmService } from '../../../services/cartm.service';
+//import { Product, CartmService } from '../../../services/cartm.service';
 import { ModalController } from '@ionic/angular';
+import { Product } from 'src/app/Models/Classes/product';
+import { CartmService } from 'src/app/services/cartm.service';
 
 @Component({
   selector: 'app-cart-modal',
@@ -8,8 +10,15 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./cart-modal.page.scss'],
 })
 export class CartModalPage implements OnInit {
+  cart: Product;
+  constructor(private cartService: CartmService, private modalCtrl: ModalController) { }
 
-  cart: Product[] = [];
+  ngOnInit() {
+    //this.cart = this.cartService.getCart();
+  }
+  /*
+
+  
   constructor(private cartService: CartmService, private modalCtrl: ModalController) { }
 
   ngOnInit() {
@@ -39,5 +48,5 @@ export class CartModalPage implements OnInit {
   checkout() {
 
   }
-
+  */
 }

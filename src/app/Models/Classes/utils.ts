@@ -20,28 +20,33 @@ export class Utils {
         let ErrorsHTML = '';
         this.requestResponse.status = Errors.status;
         this.requestResponse.statusText = Errors.statusText;
-        if (Errors.error.error != null && Errors.error.error == "invalid_grant") {
-            this.requestResponse.errors.dbErrors = Errors.error;
+        if (this.requestResponse.status == 401){
+            ErrorsHTML = "Status: " + this.requestResponse.statusText;
         } else {
-            this.requestResponse.errors.formErrors = Errors.error;
-        }
-
-        if(Object.keys(this.requestResponse.errors.dbErrors).length > 0){
-            ErrorsHTML += '<li> User or Password wrong </li>';
-        }else {
-            if(Object.keys(this.requestResponse.errors.formErrors).length > 0 ){
-                Object.keys(this.requestResponse.errors.formErrors).forEach(key => {
-                    ErrorsHTML += key + ' <br>';
-                    ErrorsHTML += '<ul> ';
-                    this.requestResponse.errors.formErrors[key].forEach(element => {
-                        ErrorsHTML += '<li> ' + element + '</li>';
+            if (Errors.error.error != null && Errors.error.error == "invalid_grant") {
+                this.requestResponse.errors.dbErrors = Errors.error;
+            } else {
+                this.requestResponse.errors.formErrors = Errors.error;
+    
+            }
+            console.log(this.requestResponse);
+    
+            if(Object.keys(this.requestResponse.errors.dbErrors).length > 0){
+                ErrorsHTML += '<li> User or Password wrong </li>';
+            }else {
+                if(Object.keys(this.requestResponse.errors.formErrors).length > 0 ){
+                    Object.keys(this.requestResponse.errors.formErrors).forEach(key => {
+                        ErrorsHTML += key + ' <br>';
+                        ErrorsHTML += '<ul> ';
+                        this.requestResponse.errors.formErrors[key].forEach(element => {
+                            ErrorsHTML += '<li> ' + element + '</li>';
+                        });
+                        ErrorsHTML += ' </ul>';
+                        //console.log()
                     });
-                    ErrorsHTML += ' </ul>';
-                    //console.log()
-                });
+                }
             }
         }
-        
         return ErrorsHTML;
     }
 
@@ -54,6 +59,7 @@ export class Utils {
                 }
             })
         });
+        //console.log(accessUserData);
         return accessUserData;
     }
 

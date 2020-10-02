@@ -21,7 +21,7 @@
 
   <ion-item lines="full">
     <ion-icon name="cash-outline" slot="start"></ion-icon>
-    <ion-toggle></ion-toggle><ion-label>Monetizar</ion-label>
+    <ion-toggle  [(ngModel)]="publication.monetized" name="monetized"></ion-toggle><ion-label>Monetizar</ion-label>
   </ion-item>
 
   <ion-button type="submit" color="primary" expand="block" (click)="post()">Publicar</ion-button>

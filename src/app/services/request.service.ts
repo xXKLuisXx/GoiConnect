@@ -38,11 +38,15 @@ export class RequestService {
 		
 		else{
 			this.HEADERS.forEach(Header => {
+				
 				if ( Header[0] === "Authorization"){
-					this.headers = this.headers.set(Header[0], token);
+					if(token != null ){
+						this.headers = this.headers.set(Header[0], token);
+					}
 				}
-				else this.headers = this.headers.set(Header[0], Header[1]);	
-
+				else {
+					this.headers = this.headers.set(Header[0], Header[1]);
+				}	
 			});
 		}
 		return this.headers;

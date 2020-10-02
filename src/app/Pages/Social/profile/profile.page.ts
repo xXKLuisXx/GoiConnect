@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { PublicationService } from '../../../services/publication.service';
-import { AuthResponse } from  '../../../Auth/auth-response';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
@@ -12,7 +11,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 export class ProfilePage implements OnInit {
   myphoto: any;
 
-  private authResponse : AuthResponse;
+  //private authResponse : AuthResponse;
   private token: string;
 
   constructor(private camera: Camera,
@@ -22,11 +21,10 @@ export class ProfilePage implements OnInit {
               }
 
   ngOnInit() {
-    this.initializeAuthResponse();
-    this.getAccessDataUser();
-    //this.getPublications();
+
   }
 
+  /*
   private async getAccessDataUser(){
     await this.nativeStorage.getItem('AccessDataUser').then(
       data => {
@@ -36,33 +34,7 @@ export class ProfilePage implements OnInit {
       error => console.error(error)
     );
   }
-  
-  private initializeAuthResponse() {
-    this.authResponse = {
-      response :{
-        name: "",
-        status: 0,
-        statusText: "",
-        accessUserData : {
-          token_type:"",
-          expires_in:0,
-          access_token:"",
-          refresh_token:""
-        },
-        errors : {
-          formErrors : {
-            name : [],
-            email : [],
-            password : []
-          },
-          dbErrors : {
-            error : "",
-            message : ""
-          }
-        }
-      }
-    };
-  }
+  */
 
   public getPublications(){
     this.publicationService.getPublications(this.token).subscribe(

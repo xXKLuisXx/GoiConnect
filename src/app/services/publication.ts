@@ -6,5 +6,6 @@ export interface Multimedia{
 export interface Publication {
     title: string,
     description: string,
+    monetized:boolean,
     multimedia: Multimedia[] 
 }

@@ -26,12 +26,14 @@ export class SocialHomePage implements OnInit {
 	profilePage = ProfilePage;
 	*/
 	menuAppsPage = MenuAppsPage;
+	public accessdata: Object;
+
 	constructor(private router: ActivatedRoute) { }
 
 	ngOnInit() {
 		this.router.queryParams.subscribe(params => {
+			console.log('social-home');
 			console.log(params);
-			console.log(params['UserData']);
 		});
 	}
 
