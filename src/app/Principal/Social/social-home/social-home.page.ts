@@ -36,13 +36,13 @@ export class SocialHomePage implements OnInit {
 	OnTabChange(ev: CustomEvent<SuperTabChangeEventDetail>) {
 		switch (ev.detail.index) {
 			case 0:
-				// console.log("Estas en apps");
+				console.log("Estas en apps");
 				break;
 			case 1:
-				// console.log("Estas en social");
+				console.log("Estas en social");
 				break;
 			case 2:
-				// console.log("Estas en profesional")
+				console.log("Estas en profesional")
 				break;
 		}
 	}

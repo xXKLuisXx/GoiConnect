@@ -24,13 +24,12 @@ export class HomePage implements OnInit {
 		monetized: false,
 		multimedia: []
 	}
-	public heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado'];
-	public numHeroes:number = this.heroes.length;
 
 	public publications:any = [];
 
 	public multis: Multimedia;
 	private accesData: any;
+	public selectedVideo: string;
 
 	croppedImagepath = "";
 	isLoading = false;
@@ -54,12 +53,14 @@ export class HomePage implements OnInit {
 	ngOnInit() {
 		this.route.queryParams.subscribe(params => {
 			this.accesData = params;
+			console.log(this.accesData);
 		});
 
-		//this.getPublications();
+		//console.log(this.getPublications());
 	}
 	
 	async pickImages() {
+		
 		let navigationExtras: NavigationExtras = {
 			queryParams: {
 				accessdata: this.accesData['accessdata'],
@@ -80,7 +81,7 @@ export class HomePage implements OnInit {
 			}
 			this.publicationService.publication = this.publication;
 			if(this.publication.multimedia.length != 0){
-				this.router.navigate(['/publication'], navigationExtras);
+				this.router.navigate(['social/social-publication'],navigationExtras);
 			  }
 			//this.utils.loadingdismiss();
 		}, (err) => {
@@ -126,6 +127,12 @@ export class HomePage implements OnInit {
 			  dirpath = dirpath.includes("file://") ? dirpath : "file://" + dirpath;
 
 			  console.log(filename, ' ', dirpath);  
+
+			  try {
+				console.log('si');
+          } catch(err) {
+            console.log('no');
+          }
 			}
 		  },
 		  (err) => {
@@ -210,7 +217,8 @@ export class HomePage implements OnInit {
 	public async getPublications() {
 		this.publicationService.getPublications(JSON.parse(this.accesData['accessdata']).token_type + ' ' + JSON.parse(this.accesData['accessdata']).access_token).subscribe(
 			async (Response: (any)) => {
-				//console.log(Response);
+				this.publications = Response;
+				console.log(this.publications);
 				//this.publications = Response;
 				//console.log(this.publications[0].title);
 

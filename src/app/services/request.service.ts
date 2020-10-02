@@ -13,7 +13,7 @@ export class RequestService {
 	constructor(
 		public httpClient : HttpClient
 	) { 
-		this.AUTH_SERVER_ADDRESS = 'http://192.168.0.5:8000/api/';
+		this.AUTH_SERVER_ADDRESS = 'http://192.168.0.15:8000/api/';
 		this.HEADERS = [['Content-Type', 'application/json'], ['Authorization', ''], ['responseType','text']];
 		this.END_POINTS = ['login', 'register', 'publications'];
 		this.headers = new HttpHeaders();

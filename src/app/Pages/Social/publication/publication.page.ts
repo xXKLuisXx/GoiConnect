@@ -50,8 +50,6 @@ export class PublicationPage implements OnInit {
 			},
 			replaceUrl: true,
 		};
-		//console.log(this.accessdata);
-		this.router.navigate(['/social'], navigationExtras);
 	}
 
 	public async post() {
