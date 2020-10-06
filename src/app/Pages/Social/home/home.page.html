@@ -1,76 +1,89 @@
-<ion-content>
+<ion-content overflow-scroll="true">
 
-      <ion-toolbar color="secondary">
-        <ion-buttons slot="primary">
-          <ion-button shape="round" style="background-color:#a1a1a1; border-radius:50%; margin-top: -35px;">
-            <ion-icon name="settings"></ion-icon>
-          </ion-button>
-          <ion-button shape="round" style="background-color:#a1a1a1; border-radius:50%; margin-top: -35px;">
-            <ion-icon name="options"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <ion-avatar slot="start" style="margin-top: 20px; margin-left: 5px;">
-          <img src="https://www.aconsciousrethink.com/wp-content/uploads/2019/05/reserved-person-line.jpg" style="width: 100%; height:100%">
-        </ion-avatar>
-        <ion-input placeholder="¿Qué estás pensando?" class="inppost" [(ngModel)]='publication.description' name="description"></ion-input>
-      </ion-toolbar>
-      <ion-toolbar color="secondary">
-        <ion-button shape="round" class="btnup" size="small" (click)="selectImage()">
-          <ion-text>Subir foto</ion-text>
-        </ion-button>
-        <ion-button shape="round" class="btnvi" size="small" (click)="selectVideo()">
-          <ion-text>Subir video</ion-text>
-        </ion-button>
-        <ion-button shape="round" size="small" horizontal="end" class="btnpost" (click)="post()">
-          <ion-text>Publicar</ion-text>
-        </ion-button>
-  
-      </ion-toolbar>
-  <br>
-  
-  <ion-slides>
-    <ion-slide *ngFor="let i of [1,1,1,1]">
-      <ion-avatar slot="start" class="avatarHistory">
-        <ion-icon name="reload"></ion-icon>
-      </ion-avatar>
-      <ion-avatar slot="start" *ngFor="let i of [1,1,1,1,1]" class="avatarHistory">
-        <img src="https://www.aconsciousrethink.com/wp-content/uploads/2019/05/reserved-person-line.jpg" style="width: 100%; height:100%">
-      </ion-avatar>
-    </ion-slide>
-  </ion-slides>
+	<ion-toolbar color="secondary">
+		<ion-buttons slot="primary">
+			<ion-button shape="round" style="background-color:#a1a1a1; border-radius:50%; margin-top: -35px;">
+				<ion-icon name="settings"></ion-icon>
+			</ion-button>
+			<ion-button shape="round" style="background-color:#a1a1a1; border-radius:50%; margin-top: -35px;">
+				<ion-icon name="options"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+		<ion-avatar slot="start" style="margin-top: 20px; margin-left: 5px;">
+			<img src="https://www.aconsciousrethink.com/wp-content/uploads/2019/05/reserved-person-line.jpg"
+				style="width: 100%; height:100%">
+		</ion-avatar>
+		<ion-input placeholder="¿Qué estás pensando?" class="inppost" [(ngModel)]='publication.description'
+			name="description"></ion-input>
+	</ion-toolbar>
+	<ion-toolbar color="secondary">
+		<ion-button shape="round" class="btnup" size="small" (click)="selectImage()">
+			<ion-text>Subir foto</ion-text>
+		</ion-button>
+		<ion-button shape="round" class="btnvi" size="small" (click)="selectVideo()">
+			<ion-text>Subir video</ion-text>
+		</ion-button>
+		<ion-button shape="round" size="small" horizontal="end" class="btnpost" (click)="getPublications()">
+			<ion-text>Publicar</ion-text>
+		</ion-button>
 
+	</ion-toolbar>
+	<br>
 
+	<ion-slides>
+		<ion-slide *ngFor="let i of [1,1,1,1]">
+			<ion-avatar slot="start" class="avatarHistory">
+				<ion-icon name="reload"></ion-icon>
+			</ion-avatar>
+			<ion-avatar slot="start" *ngFor="let i of [1,1,1,1,1]" class="avatarHistory">
+				<img src="https://www.aconsciousrethink.com/wp-content/uploads/2019/05/reserved-person-line.jpg"
+					style="width: 100%; height:100%">
+			</ion-avatar>
+		</ion-slide>
+	</ion-slides>
+	<ion-card class="cardHome" *ngFor="let publication of publications">
+		<ion-item color="dark">
+			<ion-avatar slot="start">
+				<img src="https://img.mobiscroll.com/demos/card_2.png">
+			</ion-avatar>
+			<ion-label>
+				<h3>John Doe</h3>
+				<p>New York City</p>
+			</ion-label>
+		</ion-item>
 
-<ion-card class="cardHome" *ngFor="let publication of publications">
-  <ion-item color="dark">
-    <ion-avatar slot="start">
-      <img src="https://img.mobiscroll.com/demos/card_2.png">
-    </ion-avatar>
-    <ion-label>
-      <h3>John Doe</h3>
-      <p>New York City</p>
-    </ion-label>
-  </ion-item>
-  <img src="{{ croppedImagepath }}" alt="ion">
+		<div *ngIf="isVideo(publication.path)" width="320" height="240" controls>
+			<video controls preload="metadata">
+				<source src="http://192.168.0.15:8000/storage/{{publication.path}}" type="video/mp4" >
+			  </video>
+		</div>
+		<div *ngIf="!isVideo(publication.path)">
+			<img src="http://192.168.0.15:8000/storage/DY22qFyIAnzm.jpeg"alt="ion">
+		</div>
+		
+		<ion-card-header>
+			<ion-card-title>{{publication.title}}</ion-card-title>
+		</ion-card-header>
+		<ion-card-content>
+			{{publication.description}}
+		</ion-card-content>
 
-  <ion-card-header>
-    <ion-card-title>{{publication.title}}</ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    {{publication.description}}
-  </ion-card-content>
+		<ion-card-content>
+			<ion-icon name="heart-outline" size="large" class="heartBtn"></ion-icon>
 
-  <ion-card-content>
-    <ion-icon name="heart-outline" size="large" class="heartBtn"></ion-icon>
-  
-    <ion-icon name="chatbubble-ellipses-sharp" size="large" class="chatIcon"></ion-icon>
+			<ion-icon name="chatbubble-ellipses-sharp" size="large" class="chatIcon"></ion-icon>
 
-    <ion-icon name="bookmark-outline" size="large" style="float: right;" class="bookBtn"></ion-icon>
-    
-    
+			<ion-icon name="bookmark-outline" size="large" style="float: right;" class="bookBtn"></ion-icon>
+		</ion-card-content>
 
-  </ion-card-content>
-</ion-card>
+	</ion-card>
+
+	<ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+		<ion-infinite-scroll-content
+		  loadingSpinner="crescent"
+		  loadingText="Loading more data...">
+		</ion-infinite-scroll-content>
+	  </ion-infinite-scroll>
 
 
 </ion-content>

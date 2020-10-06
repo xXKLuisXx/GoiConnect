@@ -18,7 +18,10 @@ import { IonicStorageModule } from '@ionic/storage';
 import { CartModalPageModule } from './Pages/Social/cart-modal/cart-modal.module';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { CommonModule } from '@angular/common';
+import { Base64 } from '@ionic-native/base64/ngx';
 
 
 @NgModule({
@@ -40,7 +43,10 @@ import { CommonModule } from '@angular/common';
     SplashScreen,
     NativeStorage,
     Camera,
+    File,
     ImagePicker,
+    FileTransfer,
+    Base64,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

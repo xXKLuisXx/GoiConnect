@@ -52,11 +52,12 @@ export class Utils {
     }
 
     public buildAccessData(Response: any): AccessUserData {
+        let accessdata = JSON.parse(Response['accessdata'])
         let accessUserData = new AccessUserData();
-        Object.keys(Response).forEach(keyR => {
+        Object.keys(accessdata).forEach(keyR => {
             Object.keys(accessUserData).forEach(keyAD => {
                 if(keyR == keyAD){
-                    accessUserData[keyAD] = Response[keyR];
+                    accessUserData[keyAD] = accessdata[keyR];//Response[keyR];
                 }
             })
         });
