@@ -75,6 +75,7 @@ export class Utils {
 
     public async storeItem(key: string, data: any) {
         await this.nativeStorage.setItem(key, data).then((Result) => {
+            console.log('storage');
             console.log(Result);
         }).catch((Error) => {
             console.log(Error)

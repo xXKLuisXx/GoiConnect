@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-//import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { PublicationService } from '../../../services/publication.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -13,7 +12,6 @@ import { AccessUserData } from 'src/app/Models/Classes/access-user-data';
 import { FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { IonInfiniteScroll } from '@ionic/angular';
-
 
 @Component({
 	selector: 'app-home',
@@ -37,6 +35,8 @@ export class HomePage implements OnInit {
 	private accesData: AccessUserData;
 	public selectedVideo: string;
 	private utils: Utils;
+	private page = 1;
+	private total = 0;
 
 	croppedImagepath = "";
 	isLoading = false;
@@ -64,29 +64,31 @@ export class HomePage implements OnInit {
 	}
 
 	ngOnInit() {
-		console.log("prueba");
 		this.route.queryParams.subscribe(params => {
 			this.accesData = this.utils.buildAccessData(params);
 			console.log(this.accesData);
+			this.getPublications();
 		});
 	}
 
 	loadData(event){
+		setTimeout(() => {
 		console.log('Cargando siguientes...');
+		event.target.complete();
+		this.publications = this.getPublications();
+
+		
+
+
+		}, 1000);
 	}
 
-	private async getAccessDataUser() {
-		await this.nativeStorage.getItem('AccessDataUser').then(
-			data => {
-				this.accesData = data;
-				console.log('GETiTEM');
-				console.log(this.accesData);
-			},
-			error => console.error(error)
-		);
+	toggleInfiniteScroll() {
+		this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
 	}
 
-	async pickImages() {
+
+	public pickImages() {
 
 		let navigationExtras: NavigationExtras = {
 			queryParams: {
@@ -98,22 +100,27 @@ export class HomePage implements OnInit {
 		const options = {
 			maximumImagesCount: 5,
 			quality: 100,
-			outputType: 1
+			outputType: 0
 		};
 
-		this.imagePicker.getPictures(options).then((images) => {
-			for (var i = 0; i < images.length; i++) {
-				const extensionImage = images[i].substr(images[i].lastIndexOf('.') + 1);
-				console.log('Extension image:');
-				console.log(extensionImage);
-				this.publication.multimedia.push({ base: 'data:image/' + 'jpg' + ';base64,' + images[i], ext: 'jpg' });
-			}
-			this.publicationService.publication = this.publication;
-			console.log(this.publication.multimedia.length);
-			if (this.publication.multimedia.length != 0) {
-				this.router.navigate(['social/social-publication'], navigationExtras);
-			}
-			//this.utils.loadingdismiss();
+		this.imagePicker.getPictures(options).then(async(images) => {
+			console.log(images);
+			//if(images !='OK'){
+				for (var i = 0; i < images.length; i++) {
+					const extensionImage = images[i].substr(images[i].lastIndexOf('.') + 1); 
+					 await this.base64.encodeFile(images[i]).then((base64File: string) => {
+						 this.publication.multimedia.push({ base: base64File, ext: extensionImage  });			
+					}, (err) => {
+						console.log(err);
+					});
+				}
+
+				this.publicationService.publication = this.publication;
+				console.log('Tamanio: ',this.publication.multimedia.length);
+				if (this.publication.multimedia.length != 0){
+					this.router.navigate(['social/social-publication'], navigationExtras);
+				}
+			//}
 		}, (err) => {
 			console.log(err);
 		});
@@ -134,7 +141,7 @@ export class HomePage implements OnInit {
 			mediaType: this.camera.MediaType.PICTURE
 		}
 		this.camera.getPicture(options).then((imageData) => {
-			this.publication.multimedia.push({ base: 'data:image/' + 'jpg' + ';base64,' + imageData, ext: 'jpg' });
+			this.publication.multimedia.push({ base: 'data:image/*;charset=utf-8;base64,' + imageData, ext: 'jpeg' });
 			this.publicationService.publication = this.publication;
 			if (this.publication.multimedia != null) {
 				this.router.navigate(['social/social-publication'], navigationExtras);
@@ -188,10 +195,12 @@ export class HomePage implements OnInit {
 			{
 				text: 'Use Camera',
 				handler: () => {
-					this.pickVideo(this.camera.PictureSourceType.CAMERA);
+					this.pickVideo(this.camera.PictureSourceType.SAVEDPHOTOALBUM);
 				}
 			},
+			
 			{
+
 				text: 'Cancel',
 				role: 'cancel'
 			}
@@ -199,12 +208,6 @@ export class HomePage implements OnInit {
 		});
 		await actionSheet.present();
 	}
-
-	public uploadVideo() {
-	
-	}
-
-
 
 	async selectImage() {
 		const actionSheet = await this.actionSheetController.create({
@@ -231,7 +234,7 @@ export class HomePage implements OnInit {
 	}
 
 	public post() {
-		this.publicationService.post(this.publication, JSON.parse(this.accesData['accessdata']).token_type + ' ' + JSON.parse(this.accesData['accessdata']).access_token).subscribe(
+		this.publicationService.post(this.publication, this.accesData.getAuthorization()).subscribe(
 			async (Response: (any)) => {
 
 				this.publication = {
@@ -241,9 +244,10 @@ export class HomePage implements OnInit {
 					multimedia: []
 				}
 
-				//this.utils.loadingDismiss();
+				this.utils.loadingDismiss();
+				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
 				//this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
-				console.log(Response);
+				//console.log(Response);
 			},
 			(Errors: (any)) => {
 				//this.utils.loadingDismiss();
@@ -256,14 +260,13 @@ export class HomePage implements OnInit {
 		);
 	}
 
-	 getPublications() {
-		 this.publicationService.getPublications(this.accesData.getAuthorization()).subscribe(
-			async (Response: (any)) => {
-				
-				this.publications = Response;
-				console.log(this.publications);
-				
-				
+	public  getPublications() {
+		 this.publicationService.getPublications(this.accesData.getAuthorization(), this.page).subscribe(
+			 (Response: (any)) => {
+				this.publications = Response.data;
+				console.log(Response);
+				let nextPage = Response.next_page_url.split('=');
+				this.page = nextPage[1];
 			},
 			(Errors: (any)) => {
 				console.log(Errors);
@@ -279,7 +282,11 @@ export class HomePage implements OnInit {
 		else return false;
 	}
 
-
-
-
+	public async convertToBase64(path){
+		  return await this.base64.encodeFile(path).then((base64File: string) => {
+				return base64File;
+			}, (err) => {
+				return false;
+			});
+	}
 }

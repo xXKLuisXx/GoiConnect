@@ -4,6 +4,8 @@ import { Publication } from 'src/app/services/publication';
 import { PublicationService } from 'src/app/services/publication.service';
 import { Utils } from 'src/app/Models/Classes/utils';
 import { AccessUserData } from 'src/app/Models/Classes/access-user-data';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 
 @Component({
 	selector: 'app-publication',
@@ -19,6 +21,7 @@ export class PublicationPage implements OnInit {
 		multimedia: []
 	}
 	private utils: Utils;
+	private isVideo: boolean;
 	public src: string;
 	public videoExist: boolean = false;
 	private accessdata: AccessUserData;
@@ -26,29 +29,28 @@ export class PublicationPage implements OnInit {
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
-		public publicationService: PublicationService
+		public publicationService: PublicationService,
+		private sanitizer: DomSanitizer
 	) { 
 		this.utils = new Utils();
 	}
 
 	ngOnInit() {
 		this.route.queryParams.subscribe(params => {
-			this.accessdata = this.utils.buildAccessData(params);//new AccessUserData(JSON.parse(params['accessdata']).token_type, JSON.parse(params['accessdata']).expires_in, JSON.parse(params['accessdata']).access_token, JSON.parse(params['accessdata']).refresh_token);
+			this.accessdata = this.utils.buildAccessData(params);
 			console.log(this.accessdata);
-		
 		});
-		//console.log(this.accessdata);
+
 		this.publication = this.publicationService.publication;
-		console.log('aqui');
-		console.log(this.publication);
-
-		/*if(this.publication.multimedia[0]){
-		this.videoExist = true;
 		console.log(this.publication.multimedia);
-		}*/
 		this.src = this.publication.multimedia[0].base;
-
+		if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
+		else this.isVideo = true;
 	}
+
+	getImgContent():SafeUrl {
+        return this.sanitizer.bypassSecurityTrustUrl(this.src);
+    }
 
 	public  home() {
 		let navigationExtras: NavigationExtras = {
@@ -78,7 +80,6 @@ export class PublicationPage implements OnInit {
 					monetized:false,
 					multimedia: []
 				}
-				
 
 				this.utils.loadingDismiss();
 				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );

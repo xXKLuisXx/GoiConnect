@@ -57,9 +57,9 @@ export class RequestService {
 		return this.httpClient.post<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint), object,  { headers } );
 	}
 
-	public createRequestGet(endPoint: string, post: boolean, token?: string) : any {
+	public createRequestGet(endPoint: string, post: boolean, token?: string, page?:number) : any {
 		const headers = this.createHeaders( post, token);
-		return this.httpClient.get<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint), { headers } );
+		return this.httpClient.get<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint)+'?page='+page, { headers } );
 	}
 
 }
