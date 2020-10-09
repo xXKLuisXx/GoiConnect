@@ -53,11 +53,12 @@
 			</ion-label>
 		</ion-item>
 
-		<div *ngIf="isVideo(publication['path'])" width="320" height="240" controls class="videoPlayer">
-			<video controls preload="metadata">
-				<source src="http://192.168.0.15:8000/storage/{{publication.path}}" type="video/mp4">
-			  </video>
+		<div *ngIf="isVideo(publication['path'])"  controls class="videoPlayer">
+			<video controls preload="metadata" class="videoPlayer" width="320" height="240">
+				<source src="http://192.168.0.15:8000/storage/{{publication.path}}" type="video/mp4" style="text-align: center;">
+			</video>
 		</div>
+
 		<div *ngIf="!isVideo(publication['path'])">
 			<img src="http://192.168.0.15:8000/storage/{{publication.path}}"alt="ion">
 		</div>
@@ -85,6 +86,4 @@
 		  loadingText="Loading more data...">
 		</ion-infinite-scroll-content>
 	</ion-infinite-scroll>
-
-
 </ion-content>

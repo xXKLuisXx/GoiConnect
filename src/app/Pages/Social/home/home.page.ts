@@ -12,6 +12,7 @@ import { AccessUserData } from 'src/app/Models/Classes/access-user-data';
 import { FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { IonInfiniteScroll } from '@ionic/angular';
+import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture/ngx';
 
 @Component({
 	selector: 'app-home',
@@ -58,7 +59,8 @@ export class HomePage implements OnInit {
 		private nativeStorage: NativeStorage,
 		private route: ActivatedRoute,
 		public loadingController: LoadingController,
-		private base64: Base64
+		private base64: Base64,
+		private mediaCapture: MediaCapture
 	) {
 		this.utils = new Utils();
 	}
@@ -71,22 +73,43 @@ export class HomePage implements OnInit {
 		});
 	}
 
+	public async  takeVideo(){
+		let navigationExtras: NavigationExtras = {
+			queryParams: {
+				accessdata: JSON.stringify(this.accesData),
+			},
+			replaceUrl: true,
+		};
+
+		let options: CaptureImageOptions = { limit: 1 }
+		await this.mediaCapture.captureVideo(options).then(async(data: MediaFile[]) => {
+			console.log(data[0].fullPath);
+			await this.base64.encodeFile(data[0].fullPath).then((base64File: string) => {
+				
+				this.publication.multimedia.push({ base: base64File, ext: 'mp4' });
+				this.publicationService.publication = this.publication
+				if (this.publication.multimedia != null) {
+					this.router.navigate(['social/social-publication'], navigationExtras);
+				}
+			}, (err) => {
+				console.log(err);
+			});	 
+			}, (err: CaptureError) => {
+				console.log(err);
+			}); 
+	}
+
 	loadData(event){
 		setTimeout(() => {
 		console.log('Cargando siguientes...');
 		event.target.complete();
 		this.publications = this.getPublications();
-
-		
-
-
 		}, 1000);
 	}
 
 	toggleInfiniteScroll() {
 		this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
 	}
-
 
 	public pickImages() {
 
@@ -169,6 +192,8 @@ export class HomePage implements OnInit {
 			await this.base64.encodeFile('file://' + videoUrl).then((base64File: string) => {
 				this.publication.multimedia.push({ base: base64File, ext: 'mp4' });
 				this.publicationService.publication = this.publication;
+				console.log('aqui');
+				console.log(base64File);
 
 				if (this.publication.multimedia != null) {
 					this.router.navigate(['social/social-publication'], navigationExtras);
@@ -177,7 +202,6 @@ export class HomePage implements OnInit {
 				console.log(err);
 			});
 		},
-
 			(err) => {
 				console.log(err);
 			});
@@ -195,7 +219,8 @@ export class HomePage implements OnInit {
 			{
 				text: 'Use Camera',
 				handler: () => {
-					this.pickVideo(this.camera.PictureSourceType.SAVEDPHOTOALBUM);
+					//this.pickVideo(this.camera.PictureSourceType.CAMERA);
+					this.takeVideo();
 				}
 			},
 			

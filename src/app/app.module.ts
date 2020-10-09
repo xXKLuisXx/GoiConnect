@@ -22,6 +22,7 @@ import { File } from '@ionic-native/file/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { CommonModule } from '@angular/common';
 import { Base64 } from '@ionic-native/base64/ngx';
+import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture/ngx';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { Base64 } from '@ionic-native/base64/ngx';
     ImagePicker,
     FileTransfer,
     Base64,
+    MediaCapture,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
