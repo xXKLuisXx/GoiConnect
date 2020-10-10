@@ -23,7 +23,7 @@ export class LoginPagePage implements OnInit {
     }
 
     async ngOnInit() {
-
+        console.log("dfsdfaf");
     }
 
     async ionViewDidEnter(){
