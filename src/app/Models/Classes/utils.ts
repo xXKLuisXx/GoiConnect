@@ -69,26 +69,32 @@ export class Utils {
         return loading;
     }
 
-    public storeItem(key: string, data: any) {
-        console.log("Entro");
+    public getStoreItem(key: string) {
         this.secureStorage.create('my_store_name')
             .then((storage) => {
-                storage.get('key')
+                storage.get(key)
                     .then((data) => {
-                        console.log(data)
+                        console.log(key + ": " + data)
                     })
                     .catch((error) => {
-                        console.log(error)
+                        console.log("error" + error)
                     });
-                /*
-                storage.set('key', 'value')
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+    public setStoreItem(key: string, data: any) {
+        this.secureStorage.create('my_store_name')
+            .then((storage) => {
+                storage.set(key, data)
                     .then((data) => {
-                        console.log(data)
+                        console.log("set: " + data)
                     })
                     .catch((error) => {
-                        console.log(error)
+                        console.log("error" + error)
                     });
-                    */
+
             })
             .catch((error) => {
                 console.log("2");

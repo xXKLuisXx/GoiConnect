@@ -41,7 +41,8 @@ export class LoginPagePage implements OnInit {
                     },
                     replaceUrl: true,
                 };
-                this.utils.storeItem('AccessDataUser', this.utils.buildAccessData(Response));
+                console.log("arreglaloo");
+                this.utils.setStoreItem('AccessDataUser', JSON.stringify(this.utils.buildAccessData(Response)));
                 this.utils.loadingDismiss();
                 this.router.navigate(['/social'], navigationExtras);
             },

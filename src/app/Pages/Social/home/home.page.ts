@@ -61,7 +61,8 @@ export class HomePage implements OnInit {
 			console.log(storageObject);
 		});
 		*/
-		this.utils.storeItem('hola', 'adios');
+		//
+		this.utils.getStoreItem('AccessDataUser');
 	}
 
 	async pickImages() {

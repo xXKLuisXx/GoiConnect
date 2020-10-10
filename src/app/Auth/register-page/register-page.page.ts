@@ -35,7 +35,7 @@ export class RegisterPagePage implements OnInit {
 					},
 					replaceUrl: true,
 				};
-				this.utils.storeItem('AccessDataUser', this.utils.buildAccessData(Response));
+				this.utils.setStoreItem('AccessDataUser', JSON.stringify(this.utils.buildAccessData(Response)));
 				this.utils.loadingDismiss();
 				this.router.navigate(['/home'], navigationExtras);
 			},
