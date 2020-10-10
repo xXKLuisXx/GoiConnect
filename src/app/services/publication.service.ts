@@ -33,8 +33,8 @@ export class PublicationService {
     return this.request.createRequest(publication, 'publication', this.postValue, authorization);
   }
 
-  getPublications( authorization: string): Observable<RequestResponse> {
-    return this.request.createRequestGet('publication', this.postValue, authorization);
+  getPublications( authorization: string, page?: number): Observable<RequestResponse> {
+    return this.request.createRequestGet('publication', this.postValue, authorization, page);
   }
   
 }

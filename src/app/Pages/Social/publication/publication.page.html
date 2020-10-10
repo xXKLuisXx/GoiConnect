@@ -5,7 +5,15 @@
 </ion-header>
 
 <ion-content>
-  <img src={{src}}/>
+
+  <div *ngIf="isVideo" width="320" height="240" controls class="videoPlayer">
+    <video controls preload="metadata">
+      <source [src]="getImgContent()" type="video/mp4">
+      </video>
+  </div>
+  <div *ngIf="!isVideo">
+    <img [src]="getImgContent()"/>
+  </div>
 
   <ion-item lines="full">
     <ion-icon name="text-outline" slot="start"></ion-icon>

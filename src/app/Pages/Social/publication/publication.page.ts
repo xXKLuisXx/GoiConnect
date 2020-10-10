@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 import { Publication } from 'src/app/services/publication';
 import { PublicationService } from 'src/app/services/publication.service';
 import { Utils } from 'src/app/Models/Classes/utils';
 import { AccessUserData } from 'src/app/Models/Classes/access-user-data';
-import { JsonPipe } from '@angular/common';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 
 @Component({
 	selector: 'app-publication',
@@ -20,28 +21,36 @@ export class PublicationPage implements OnInit {
 		multimedia: []
 	}
 	private utils: Utils;
+	private isVideo: boolean;
 	public src: string;
+	public videoExist: boolean = false;
 	private accessdata: AccessUserData;
-	//private accessdata: any;
-
-
+	
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
-		public publicationService: PublicationService
+		public publicationService: PublicationService,
+		private sanitizer: DomSanitizer
 	) { 
 		this.utils = new Utils();
 	}
 
 	ngOnInit() {
 		this.route.queryParams.subscribe(params => {
-			this.accessdata = new AccessUserData(JSON.parse(params['accessdata']).token_type, JSON.parse(params['accessdata']).expires_in, JSON.parse(params['accessdata']).access_token, JSON.parse(params['accessdata']).refresh_token);
+			this.accessdata = this.utils.buildAccessData(params);
+			console.log(this.accessdata);
 		});
-		console.log(this.accessdata);
-		this.publication = this.publicationService.publication;
-		this.src = this.publication.multimedia[0].base;
 
+		this.publication = this.publicationService.publication;
+		console.log(this.publication.multimedia);
+		this.src = this.publication.multimedia[0].base;
+		if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
+		else this.isVideo = true;
 	}
+
+	getImgContent():SafeUrl {
+        return this.sanitizer.bypassSecurityTrustUrl(this.src);
+    }
 
 	public  home() {
 		let navigationExtras: NavigationExtras = {
@@ -50,13 +59,12 @@ export class PublicationPage implements OnInit {
 			},
 			replaceUrl: true,
 		};
-		//console.log(this.accessdata);
-		this.router.navigate(['/social'], navigationExtras);
+		this.router.navigate(['social'],navigationExtras);
 	}
 
 	public async post() {
-		this.home();
 		await this.utils.loadingPresent();
+		console.log(this.publication);
 		this.publicationService.post(this.publication, this.accessdata.getAuthorization()).subscribe(
 			async (Response: (any)) => {
 				this.publication={
@@ -65,6 +73,14 @@ export class PublicationPage implements OnInit {
 					monetized:false,
 					multimedia: []
 				}
+
+				this.publicationService.publication = {
+					title: "",
+					description: "",
+					monetized:false,
+					multimedia: []
+				}
+
 				this.utils.loadingDismiss();
 				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
 				this.home();

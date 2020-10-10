@@ -34,10 +34,9 @@ export class LoginPagePage implements OnInit {
         await this.utils.loadingPresent();
         this.authService.login(this.UserData).subscribe(
             (Response: (any)) => {
-                //console.log(Response);
                 let navigationExtras: NavigationExtras = {
                     queryParams: {
-                        accessdata: JSON.stringify(this.utils.buildAccessData(Response))
+                        accessdata: JSON.stringify(Response)//this.utils.buildAccessData(this.response))
                     },
                     replaceUrl: true,
                 };
@@ -53,6 +52,7 @@ export class LoginPagePage implements OnInit {
             () => {
                 this.utils.loadingDismiss();
                 console.log("Terminó")
+                
             }
         );
     }
