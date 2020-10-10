@@ -40,7 +40,7 @@ export class PublicationPage implements OnInit {
 			this.accessdata = this.utils.buildAccessData(params);
 			console.log(this.accessdata);
 		});
-
+		console.log("asdads");
 		this.publication = this.publicationService.publication;
 		console.log(this.publication.multimedia);
 		this.src = this.publication.multimedia[0].base;
