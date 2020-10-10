@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { PublicationService } from '../../../services/publication.service';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Component({
   selector: 'app-profile',
@@ -14,43 +13,31 @@ export class ProfilePage implements OnInit {
   //private authResponse : AuthResponse;
   private token: string;
 
-  constructor(private camera: Camera,
-              public publicationService: PublicationService,       
-              private nativeStorage : NativeStorage,) { 
-                
-              }
+  constructor(
+    private camera: Camera,
+    public publicationService: PublicationService,) {
+
+  }
 
   ngOnInit() {
 
   }
 
-  /*
-  private async getAccessDataUser(){
-    await this.nativeStorage.getItem('AccessDataUser').then(
-      data => {
-        this.authResponse.response.accessUserData = data;
-        this.token = 'Bearer ' + this.authResponse.response.accessUserData.access_token;
-      },
-      error => console.error(error)
-    );
-  }
-  */
-
-  public getPublications(){
+  public getPublications() {
     this.publicationService.getPublications(this.token).subscribe(
-      async ( Response: (any) ) => {
+      async (Response: (any)) => {
         console.log(Response);
-       },
-      ( Errors: (any) ) => {
-        console.log( Errors );
+      },
+      (Errors: (any)) => {
+        console.log(Errors);
       },
       () => {
-        //this.presentAlert('Termino');
+        
       }
     );
   }
 
-  takePhoto(){
+  takePhoto() {
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -60,11 +47,11 @@ export class ProfilePage implements OnInit {
     };
 
     this.camera.getPicture(options).then((imageData) => {
-     // imageData is either a base64 encoded string or a file URI
-     // If it's base64 (DATA_URL):
-     this.myphoto = 'data:image/jpeg;base64,' + imageData;
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      this.myphoto = 'data:image/jpeg;base64,' + imageData;
     }, (err) => {
-     // Handle error
+      // Handle error
     });
   }
 }

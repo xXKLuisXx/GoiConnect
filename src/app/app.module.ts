@@ -16,9 +16,11 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { SuperTabsModule} from '@ionic-super-tabs/angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { CartModalPageModule } from './Pages/Social/cart-modal/cart-modal.module';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { CommonModule } from '@angular/common';
+import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
+import { Utils } from './Models/Classes/utils';
 
 
 @NgModule({
@@ -36,6 +38,9 @@ import { CommonModule } from '@angular/common';
     SuperTabsModule.forRoot()
   ],
   providers: [
+    Utils,
+    SecureStorage,
+    NativeStorage,
     StatusBar,
     SplashScreen,
     NativeStorage,

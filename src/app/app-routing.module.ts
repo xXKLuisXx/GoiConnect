@@ -26,6 +26,7 @@ const routes: Routes = [
 			{
 				path: '',
 				loadChildren: () => import('./Principal/Profesional/profesional-home/profesional-home.module').then(m => m.ProfesionalHomePageModule)
+				//canActivate:[ProtectGuard],
 			},
 			{
 				path: 'profesional-home',
@@ -58,7 +59,7 @@ const routes: Routes = [
 				loadChildren: () => import('./Principal/Social/social-home/social-home.module').then(m => m.SocialHomePageModule),
 			},
 			{
-				path: 'social-home',
+				path: '',
 				loadChildren: () => import('./Pages/Social/home/home.module').then(m => m.HomePageModule),
 			},
 			{

@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-//import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { ActionSheetController, LoadingController } from '@ionic/angular';
+import { ActionSheetController, } from '@ionic/angular';
 import { PublicationService } from '../../../services/publication.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Multimedia, Publication } from '../../../services/publication';
-import { AlertController } from '@ionic/angular';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Utils } from 'src/app/Models/Classes/utils';
-import { HttpErrorResponse } from '@angular/common/http';
+import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 
 
 @Component({
@@ -25,9 +23,9 @@ export class HomePage implements OnInit {
 		multimedia: []
 	}
 	public heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado'];
-	public numHeroes:number = this.heroes.length;
+	public numHeroes: number = this.heroes.length;
 
-	public publications:any = [];
+	public publications: any = [];
 
 	public multis: Multimedia;
 	private accesData: any;
@@ -44,21 +42,28 @@ export class HomePage implements OnInit {
 		private camera: Camera,
 		public actionSheetController: ActionSheetController,
 		public publicationService: PublicationService,
-		public alertController: AlertController,
 		private imagePicker: ImagePicker,
 		private router: Router,
 		private route: ActivatedRoute,
-		public loadingController: LoadingController
-	) { }
+		private utils: Utils,
+		public _storageConnection: SecureStorage,
+	) {
+
+	}
 
 	ngOnInit() {
 		this.route.queryParams.subscribe(params => {
 			this.accesData = params;
 		});
-
+		/*
 		//this.getPublications();
+		this._storageConnection.create('MyStorage').then((storageObject : SecureStorageObject) => { 
+			console.log(storageObject);
+		});
+		*/
+		this.utils.storeItem('hola', 'adios');
 	}
-	
+
 	async pickImages() {
 		let navigationExtras: NavigationExtras = {
 			queryParams: {
@@ -79,10 +84,9 @@ export class HomePage implements OnInit {
 				this.publication.multimedia.push({ base: 'data:image/' + 'jpg' + ';base64,' + images[i], ext: 'jpg' });
 			}
 			this.publicationService.publication = this.publication;
-			if(this.publication.multimedia.length != 0){
+			if (this.publication.multimedia.length != 0) {
 				this.router.navigate(['/publication'], navigationExtras);
-			  }
-			//this.utils.loadingdismiss();
+			}
 		}, (err) => {
 			console.log(err);
 		});
@@ -96,41 +100,41 @@ export class HomePage implements OnInit {
 			replaceUrl: true,
 		};
 		const options: CameraOptions = {
-		  quality: 100,
-		  sourceType: sourceType,
-		  destinationType: this.camera.DestinationType.DATA_URL,
-		  encodingType: this.camera.EncodingType.JPEG,
-		  mediaType: this.camera.MediaType.PICTURE
+			quality: 100,
+			sourceType: sourceType,
+			destinationType: this.camera.DestinationType.DATA_URL,
+			encodingType: this.camera.EncodingType.JPEG,
+			mediaType: this.camera.MediaType.PICTURE
 		}
 		this.camera.getPicture(options).then((imageData) => {
-		  this.publication.multimedia.push({ base: 'data:image/' + 'jpg' + ';base64,' + imageData, ext: 'jpg' });
-		  this.publicationService.publication = this.publication;
-		  if(this.publication.multimedia != null){
-			this.router.navigate(['/publication'], navigationExtras);
-		  }
-		  
+			this.publication.multimedia.push({ base: 'data:image/' + 'jpg' + ';base64,' + imageData, ext: 'jpg' });
+			this.publicationService.publication = this.publication;
+			if (this.publication.multimedia != null) {
+				this.router.navigate(['/publication'], navigationExtras);
+			}
+
 		}, (err) => {
-		  // Handle error 
+			// Handle error 
 		});
 	}
 
-	pickVideo(sourceType){
+	pickVideo(sourceType) {
 		const options: CameraOptions = {
 			mediaType: this.camera.MediaType.VIDEO,
 			sourceType: sourceType
-		  }
-		  this.camera.getPicture(options).then( async (videoUrl) => {
+		}
+		this.camera.getPicture(options).then(async (videoUrl) => {
 			if (videoUrl) {
-			  var filename = videoUrl.substr(videoUrl.lastIndexOf('/') + 1);
-			  var dirpath = videoUrl.substr(0, videoUrl.lastIndexOf('/') + 1);
-			  dirpath = dirpath.includes("file://") ? dirpath : "file://" + dirpath;
+				var filename = videoUrl.substr(videoUrl.lastIndexOf('/') + 1);
+				var dirpath = videoUrl.substr(0, videoUrl.lastIndexOf('/') + 1);
+				dirpath = dirpath.includes("file://") ? dirpath : "file://" + dirpath;
 
-			  console.log(filename, ' ', dirpath);  
+				console.log(filename, ' ', dirpath);
 			}
-		  },
-		  (err) => {
-			console.log(err);
-		  });
+		},
+			(err) => {
+				console.log(err);
+			});
 	}
 
 	async selectVideo() {
@@ -154,7 +158,7 @@ export class HomePage implements OnInit {
 			}
 			]
 		});
-		await actionSheet.present();	
+		await actionSheet.present();
 	}
 
 	async selectImage() {
@@ -206,7 +210,7 @@ export class HomePage implements OnInit {
 			}
 		);
 	}
-	
+
 	public async getPublications() {
 		this.publicationService.getPublications(JSON.parse(this.accesData['accessdata']).token_type + ' ' + JSON.parse(this.accesData['accessdata']).access_token).subscribe(
 			async (Response: (any)) => {
@@ -224,6 +228,6 @@ export class HomePage implements OnInit {
 	}
 
 
-	
+
 
 }

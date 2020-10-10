@@ -1,41 +1,40 @@
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { AccessUserData } from './access-user-data';
 import { RequestResponse } from './request-response';
 
 export class Utils {
-    private nativeStorage: NativeStorage;
+    private secureStorage: SecureStorage;
     private loadingController: LoadingController;
     private alertController: AlertController;
     private loading: HTMLIonLoadingElement;
     private alert: HTMLIonAlertElement;
     private requestResponse: RequestResponse;
     constructor() {
+        this.secureStorage = new SecureStorage();
         this.loadingController = new LoadingController();
         this.alertController = new AlertController();
         this.requestResponse = new RequestResponse();
-        this.nativeStorage = new NativeStorage();
     }
 
     public buildErrors(Errors: any): string {
         let ErrorsHTML = '';
         this.requestResponse.status = Errors.status;
         this.requestResponse.statusText = Errors.statusText;
-        if (this.requestResponse.status == 401){
+        if (this.requestResponse.status == 401) {
             ErrorsHTML = "Status: " + this.requestResponse.statusText;
         } else {
             if (Errors.error.error != null && Errors.error.error == "invalid_grant") {
                 this.requestResponse.errors.dbErrors = Errors.error;
             } else {
                 this.requestResponse.errors.formErrors = Errors.error;
-    
             }
             console.log(this.requestResponse);
-    
-            if(Object.keys(this.requestResponse.errors.dbErrors).length > 0){
+
+            if (Object.keys(this.requestResponse.errors.dbErrors).length > 0) {
                 ErrorsHTML += '<li> User or Password wrong </li>';
-            }else {
-                if(Object.keys(this.requestResponse.errors.formErrors).length > 0 ){
+            } else {
+                if (Object.keys(this.requestResponse.errors.formErrors).length > 0) {
                     Object.keys(this.requestResponse.errors.formErrors).forEach(key => {
                         ErrorsHTML += key + ' <br>';
                         ErrorsHTML += '<ul> ';
@@ -43,7 +42,6 @@ export class Utils {
                             ErrorsHTML += '<li> ' + element + '</li>';
                         });
                         ErrorsHTML += ' </ul>';
-                        //console.log()
                     });
                 }
             }
@@ -55,12 +53,11 @@ export class Utils {
         let accessUserData = new AccessUserData();
         Object.keys(Response).forEach(keyR => {
             Object.keys(accessUserData).forEach(keyAD => {
-                if(keyR == keyAD){
+                if (keyR == keyAD) {
                     accessUserData[keyAD] = Response[keyR];
                 }
             })
         });
-        //console.log(accessUserData);
         return accessUserData;
     }
 
@@ -72,14 +69,79 @@ export class Utils {
         return loading;
     }
 
-    public async storeItem(key: string, data: any) {
-        await this.nativeStorage.setItem(key, data).then((Result) => {
-            console.log(Result);
-        }).catch((Error) => {
-            console.log(Error)
-        });
+    public storeItem(key: string, data: any) {
+        console.log("Entro");
+        this.secureStorage.create('my_store_name')
+            .then((storage) => {
+                storage.get('key')
+                    .then((data) => {
+                        console.log(data)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
+                /*
+                storage.set('key', 'value')
+                    .then((data) => {
+                        console.log(data)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
+                    */
+            })
+            .catch((error) => {
+                console.log("2");
+                console.log(error);
+            });
+        /*
+        
+        */
+        /*
+            .then((storage: SecureStorageObject) => {
+                console.log("entras");
+                storage.keys();
+                
+                storage.get('key')
+                    .then(
+                        data => console.log(data),
+                        error => console.log(error)
+                    );
+
+                storage.set('key', 'value')
+                    .then(
+                        data => console.log(data),
+                        error => console.log(error)
+                    );
+
+                storage.remove('key')
+                    .then(
+                        data => console.log(data),
+                        error => console.log(error)
+                    );
+                    
+            });
+            */
     }
 
+    public async GuardadoSeguro(key: string, data_in: any) {
+        console.log("entra");
+        return new Promise((resolve, reject) => {
+            this.secureStorage.create('prueba').then((storage: SecureStorageObject) => {
+                console.log("entra");
+                storage.set(key, data_in).then(
+                    data => {
+                        console.log(data)
+                        resolve(data);
+                    },
+                    error => {
+                        console.log(error)
+                        reject(error);
+                    }
+                )
+            })
+        });
+    }
     public async createAlert(header: string, messageAlert: string, text: string): Promise<HTMLIonAlertElement> {
         let alert = await this.alertController.create({
             header: header,
