@@ -3,6 +3,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/Auth/auth.service';
 import { User } from 'src/app/Models/Classes/user';
 import { Utils } from 'src/app/Models/Classes/utils';
+import { stringify } from 'querystring';
 
 
 @Component({
@@ -13,7 +14,8 @@ import { Utils } from 'src/app/Models/Classes/utils';
 export class LoginPagePage implements OnInit {
     private UserData: User;
     private utils: Utils;
-    public numeros = [1,2,3,4,7,8];
+    
+    
     constructor(
         private router: Router,
         private authService: AuthService,
@@ -23,7 +25,7 @@ export class LoginPagePage implements OnInit {
     }
 
     async ngOnInit() {
-        console.log("dfsdfaf");
+
     }
 
     async ionViewDidEnter(){
@@ -34,7 +36,8 @@ export class LoginPagePage implements OnInit {
         await this.utils.loadingPresent();
         this.authService.login(this.UserData).subscribe(
             (Response: (any)) => {
-                this.utils.storeItem('AccessDataUser', this.utils.buildAccessData(Response));
+                console.log('login');
+                this.utils.storeItem('AccessDataUser', JSON.stringify( this.utils.buildAccessData(Response)));
                 this.utils.loadingDismiss();
                 this.router.navigate(['/social']);
             },

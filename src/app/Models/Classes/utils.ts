@@ -87,8 +87,10 @@ export class Utils {
     }
 
     public storeItem(key: string, data: any) {
+        console.log('aqui');
         this.secureStorage.create('private_storage')
             .then((storage) => {
+                console.log('aqui1');
                 storage.set(key, data)
                     .then((data) => {
                         console.log("set: " + data)
