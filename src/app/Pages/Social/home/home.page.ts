@@ -7,6 +7,8 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Utils } from 'src/app/Models/Classes/utils';
 import { AccessUserData } from 'src/app/Models/Classes/access-user-data';
 import { Router } from '@angular/router';
+import { CaptureError, CaptureImageOptions, MediaCapture, MediaFile } from '@ionic-native/media-capture/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
 
 @Component({
 	selector: 'app-home',
@@ -49,8 +51,8 @@ export class HomePage implements OnInit {
 		public publicationService: PublicationService,
 		private imagePicker: ImagePicker,
 		private router: Router,
-		//private mediaCapture: MediaCapture,
-		//private base64: Base64
+		private mediaCapture: MediaCapture,
+		private base64: Base64
 	) {
 
 	}
@@ -58,7 +60,7 @@ export class HomePage implements OnInit {
 	ngOnInit() {
 		// aqui toca el get item
 	}
-	/*
+
 	public async takeVideo() {
 		let options: CaptureImageOptions = { limit: 1 }
 		await this.mediaCapture.captureVideo(options).then(async (data: MediaFile[]) => {
@@ -277,6 +279,4 @@ export class HomePage implements OnInit {
 			return false;
 		});
 	}
-	*/
-
 }

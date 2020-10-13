@@ -8,6 +8,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Platform } from '@ionic/angular';
 import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
 //import { Base64 } from '@ionic-native/base64/ngx';
 
 
@@ -38,7 +39,7 @@ export class PublicationPage implements OnInit {
 		private platform: Platform,
 		public actionSheetController: ActionSheetController,
 		private imagePicker: ImagePicker,
-		//private base64: Base64
+		private base64: Base64
 	) { 
 		this.utils = new Utils();
 	}
@@ -57,8 +58,6 @@ export class PublicationPage implements OnInit {
 			this.router.navigate(['social']);
 		});
 	}
-
-	/*
 	getImgContent():SafeUrl {
         return this.sanitizer.bypassSecurityTrustUrl(this.src);
     }
@@ -167,5 +166,4 @@ export class PublicationPage implements OnInit {
 			console.log(err);
 		});
 	}
-	*/
 }

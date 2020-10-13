@@ -18,8 +18,8 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Camera} from '@ionic-native/camera/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { CommonModule } from '@angular/common';
-import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 import { Utils } from './Models/Classes/utils';
+import { SecureStorage } from '@ionic-native/secure-storage/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { MediaCapture } from '@ionic-native/media-capture/ngx';
 
@@ -46,8 +46,8 @@ import { MediaCapture } from '@ionic-native/media-capture/ngx';
     NativeStorage,
     Camera,
     ImagePicker,
-    //Base64,
-    //MediaCapture,
+    Base64,
+    MediaCapture,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
