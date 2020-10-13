@@ -35,11 +35,13 @@ export class SocialHomePage implements OnInit {
 	}
 
 	ngOnInit() {
-		this.route.queryParams.subscribe(params => {
-			this.accessdata = this.utils.buildAccessData(params);
-			console.log('ad');
-			console.log(this.accessdata);
-		});
+		/*this.route.queryParams.subscribe(params => {
+			//this.accessdata = this.utils.buildAccessData(params);
+			//console.log('ad');
+			//console.log(this.accessdata);
+		});*/
+
+		//console.log(this.utils.getItem());
 	}
 
 	OnTabChange(ev: CustomEvent<SuperTabChangeEventDetail>) {

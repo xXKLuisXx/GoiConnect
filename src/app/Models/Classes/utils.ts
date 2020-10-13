@@ -50,7 +50,8 @@ export class Utils {
     }
 
     public buildAccessData(Response: any): AccessUserData {
-        let accessdata = JSON.parse(Response['accessdata'])
+        console.log(Response);
+        let accessdata = Response;
         let accessUserData = new AccessUserData();
         Object.keys(accessdata).forEach(keyR => {
             Object.keys(accessUserData).forEach(keyAD => {
@@ -87,10 +88,8 @@ export class Utils {
     }
 
     public storeItem(key: string, data: any) {
-        console.log('aqui');
         this.secureStorage.create('private_storage')
             .then((storage) => {
-                console.log('aqui1');
                 storage.set(key, data)
                     .then((data) => {
                         console.log("set: " + data)
