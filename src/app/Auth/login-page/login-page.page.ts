@@ -34,16 +34,9 @@ export class LoginPagePage implements OnInit {
         await this.utils.loadingPresent();
         this.authService.login(this.UserData).subscribe(
             (Response: (any)) => {
-                //console.log(Response);
-                let navigationExtras: NavigationExtras = {
-                    queryParams: {
-                        accessdata: JSON.stringify(this.utils.buildAccessData(Response))
-                    },
-                    replaceUrl: true,
-                };
                 this.utils.storeItem('AccessDataUser', this.utils.buildAccessData(Response));
                 this.utils.loadingDismiss();
-                this.router.navigate(['/social'], navigationExtras);
+                this.router.navigate(['/social']);
             },
             (Errors: (any)) => {
                 this.utils.loadingDismiss();

@@ -69,9 +69,8 @@ export class Utils {
         return loading;
     }
 
-    public storeItem(key: string, data: any) {
-        console.log("Entro");
-        this.secureStorage.create('my_store_name')
+    public getItem(key: string){
+        this.secureStorage.create('private_storage')
             .then((storage) => {
                 storage.get('key')
                     .then((data) => {
@@ -80,68 +79,28 @@ export class Utils {
                     .catch((error) => {
                         console.log(error)
                     });
-                /*
-                storage.set('key', 'value')
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    public storeItem(key: string, data: any) {
+        this.secureStorage.create('private_storage')
+            .then((storage) => {
+                storage.set(key, data)
                     .then((data) => {
                         console.log(data)
                     })
                     .catch((error) => {
                         console.log(error)
                     });
-                    */
             })
             .catch((error) => {
-                console.log("2");
                 console.log(error);
             });
-        /*
-        
-        */
-        /*
-            .then((storage: SecureStorageObject) => {
-                console.log("entras");
-                storage.keys();
-                
-                storage.get('key')
-                    .then(
-                        data => console.log(data),
-                        error => console.log(error)
-                    );
-
-                storage.set('key', 'value')
-                    .then(
-                        data => console.log(data),
-                        error => console.log(error)
-                    );
-
-                storage.remove('key')
-                    .then(
-                        data => console.log(data),
-                        error => console.log(error)
-                    );
-                    
-            });
-            */
     }
 
-    public async GuardadoSeguro(key: string, data_in: any) {
-        console.log("entra");
-        return new Promise((resolve, reject) => {
-            this.secureStorage.create('prueba').then((storage: SecureStorageObject) => {
-                console.log("entra");
-                storage.set(key, data_in).then(
-                    data => {
-                        console.log(data)
-                        resolve(data);
-                    },
-                    error => {
-                        console.log(error)
-                        reject(error);
-                    }
-                )
-            })
-        });
-    }
     public async createAlert(header: string, messageAlert: string, text: string): Promise<HTMLIonAlertElement> {
         let alert = await this.alertController.create({
             header: header,

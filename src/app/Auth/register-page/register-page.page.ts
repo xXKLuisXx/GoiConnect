@@ -29,15 +29,9 @@ export class RegisterPagePage implements OnInit {
 		await this.utils.loadingPresent();
 		this.authService.register(this.UserData).subscribe(
 			(Response: (any)) => {
-				let navigationExtras: NavigationExtras = {
-					queryParams: {
-						accessdata: JSON.stringify(this.utils.buildAccessData(Response))
-					},
-					replaceUrl: true,
-				};
 				this.utils.storeItem('AccessDataUser', this.utils.buildAccessData(Response));
 				this.utils.loadingDismiss();
-				this.router.navigate(['/home'], navigationExtras);
+				this.router.navigate(['/home']);
 			},
 			(Errors: (any)) => {
 				this.utils.loadingDismiss();

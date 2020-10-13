@@ -44,34 +44,15 @@ export class HomePage implements OnInit {
 		public publicationService: PublicationService,
 		private imagePicker: ImagePicker,
 		private router: Router,
-		private route: ActivatedRoute,
-		private utils: Utils,
 		public _storageConnection: SecureStorage,
 	) {
 
 	}
 
 	ngOnInit() {
-		this.route.queryParams.subscribe(params => {
-			this.accesData = params;
-		});
-		/*
-		//this.getPublications();
-		this._storageConnection.create('MyStorage').then((storageObject : SecureStorageObject) => { 
-			console.log(storageObject);
-		});
-		*/
-		this.utils.storeItem('hola', 'adios');
 	}
 
 	async pickImages() {
-		let navigationExtras: NavigationExtras = {
-			queryParams: {
-				accessdata: this.accesData['accessdata'],
-			},
-			replaceUrl: true,
-		};
-
 		const options = {
 			maximumImagesCount: 5,
 			quality: 100,
@@ -85,7 +66,7 @@ export class HomePage implements OnInit {
 			}
 			this.publicationService.publication = this.publication;
 			if (this.publication.multimedia.length != 0) {
-				this.router.navigate(['/publication'], navigationExtras);
+				this.router.navigate(['/publication']);
 			}
 		}, (err) => {
 			console.log(err);
@@ -114,7 +95,6 @@ export class HomePage implements OnInit {
 			}
 
 		}, (err) => {
-			// Handle error 
 		});
 	}
 
