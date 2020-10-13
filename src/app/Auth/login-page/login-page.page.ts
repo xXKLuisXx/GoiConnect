@@ -45,6 +45,7 @@ export class LoginPagePage implements OnInit {
             () => {
                 this.utils.loadingDismiss();
                 console.log("Terminó")
+                
             }
         );
     }

@@ -63,7 +63,7 @@ const routes: Routes = [
 				loadChildren: () => import('./Pages/Social/home/home.module').then(m => m.HomePageModule),
 			},
 			{
-				path: 'social-market',
+				path: '',
 				loadChildren: () => import('./Pages/Social/market/market.module').then(m => m.MarketPageModule)
 			},
 			{

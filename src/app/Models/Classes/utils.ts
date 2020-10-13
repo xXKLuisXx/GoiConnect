@@ -50,8 +50,9 @@ export class Utils {
     }
 
     public buildAccessData(Response: any): AccessUserData {
+        let accessdata = JSON.parse(Response['accessdata'])
         let accessUserData = new AccessUserData();
-        Object.keys(Response).forEach(keyR => {
+        Object.keys(accessdata).forEach(keyR => {
             Object.keys(accessUserData).forEach(keyAD => {
                 if (keyR == keyAD) {
                     accessUserData[keyAD] = Response[keyR];
@@ -72,12 +73,12 @@ export class Utils {
     public getItem(key: string){
         this.secureStorage.create('private_storage')
             .then((storage) => {
-                storage.get('key')
+                storage.get(key)
                     .then((data) => {
-                        console.log(data)
+                        console.log(key + ": " + data)
                     })
                     .catch((error) => {
-                        console.log(error)
+                        console.log("error" + error)
                     });
             })
             .catch((error) => {
@@ -90,10 +91,10 @@ export class Utils {
             .then((storage) => {
                 storage.set(key, data)
                     .then((data) => {
-                        console.log(data)
+                        console.log("set: " + data)
                     })
                     .catch((error) => {
-                        console.log(error)
+                        console.log("error" + error)
                     });
             })
             .catch((error) => {

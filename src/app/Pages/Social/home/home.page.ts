@@ -8,13 +8,14 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Utils } from 'src/app/Models/Classes/utils';
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 
-
 @Component({
 	selector: 'app-home',
 	templateUrl: './home.page.html',
 	styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+
+	@ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
 	public publication: Publication = {
 		title: "",
@@ -28,7 +29,11 @@ export class HomePage implements OnInit {
 	public publications: any = [];
 
 	public multis: Multimedia;
-	private accesData: any;
+	private accesData: AccessUserData;
+	public selectedVideo: string;
+	private utils: Utils;
+	private page = 1;
+	private total = 0;
 
 	croppedImagepath = "";
 	isLoading = false;
@@ -37,6 +42,8 @@ export class HomePage implements OnInit {
 		maximumImagesCount: 1,
 		quality: 50
 	};
+
+	videoFileUpload: FileTransferObject;
 
 	constructor(
 		private camera: Camera,
@@ -56,7 +63,7 @@ export class HomePage implements OnInit {
 		const options = {
 			maximumImagesCount: 5,
 			quality: 100,
-			outputType: 1
+			outputType: 0
 		};
 
 		this.imagePicker.getPictures(options).then((images) => {
@@ -76,7 +83,7 @@ export class HomePage implements OnInit {
 	async pickImage(sourceType) {
 		let navigationExtras: NavigationExtras = {
 			queryParams: {
-				accessdata: this.accesData['accessdata'],
+				accessdata: JSON.stringify(this.accesData),
 			},
 			replaceUrl: true,
 		};
@@ -129,10 +136,13 @@ export class HomePage implements OnInit {
 			{
 				text: 'Use Camera',
 				handler: () => {
-					this.pickVideo(this.camera.PictureSourceType.CAMERA);
+					//this.pickVideo(this.camera.PictureSourceType.CAMERA);
+					this.takeVideo();
 				}
 			},
+			
 			{
+
 				text: 'Cancel',
 				role: 'cancel'
 			}
@@ -166,7 +176,7 @@ export class HomePage implements OnInit {
 	}
 
 	public post() {
-		this.publicationService.post(this.publication, JSON.parse(this.accesData['accessdata']).token_type + ' ' + JSON.parse(this.accesData['accessdata']).access_token).subscribe(
+		this.publicationService.post(this.publication, this.accesData.getAuthorization()).subscribe(
 			async (Response: (any)) => {
 
 				this.publication = {
@@ -176,9 +186,10 @@ export class HomePage implements OnInit {
 					multimedia: []
 				}
 
-				//this.utils.loadingDismiss();
+				this.utils.loadingDismiss();
+				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
 				//this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
-				console.log(Response);
+				//console.log(Response);
 			},
 			(Errors: (any)) => {
 				//this.utils.loadingDismiss();
@@ -198,6 +209,13 @@ export class HomePage implements OnInit {
 				//this.publications = Response;
 				//console.log(this.publications[0].title);
 
+	public  getPublications() {
+		 this.publicationService.getPublications(this.accesData.getAuthorization(), this.page).subscribe(
+			 (Response: (any)) => {
+				this.publications = Response.data;
+				console.log(Response);
+				let nextPage = Response.next_page_url.split('=');
+				this.page = nextPage[1];
 			},
 			(Errors: (any)) => {
 				console.log(Errors);
@@ -207,6 +225,11 @@ export class HomePage implements OnInit {
 		);
 	}
 
+	public isVideo(publication){
+		let extension = publication.substr(13);
+		if(extension == 'mp4') return true;
+		else return false;
+	}
 
 
 
