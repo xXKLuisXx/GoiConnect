@@ -112,7 +112,7 @@ export class HomePage implements OnInit {
 	}
 
 	scrollToTop() {
-		this.content.scrollToTop();
+		//this.content.scrollToTop();
 	  }
 
 	toggleInfiniteScroll() {
