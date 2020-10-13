@@ -40,9 +40,12 @@ export class SocialHomePage implements OnInit {
 			//console.log('ad');
 			//console.log(this.accessdata);
 		});*/
-
-		//console.log(this.utils.getItem());
+		console.log('onInit');
+		
+		//this.utils.getItem('AccessDataUser')
+		
 	}
+
 
 	OnTabChange(ev: CustomEvent<SuperTabChangeEventDetail>) {
 		switch (ev.detail.index) {

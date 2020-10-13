@@ -30,6 +30,7 @@ export class PublicationPage implements OnInit {
 	public src: string;
 	public videoExist: boolean = false;
 	private accessdata: AccessUserData;
+	public typePublication = false;
 	
 	constructor(
 		private router: Router,

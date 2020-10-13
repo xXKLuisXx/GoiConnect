@@ -10,6 +10,7 @@ export class Utils {
     private loading: HTMLIonLoadingElement;
     private alert: HTMLIonAlertElement;
     private requestResponse: RequestResponse;
+    public stor: any;
     constructor() {
         this.secureStorage = new SecureStorage();
         this.loadingController = new LoadingController();
@@ -71,12 +72,12 @@ export class Utils {
         return loading;
     }
 
-    public getItem(key: string){
-        this.secureStorage.create('private_storage')
+   public async getItem(key: string){   
+        return await this.secureStorage.create('private_storage')
             .then((storage) => {
-                storage.get(key)
+                 storage.get(key)
                     .then((data) => {
-                        console.log(key + ": " + data)
+                        console.log((key +':'+ data));
                     })
                     .catch((error) => {
                         console.log("error" + error)
@@ -84,7 +85,11 @@ export class Utils {
             })
             .catch((error) => {
                 console.log(error);
-            });
+            });      
+    }
+
+    public async accessDataUser(){
+        
     }
 
     public storeItem(key: string, data: any) {
