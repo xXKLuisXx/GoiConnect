@@ -80,6 +80,12 @@
 
 	</ion-card>
 
+	<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+		<ion-fab-button>
+		  <ion-icon name="arrow-up-circle"></ion-icon>
+		</ion-fab-button>
+	  </ion-fab>
+
 	<ion-infinite-scroll threshold="20px" (ionInfinite)="loadData($event)">
 		<ion-infinite-scroll-content
 		  loadingSpinner="crescent"
