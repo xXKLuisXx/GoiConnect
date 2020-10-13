@@ -8,6 +8,8 @@ import { ChatPage } from 'src/app/Pages/Social/chat/chat.page';
 import { ProfilePage } from 'src/app/Pages/Social/profile/profile.page';
 import { SuperTabChangeEventDetail } from '@ionic-super-tabs/core';
 import { ActivatedRoute } from '@angular/router';
+import { AccessUserData } from 'src/app/Models/Classes/access-user-data';
+import { Utils } from 'src/app/Models/Classes/utils';
 
 
 @Component({
@@ -24,12 +26,19 @@ export class SocialHomePage implements OnInit {
 	menuAppsPage = MenuAppsPage;
 
 	
-	public accessdata: Object;
+	//public accessdata: Object;
+	public accessdata: AccessUserData;
+	private utils: Utils;
 
-	constructor(private router: ActivatedRoute) { }
+	constructor(private route: ActivatedRoute) { 
+		this.utils = new Utils();
+	}
 
 	ngOnInit() {
-		this.router.queryParams.subscribe(params => {
+		this.route.queryParams.subscribe(params => {
+			this.accessdata = this.utils.buildAccessData(params);
+			console.log('ad');
+			console.log(this.accessdata);
 		});
 	}
 

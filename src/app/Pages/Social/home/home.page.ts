@@ -36,8 +36,9 @@ export class HomePage implements OnInit {
 	private accesData: AccessUserData;
 	public selectedVideo: string;
 	private utils: Utils;
-	private page = 1;
+	private nextPage = 1;
 	private total = 0;
+	private lastPage = 0;
 
 	croppedImagepath = "";
 	isLoading = false;
@@ -68,7 +69,6 @@ export class HomePage implements OnInit {
 	ngOnInit() {
 		this.route.queryParams.subscribe(params => {
 			this.accesData = this.utils.buildAccessData(params);
-			console.log(this.accesData);
 			this.getPublications();
 		});
 	}
@@ -83,7 +83,6 @@ export class HomePage implements OnInit {
 
 		let options: CaptureImageOptions = { limit: 1 }
 		await this.mediaCapture.captureVideo(options).then(async(data: MediaFile[]) => {
-			console.log(data[0].fullPath);
 			await this.base64.encodeFile(data[0].fullPath).then((base64File: string) => {
 				
 				this.publication.multimedia.push({ base: base64File, ext: 'mp4' });
@@ -103,8 +102,12 @@ export class HomePage implements OnInit {
 		setTimeout(() => {
 		console.log('Cargando siguientes...');
 		event.target.complete();
-		this.publications = this.getPublications();
-		}, 1000);
+		this.getPublications();
+
+		if(this.nextPage == this.lastPage){
+			event.target.disabled = true;
+		}
+		}, 500);
 	}
 
 	toggleInfiniteScroll() {
@@ -112,13 +115,6 @@ export class HomePage implements OnInit {
 	}
 
 	public pickImages() {
-
-		let navigationExtras: NavigationExtras = {
-			queryParams: {
-				accessdata: JSON.stringify(this.accesData),
-			},
-			replaceUrl: true,
-		};
 
 		const options = {
 			maximumImagesCount: 5,
@@ -141,7 +137,7 @@ export class HomePage implements OnInit {
 				this.publicationService.publication = this.publication;
 				console.log('Tamanio: ',this.publication.multimedia.length);
 				if (this.publication.multimedia.length != 0){
-					this.router.navigate(['social/social-publication'], navigationExtras);
+					this.router.navigate(['social/social-publication'], this.navigationExtra());
 				}
 			//}
 		}, (err) => {
@@ -192,8 +188,6 @@ export class HomePage implements OnInit {
 			await this.base64.encodeFile('file://' + videoUrl).then((base64File: string) => {
 				this.publication.multimedia.push({ base: base64File, ext: 'mp4' });
 				this.publicationService.publication = this.publication;
-				console.log('aqui');
-				console.log(base64File);
 
 				if (this.publication.multimedia != null) {
 					this.router.navigate(['social/social-publication'], navigationExtras);
@@ -207,7 +201,7 @@ export class HomePage implements OnInit {
 			});
 	}
 
-	async selectVideo() {
+	async menuVideo() {
 		const actionSheet = await this.actionSheetController.create({
 			header: "Select Video source",
 			buttons: [{
@@ -234,7 +228,7 @@ export class HomePage implements OnInit {
 		await actionSheet.present();
 	}
 
-	async selectImage() {
+	async menuImage() {
 		const actionSheet = await this.actionSheetController.create({
 			header: "Select Image source",
 			buttons: [{
@@ -285,13 +279,27 @@ export class HomePage implements OnInit {
 		);
 	}
 
-	public  getPublications() {
-		 this.publicationService.getPublications(this.accesData.getAuthorization(), this.page).subscribe(
+	public getPublications() {
+		  this.publicationService.getPublications(this.accesData.getAuthorization(), this.nextPage).subscribe(
 			 (Response: (any)) => {
-				this.publications = Response.data;
-				console.log(Response);
-				let nextPage = Response.next_page_url.split('=');
-				this.page = nextPage[1];
+
+				Response.data.forEach(element => {
+					console.log(element);
+					this.publications.push(element);
+				});
+
+
+				//this.publications = Response.data;
+				
+				if(Response.last_page != 1){
+					//let nextPage = Response.next_page_url.split('=');
+					this.nextPage = Response.current_page + 1;
+					this.lastPage = Response.last_page;
+				}
+				else{
+					this.nextPage = 1;
+					this.lastPage = Response.last_page;
+				}
 			},
 			(Errors: (any)) => {
 				console.log(Errors);
@@ -313,5 +321,16 @@ export class HomePage implements OnInit {
 			}, (err) => {
 				return false;
 			});
+	}
+
+	public navigationExtra(){
+		let navigationExtras: NavigationExtras = {
+			queryParams: {
+				accessdata: JSON.stringify(this.accesData),
+			},
+			replaceUrl: true,
+		};
+
+		return navigationExtras;
 	}
 }

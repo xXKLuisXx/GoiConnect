@@ -15,7 +15,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 import { SuperTabsModule} from '@ionic-super-tabs/angular';
 import { IonicStorageModule } from '@ionic/storage';
-import { CartModalPageModule } from './Pages/Social/cart-modal/cart-modal.module';
+//import { CartModalPageModule } from './Pages/Social/cart-modal/cart-modal.module';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { File } from '@ionic-native/file/ngx';
@@ -35,7 +35,7 @@ import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ion
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     FormsModule,
-    CartModalPageModule,
+    //CartModalPageModule,
     HttpClientModule,
     SuperTabsModule.forRoot()
   ],
