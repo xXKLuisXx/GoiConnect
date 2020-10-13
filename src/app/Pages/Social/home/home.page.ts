@@ -5,7 +5,6 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Multimedia, Publication } from '../../../services/publication';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Utils } from 'src/app/Models/Classes/utils';
-import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 import { AccessUserData } from 'src/app/Models/Classes/access-user-data';
 import { Router } from '@angular/router';
 
@@ -51,7 +50,8 @@ export class HomePage implements OnInit {
 		public publicationService: PublicationService,
 		private imagePicker: ImagePicker,
 		private router: Router,
-		public _storageConnection: SecureStorage,
+		//private mediaCapture: MediaCapture,
+		//private base64: Base64
 	) {
 
 	}
@@ -59,7 +59,7 @@ export class HomePage implements OnInit {
 	ngOnInit() {
 		// aqui toca el get item
 	}
-
+	/*
 	public async takeVideo() {
 		let options: CaptureImageOptions = { limit: 1 }
 		await this.mediaCapture.captureVideo(options).then(async (data: MediaFile[]) => {
@@ -103,7 +103,6 @@ export class HomePage implements OnInit {
 		};
 
 		this.imagePicker.getPictures(options).then(async (images) => {
-			console.log(images);
 			for (var i = 0; i < images.length; i++) {
 				const extensionImage = images[i].substr(images[i].lastIndexOf('.') + 1);
 				await this.base64.encodeFile(images[i]).then((base64File: string) => {
@@ -116,7 +115,7 @@ export class HomePage implements OnInit {
 			this.publicationService.publication = this.publication;
 			console.log('Tamanio: ', this.publication.multimedia.length);
 			if (this.publication.multimedia.length != 0) {
-				this.router.navigate(['social/social-publication'], this.navigationExtra());
+				this.router.navigate(['social/social-publication']);
 			}
 		}, (err) => {
 			console.log(err);
@@ -147,7 +146,8 @@ export class HomePage implements OnInit {
 			mediaType: this.camera.MediaType.VIDEO,
 			sourceType: sourceType
 		}
-		this.camera.getPicture(options).then(async (videoUrl) => {
+		this.camera.getPicture(options)
+		.then(async (videoUrl) => {
 			if (videoUrl) {
 				var dirpath = videoUrl.substr(0, videoUrl.lastIndexOf('/') + 1);
 				dirpath = dirpath.includes("file://") ? dirpath : "file://" + dirpath;
@@ -162,10 +162,11 @@ export class HomePage implements OnInit {
 				}, (err) => {
 					console.log(err);
 				});
-			},
-			(err) => {
+			}
+		})
+		.catch(err => {
 				console.log(err);
-			});
+		});
 	}
 
 	async menuVideo() {
@@ -279,5 +280,6 @@ export class HomePage implements OnInit {
 			return false;
 		});
 	}
+	*/
 
 }

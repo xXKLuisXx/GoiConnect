@@ -15,11 +15,8 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 import { SuperTabsModule} from '@ionic-super-tabs/angular';
 import { IonicStorageModule } from '@ionic/storage';
-//import { CartModalPageModule } from './Pages/Social/cart-modal/cart-modal.module';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Camera} from '@ionic-native/camera/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { File } from '@ionic-native/file/ngx';
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { CommonModule } from '@angular/common';
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 import { Utils } from './Models/Classes/utils';
@@ -35,7 +32,6 @@ import { Utils } from './Models/Classes/utils';
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     FormsModule,
-    //CartModalPageModule,
     HttpClientModule,
     SuperTabsModule.forRoot()
   ],
@@ -47,11 +43,9 @@ import { Utils } from './Models/Classes/utils';
     SplashScreen,
     NativeStorage,
     Camera,
-    File,
     ImagePicker,
-    FileTransfer,
-    Base64,
-    MediaCapture,
+    //Base64,
+    //MediaCapture,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

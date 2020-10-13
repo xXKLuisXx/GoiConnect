@@ -8,7 +8,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Platform } from '@ionic/angular';
 import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { Base64 } from '@ionic-native/base64/ngx';
+//import { Base64 } from '@ionic-native/base64/ngx';
 
 
 @Component({
@@ -38,7 +38,7 @@ export class PublicationPage implements OnInit {
 		private platform: Platform,
 		public actionSheetController: ActionSheetController,
 		private imagePicker: ImagePicker,
-		private base64: Base64
+		//private base64: Base64
 	) { 
 		this.utils = new Utils();
 	}
@@ -53,17 +53,12 @@ export class PublicationPage implements OnInit {
 		if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
 		else this.isVideo = true;
 
-		let navigationExtras: NavigationExtras = {
-			queryParams: {
-				accessdata: JSON.stringify(this.accessdata),
-			},
-			replaceUrl: true,
-		};
 		this.platform.backButton.subscribeWithPriority(10, () => {
-			this.router.navigate(['social'], navigationExtras);
-		  });
+			this.router.navigate(['social']);
+		});
 	}
 
+	/*
 	getImgContent():SafeUrl {
         return this.sanitizer.bypassSecurityTrustUrl(this.src);
     }
@@ -135,6 +130,7 @@ export class PublicationPage implements OnInit {
 		await actionSheet.present();
 	}
 
+	
 	public pickImages() {
 
 		let navigationExtras: NavigationExtras = {
@@ -171,5 +167,5 @@ export class PublicationPage implements OnInit {
 			console.log(err);
 		});
 	}
-
+	*/
 }
