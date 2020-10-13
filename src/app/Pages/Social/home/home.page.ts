@@ -13,6 +13,7 @@ import { FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture/ngx';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
 	selector: 'app-home',
@@ -22,6 +23,7 @@ import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ion
 export class HomePage implements OnInit {
 
 	@ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+	@ViewChild(Content) content: Content;
 
 	public publication: Publication = {
 		title: "",
@@ -108,6 +110,10 @@ export class HomePage implements OnInit {
 		}
 		}, 500);
 	}
+
+	scrollToTop() {
+		this.content.scrollToTop();
+	  }
 
 	toggleInfiniteScroll() {
 		this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
