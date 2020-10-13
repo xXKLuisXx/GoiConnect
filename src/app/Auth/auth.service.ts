@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from './user';
 import { AuthResponse } from './auth-response';
-import { RequestService } from '../services/request.service'
+import { RequestService } from '../services/request.service';
 
 @Injectable({
 	providedIn: 'root'

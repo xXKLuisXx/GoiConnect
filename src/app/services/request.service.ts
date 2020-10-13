@@ -12,9 +12,9 @@ export class RequestService {
 	private headers : HttpHeaders;
 
 	constructor(
-		public httpClient : HttpClient
-	) { 
-		this.AUTH_SERVER_ADDRESS = 'http://192.168.0.15:8000/api/';
+		public httpClient: HttpClient
+	) {
+		this.AUTH_SERVER_ADDRESS = 'http://192.168.100.100:8000/api/';
 		this.HEADERS = [['Content-Type', 'application/json'], ['Authorization', '']];
 		this.END_POINTS = ['login', 'register', 'publications'];
 		this.headers = new HttpHeaders();
@@ -47,7 +47,8 @@ export class RequestService {
 			});
 		}
 		
-		console.log( this.headers );
+		// tslint:disable-next-line: indent
+		console.log(this.headers);
 		return this.headers;
 	}
 
