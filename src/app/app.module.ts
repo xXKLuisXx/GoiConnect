@@ -20,6 +20,8 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { CommonModule } from '@angular/common';
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 import { Utils } from './Models/Classes/utils';
+import { Base64 } from '@ionic-native/base64/ngx';
+import { MediaCapture } from '@ionic-native/media-capture/ngx';
 
 
 @NgModule({

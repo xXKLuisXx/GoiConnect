@@ -28,7 +28,6 @@ export class HomePage implements OnInit {
 
 	public publications: any = [];
 
-	public multis: Multimedia;
 	private accesData: AccessUserData;
 	public selectedVideo: string;
 	private utils: Utils;
@@ -186,7 +185,6 @@ export class HomePage implements OnInit {
 			},
 
 			{
-
 				text: 'Cancel',
 				role: 'cancel'
 			}
@@ -229,7 +227,6 @@ export class HomePage implements OnInit {
 					monetized: false,
 					multimedia: []
 				}
-
 				this.utils.loadingDismiss();
 				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK');
 			},
