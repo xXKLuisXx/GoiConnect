@@ -16,13 +16,13 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { SuperTabsModule} from '@ionic-super-tabs/angular';
 import { IonicStorageModule } from '@ionic/storage';
 //import { CartModalPageModule } from './Pages/Social/cart-modal/cart-modal.module';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { CommonModule } from '@angular/common';
 import { Base64 } from '@ionic-native/base64/ngx';
-import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture/ngx';
+import { MediaCapture } from '@ionic-native/media-capture/ngx';
 
 
 @NgModule({

@@ -32,7 +32,6 @@ export class HomePage implements OnInit {
 
 	public publications: any = [];
 
-	public multis: Multimedia;
 	private accesData: AccessUserData;
 	public selectedVideo: string;
 	private utils: Utils;
@@ -213,13 +212,11 @@ export class HomePage implements OnInit {
 			{
 				text: 'Use Camera',
 				handler: () => {
-					//this.pickVideo(this.camera.PictureSourceType.CAMERA);
 					this.takeVideo();
 				}
 			},
 			
 			{
-
 				text: 'Cancel',
 				role: 'cancel'
 			}
@@ -262,19 +259,13 @@ export class HomePage implements OnInit {
 					monetized: false,
 					multimedia: []
 				}
-
 				this.utils.loadingDismiss();
 				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
-				//this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
-				//console.log(Response);
 			},
 			(Errors: (any)) => {
-				//this.utils.loadingDismiss();
 				console.log(Errors);
-				//this.utils.alertPresent('Errors', this.utils.buildErrors(Errors), 'OK');
 			},
 			() => {
-				//this.presentAlert('Termino');
 			}
 		);
 	}
@@ -288,11 +279,7 @@ export class HomePage implements OnInit {
 					this.publications.push(element);
 				});
 
-
-				//this.publications = Response.data;
-				
 				if(Response.last_page != 1){
-					//let nextPage = Response.next_page_url.split('=');
 					this.nextPage = Response.current_page + 1;
 					this.lastPage = Response.last_page;
 				}
