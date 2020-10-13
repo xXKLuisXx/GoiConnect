@@ -157,7 +157,8 @@ export class HomePage implements OnInit {
 			sourceType: sourceType,
 			destinationType: this.camera.DestinationType.DATA_URL,
 			encodingType: this.camera.EncodingType.JPEG,
-			mediaType: this.camera.MediaType.PICTURE
+			mediaType: this.camera.MediaType.PICTURE,
+			correctOrientation: true
 		}
 		this.camera.getPicture(options).then((imageData) => {
 			this.publication.multimedia.push({ base: 'data:image/*;charset=utf-8;base64,' + imageData, ext: 'jpeg' });
