@@ -32,8 +32,9 @@ export class HomePage implements OnInit {
 	private accesData: AccessUserData;
 	public selectedVideo: string;
 	private utils: Utils;
-	private page = 1;
+	private nextPage = 1;
 	private total = 0;
+	private lastPage = 0;
 
 	croppedImagepath = "";
 	isLoading = false;
@@ -57,24 +58,79 @@ export class HomePage implements OnInit {
 	}
 
 	ngOnInit() {
+		this.route.queryParams.subscribe(params => {
+			this.accesData = this.utils.buildAccessData(params);
+			this.getPublications();
+		});
 	}
 
-	async pickImages() {
+	public async  takeVideo(){
+		let navigationExtras: NavigationExtras = {
+			queryParams: {
+				accessdata: JSON.stringify(this.accesData),
+			},
+			replaceUrl: true,
+		};
+
+		let options: CaptureImageOptions = { limit: 1 }
+		await this.mediaCapture.captureVideo(options).then(async(data: MediaFile[]) => {
+			await this.base64.encodeFile(data[0].fullPath).then((base64File: string) => {
+				
+				this.publication.multimedia.push({ base: base64File, ext: 'mp4' });
+				this.publicationService.publication = this.publication
+				if (this.publication.multimedia != null) {
+					this.router.navigate(['social/social-publication'], navigationExtras);
+				}
+			}, (err) => {
+				console.log(err);
+			});	 
+			}, (err: CaptureError) => {
+				console.log(err);
+			}); 
+	}
+
+	loadData(event){
+		setTimeout(() => {
+		console.log('Cargando siguientes...');
+		event.target.complete();
+		this.getPublications();
+
+		if(this.nextPage == this.lastPage){
+			event.target.disabled = true;
+		}
+		}, 500);
+	}
+
+	toggleInfiniteScroll() {
+		this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+	}
+
+	public pickImages() {
+
 		const options = {
 			maximumImagesCount: 5,
 			quality: 100,
 			outputType: 0
 		};
 
-		this.imagePicker.getPictures(options).then((images) => {
-			for (var i = 0; i < images.length; i++) {
-				const extensionImage = images[i].substr(images[i].lastIndexOf('.') + 1);
-				this.publication.multimedia.push({ base: 'data:image/' + 'jpg' + ';base64,' + images[i], ext: 'jpg' });
-			}
-			this.publicationService.publication = this.publication;
-			if (this.publication.multimedia.length != 0) {
-				this.router.navigate(['/publication']);
-			}
+		this.imagePicker.getPictures(options).then(async(images) => {
+			console.log(images);
+			//if(images !='OK'){
+				for (var i = 0; i < images.length; i++) {
+					const extensionImage = images[i].substr(images[i].lastIndexOf('.') + 1); 
+					 await this.base64.encodeFile(images[i]).then((base64File: string) => {
+						 this.publication.multimedia.push({ base: base64File, ext: extensionImage  });			
+					}, (err) => {
+						console.log(err);
+					});
+				}
+
+				this.publicationService.publication = this.publication;
+				console.log('Tamanio: ',this.publication.multimedia.length);
+				if (this.publication.multimedia.length != 0){
+					this.router.navigate(['social/social-publication'], this.navigationExtra());
+				}
+			//}
 		}, (err) => {
 			console.log(err);
 		});
@@ -116,15 +172,23 @@ export class HomePage implements OnInit {
 				var dirpath = videoUrl.substr(0, videoUrl.lastIndexOf('/') + 1);
 				dirpath = dirpath.includes("file://") ? dirpath : "file://" + dirpath;
 
-				console.log(filename, ' ', dirpath);
-			}
+			await this.base64.encodeFile('file://' + videoUrl).then((base64File: string) => {
+				this.publication.multimedia.push({ base: base64File, ext: 'mp4' });
+				this.publicationService.publication = this.publication;
+
+				if (this.publication.multimedia != null) {
+					this.router.navigate(['social/social-publication'], navigationExtras);
+				}
+			}, (err) => {
+				console.log(err);
+			});
 		},
 			(err) => {
 				console.log(err);
 			});
 	}
 
-	async selectVideo() {
+	async menuVideo() {
 		const actionSheet = await this.actionSheetController.create({
 			header: "Select Video source",
 			buttons: [{
@@ -151,7 +215,7 @@ export class HomePage implements OnInit {
 		await actionSheet.present();
 	}
 
-	async selectImage() {
+	async menuImage() {
 		const actionSheet = await this.actionSheetController.create({
 			header: "Select Image source",
 			buttons: [{
@@ -202,20 +266,27 @@ export class HomePage implements OnInit {
 		);
 	}
 
-	public async getPublications() {
-		this.publicationService.getPublications(JSON.parse(this.accesData['accessdata']).token_type + ' ' + JSON.parse(this.accesData['accessdata']).access_token).subscribe(
-			async (Response: (any)) => {
-				//console.log(Response);
-				//this.publications = Response;
-				//console.log(this.publications[0].title);
-
-	public  getPublications() {
-		 this.publicationService.getPublications(this.accesData.getAuthorization(), this.page).subscribe(
+	public getPublications() {
+		  this.publicationService.getPublications(this.accesData.getAuthorization(), this.nextPage).subscribe(
 			 (Response: (any)) => {
-				this.publications = Response.data;
-				console.log(Response);
-				let nextPage = Response.next_page_url.split('=');
-				this.page = nextPage[1];
+
+				Response.data.forEach(element => {
+					console.log(element);
+					this.publications.push(element);
+				});
+
+
+				//this.publications = Response.data;
+				
+				if(Response.last_page != 1){
+					//let nextPage = Response.next_page_url.split('=');
+					this.nextPage = Response.current_page + 1;
+					this.lastPage = Response.last_page;
+				}
+				else{
+					this.nextPage = 1;
+					this.lastPage = Response.last_page;
+				}
 			},
 			(Errors: (any)) => {
 				console.log(Errors);
@@ -231,6 +302,22 @@ export class HomePage implements OnInit {
 		else return false;
 	}
 
+	public async convertToBase64(path){
+		  return await this.base64.encodeFile(path).then((base64File: string) => {
+				return base64File;
+			}, (err) => {
+				return false;
+			});
+	}
 
+	public navigationExtra(){
+		let navigationExtras: NavigationExtras = {
+			queryParams: {
+				accessdata: JSON.stringify(this.accesData),
+			},
+			replaceUrl: true,
+		};
 
+		return navigationExtras;
+	}
 }
