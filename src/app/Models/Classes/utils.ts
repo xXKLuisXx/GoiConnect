@@ -88,6 +88,7 @@ export class Utils {
             })
             .catch((error) => {
                 console.log(error);
+                reject(error);
             });
          });      
     }
@@ -99,18 +100,22 @@ export class Utils {
     }
         
     public storeItem(key: string, data: any) {
+        console.log("entra set storage");
         this.secureStorage.create('private_storage')
             .then((storage) => {
                 storage.set(key, data)
                     .then((data) => {
+                        console.log("1");
                         console.log("set: " + data)
                     })
                     .catch((error) => {
+                        console.log("2");
                         console.log("error" + error)
                     });
             })
             .catch((error) => {
-                console.log(error);
+                console.log("3");
+                console.log("error store: " + error);
             });
     }
 

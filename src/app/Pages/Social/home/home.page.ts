@@ -9,6 +9,9 @@ import { AccessUserData } from 'src/app/Models/Classes/access-user-data';
 import { Router } from '@angular/router';
 import { CaptureError, CaptureImageOptions, MediaCapture, MediaFile } from '@ionic-native/media-capture/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
+import { IonInfiniteScroll } from '@ionic/angular';
+import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture/ngx';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
 	selector: 'app-home',
@@ -18,6 +21,7 @@ import { Base64 } from '@ionic-native/base64/ngx';
 export class HomePage implements OnInit {
 
 	@ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+	@ViewChild(Content) content: Content;
 
 	public publication: Publication = {
 		title: "",
@@ -55,6 +59,7 @@ export class HomePage implements OnInit {
 	}
 
 	async ngOnInit() {
+		console.log("entra 1")
 		await this.utils.getAccessData();
 		this.getPublications();
 	}
@@ -88,6 +93,10 @@ export class HomePage implements OnInit {
 			}
 		}, 500);
 	}
+
+	scrollToTop() {
+		//this.content.scrollToTop();
+	  }
 
 	toggleInfiniteScroll() {
 		this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
