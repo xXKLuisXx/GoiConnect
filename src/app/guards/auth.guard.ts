@@ -27,6 +27,7 @@ export class AuthGuard implements CanActivate {
 			console.log(error)
 			return true;
 		});
+		*/
 
 		return promise;
 	}
