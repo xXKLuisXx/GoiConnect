@@ -1,21 +1,27 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Utils } from '../Models/Classes/utils';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-	private userAuthenticated = false;
-
+	private utils: Utils;
 	constructor(
 		private router: Router,
-		private nativeStorage: NativeStorage,
-	) { }
+	) { 
+		this.utils = new Utils();
+	}
 	async canActivate(
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot
 	): Promise<boolean | UrlTree> {
+
+		if(this.utils.getItem('AccessDataUser') != null){
+
+		}
+		/*
 		let promise = await new Promise((resolve, reject) => {
 			this.nativeStorage.getItem('AccessDataUser').then(
 				() => {
@@ -30,6 +36,7 @@ export class AuthGuard implements CanActivate {
 		}).catch(() => {
 			return true;
 		});
+		*/
 
 
 		return promise;
