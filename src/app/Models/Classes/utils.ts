@@ -1,4 +1,4 @@
-import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
+import { SecureStorage } from '@ionic-native/secure-storage/ngx';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { AccessUserData } from './access-user-data';
 import { RequestResponse } from './request-response';
@@ -19,8 +19,6 @@ export class Utils {
         this.alertController = new AlertController();
         this.requestResponse = new RequestResponse();
         this.accessUserData = new AccessUserData();
-
-        console.log("finaliza");
     }
 
     public buildErrors(Errors: any): string {
@@ -56,7 +54,6 @@ export class Utils {
     }
 
     public buildAccessData(Response: any): AccessUserData {
-        //console.log(Response);
         let accessdata = Response;
         let accessUserData = new AccessUserData();
         Object.keys(accessdata).forEach(keyR => {
@@ -98,14 +95,9 @@ export class Utils {
     public async  getAccessData(){
         await this.getItem('AccessDataUser').then( (data:string) => {
             this.accessUserData = this.buildAccessData(JSON.parse(data));
-            
         });
-
-        console.log("entra 2");
-        
     }
         
-
     public storeItem(key: string, data: any) {
         this.secureStorage.create('private_storage')
             .then((storage) => {

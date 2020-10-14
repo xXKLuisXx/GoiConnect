@@ -9,7 +9,6 @@ import { Platform } from '@ionic/angular';
 import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
-//import { Base64 } from '@ionic-native/base64/ngx';
 
 
 @Component({
@@ -30,7 +29,8 @@ export class PublicationPage implements OnInit {
 	public src: string;
 	public videoExist: boolean = false;
 	private accessdata: AccessUserData;
-	public typePublication = false;
+	public typePublication = '';
+	private hospedaje = false;
 	
 	constructor(
 		private router: Router,
@@ -57,7 +57,7 @@ export class PublicationPage implements OnInit {
 
 		await this.utils.getAccessData();
 	}
-	getImgContent():SafeUrl {
+	public getImgContent():SafeUrl {
         return this.sanitizer.bypassSecurityTrustUrl(this.src);
     }
 
@@ -128,7 +128,6 @@ export class PublicationPage implements OnInit {
 		await actionSheet.present();
 	}
 
-	
 	public pickImages() {
 
 		let navigationExtras: NavigationExtras = {

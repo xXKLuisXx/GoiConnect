@@ -29,30 +29,67 @@
 
   <ion-item>
     <ion-label>Tipo de publicación</ion-label>
-    <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Seleccionar">
+    <ion-select [(ngModel)]='typePublication' [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Seleccionar">
       <ion-select-option value="hospedaje">Hospedaje</ion-select-option>
       <ion-select-option value="evento">Evento</ion-select-option>
+      <ion-select-option value="viaje">Viaje</ion-select-option>
+      <ion-select-option value="">Estado</ion-select-option>
     </ion-select>
   </ion-item>
 
-  <div *ngIf="typePublication">
-    <ion-item lines="full">
-      <ion-icon name="cash-outline" slot="start"></ion-icon>
-      <ion-label position="floating">Precio</ion-label>
-      <ion-input type="number" name="price" required></ion-input>
-    </ion-item>
+  <div [ngSwitch]="typePublication">
+    
+    <div *ngSwitchCase="'hospedaje'">
+      <ion-item lines="full">
+        <ion-icon name="cash-outline" slot="start"></ion-icon>
+        <ion-label position="floating">Precio</ion-label>
+        <ion-input type="number" name="price" required></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Check In</ion-label>
+        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Check Out</ion-label>
+        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
+      </ion-item>
+    </div>
 
-    <ion-item>
-      <ion-label>DDD. MMM DD, YY (custom locale)</ion-label>
-      <ion-datetime value="1995-04-15" min="1990-02" max="2000"
-        [dayShortNames]="customDayShortNames"
-        displayFormat="DDD. MMM DD, YY"
-        monthShortNames="jan, feb, mar, apr, mai, jun, jul, aug, sep, okt, nov, des"></ion-datetime>
-    </ion-item>
+    <div *ngSwitchCase="'evento'">
+      <ion-item>
+        <ion-label>Fecha</ion-label>
+        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
+      </ion-item>
 
+      <ion-item>
+        <ion-label>Hora</ion-label>
+        <ion-datetime displayFormat="HH:mm"></ion-datetime>
+      </ion-item>
+    </div>
+
+    <div *ngSwitchCase="'viaje'">
+      <ion-item lines="full">
+        <ion-icon name="cash-outline" slot="start"></ion-icon>
+        <ion-label position="floating">Precio</ion-label>
+        <ion-input type="number" name="price" required></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Check In</ion-label>
+        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Check Out</ion-label>
+        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
+      </ion-item>
+    </div>
+
+    <div *ngSwitchDefault>
+    </div>
   </div>
-
-
 
   <ion-item lines="full">
     <ion-icon name="card-outline" slot="start"></ion-icon>
