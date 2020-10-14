@@ -27,21 +27,32 @@
     <ion-input type="text" [(ngModel)]='publication.description' name="description" required></ion-input>
   </ion-item>
 
+  <ion-item>
+    <ion-label>Tipo de publicación</ion-label>
+    <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Seleccionar">
+      <ion-select-option value="hospedaje">Hospedaje</ion-select-option>
+      <ion-select-option value="evento">Evento</ion-select-option>
+    </ion-select>
+  </ion-item>
+
   <div *ngIf="typePublication">
-    <ion-item>
-      <ion-label>Tipo de publicación</ion-label>
-      <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Seleccionar">
-        <ion-select-option value="hospedaje">Hospedaje</ion-select-option>
-        <ion-select-option value="invitacion">Invitación</ion-select-option>
-      </ion-select>
-    </ion-item>
-  
     <ion-item lines="full">
       <ion-icon name="cash-outline" slot="start"></ion-icon>
       <ion-label position="floating">Precio</ion-label>
       <ion-input type="number" name="price" required></ion-input>
     </ion-item>
+
+    <ion-item>
+      <ion-label>DDD. MMM DD, YY (custom locale)</ion-label>
+      <ion-datetime value="1995-04-15" min="1990-02" max="2000"
+        [dayShortNames]="customDayShortNames"
+        displayFormat="DDD. MMM DD, YY"
+        monthShortNames="jan, feb, mar, apr, mai, jun, jul, aug, sep, okt, nov, des"></ion-datetime>
+    </ion-item>
+
   </div>
+
+
 
   <ion-item lines="full">
     <ion-icon name="card-outline" slot="start"></ion-icon>

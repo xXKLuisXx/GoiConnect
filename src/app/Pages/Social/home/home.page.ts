@@ -25,12 +25,8 @@ export class HomePage implements OnInit {
 		monetized: false,
 		multimedia: []
 	}
-	public heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado'];
-	public numHeroes: number = this.heroes.length;
 
 	public publications: any = [];
-
-	private accesData: AccessUserData;
 	public selectedVideo: string;
 	private utils: Utils;
 	private nextPage = 1;
@@ -54,11 +50,13 @@ export class HomePage implements OnInit {
 		private mediaCapture: MediaCapture,
 		private base64: Base64
 	) {
-
+		this.utils = new Utils();
+		
 	}
 
-	ngOnInit() {
-		// aqui toca el get item
+	async ngOnInit() {
+		await this.utils.getAccessData();
+		this.getPublications();
 	}
 
 	public async takeVideo() {
@@ -221,7 +219,7 @@ export class HomePage implements OnInit {
 	}
 
 	public post() {
-		this.publicationService.post(this.publication, this.accesData.getAuthorization()).subscribe(
+		this.publicationService.post(this.publication, this.utils.accessUserData.getAuthorization()).subscribe(
 			async (Response: (any)) => {
 
 				this.publication = {
@@ -242,9 +240,9 @@ export class HomePage implements OnInit {
 	}
 
 	public getPublications() {
-		this.publicationService.getPublications(this.accesData.getAuthorization(), this.nextPage).subscribe(
+		this.publicationService.getPublications(this.utils.accessUserData.getAuthorization(), this.nextPage).subscribe(
 			(Response: (any)) => {
-
+				console.log(Response);
 				Response.data.forEach(element => {
 					console.log(element);
 					this.publications.push(element);

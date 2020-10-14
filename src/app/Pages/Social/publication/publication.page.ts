@@ -45,11 +45,7 @@ export class PublicationPage implements OnInit {
 		this.utils = new Utils();
 	}
 
-	ngOnInit() {
-		this.route.queryParams.subscribe(params => {
-			this.accessdata = this.utils.buildAccessData(params);
-		});
-		
+	async ngOnInit() {		
 		this.publication = this.publicationService.publication;
 		this.src = this.publication.multimedia[0].base;
 		if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
@@ -58,6 +54,8 @@ export class PublicationPage implements OnInit {
 		this.platform.backButton.subscribeWithPriority(10, () => {
 			this.router.navigate(['social']);
 		});
+
+		await this.utils.getAccessData();
 	}
 	getImgContent():SafeUrl {
         return this.sanitizer.bypassSecurityTrustUrl(this.src);
@@ -76,7 +74,7 @@ export class PublicationPage implements OnInit {
 	public async post() {
 		await this.utils.loadingPresent();
 		console.log(this.publication);
-		this.publicationService.post(this.publication, this.accessdata.getAuthorization()).subscribe(
+		this.publicationService.post(this.publication, this.utils.accessUserData.getAuthorization()).subscribe(
 			async (Response: (any)) => {
 				this.publication={
 					title: "",

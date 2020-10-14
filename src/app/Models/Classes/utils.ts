@@ -10,12 +10,17 @@ export class Utils {
     private loading: HTMLIonLoadingElement;
     private alert: HTMLIonAlertElement;
     private requestResponse: RequestResponse;
+    public accessUserData: AccessUserData;
     public stor: any;
+
     constructor() {
         this.secureStorage = new SecureStorage();
         this.loadingController = new LoadingController();
         this.alertController = new AlertController();
         this.requestResponse = new RequestResponse();
+        this.accessUserData = new AccessUserData();
+
+        console.log("finaliza");
     }
 
     public buildErrors(Errors: any): string {
@@ -51,7 +56,7 @@ export class Utils {
     }
 
     public buildAccessData(Response: any): AccessUserData {
-        console.log(Response);
+        //console.log(Response);
         let accessdata = Response;
         let accessUserData = new AccessUserData();
         Object.keys(accessdata).forEach(keyR => {
@@ -72,25 +77,34 @@ export class Utils {
         return loading;
     }
 
-   public async getItem(key: string){   
-        return await this.secureStorage.create('private_storage')
+   public getItem(key: string){   
+         return new Promise((resolve, reject)=> {
+            this.secureStorage.create('private_storage')
             .then((storage) => {
                  storage.get(key)
                     .then((data) => {
-                        console.log((key +':'+ data));
+                       resolve(data);    
                     })
                     .catch((error) => {
-                        console.log("error" + error)
+                        reject(error);
                     });
             })
             .catch((error) => {
                 console.log(error);
-            });      
+            });
+         });      
     }
+    
+    public async  getAccessData(){
+        await this.getItem('AccessDataUser').then( (data:string) => {
+            this.accessUserData = this.buildAccessData(JSON.parse(data));
+            
+        });
 
-    public async accessDataUser(){
+        console.log("entra 2");
         
     }
+        
 
     public storeItem(key: string, data: any) {
         this.secureStorage.create('private_storage')

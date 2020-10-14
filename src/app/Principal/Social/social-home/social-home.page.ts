@@ -25,8 +25,6 @@ export class SocialHomePage implements OnInit {
 	profilePage = ProfilePage;
 	menuAppsPage = MenuAppsPage;
 
-	
-	//public accessdata: Object;
 	public accessdata: AccessUserData;
 	private utils: Utils;
 
@@ -34,16 +32,9 @@ export class SocialHomePage implements OnInit {
 		this.utils = new Utils();
 	}
 
-	ngOnInit() {
-		/*this.route.queryParams.subscribe(params => {
-			//this.accessdata = this.utils.buildAccessData(params);
-			//console.log('ad');
-			//console.log(this.accessdata);
-		});*/
+	async ngOnInit() {
 		console.log('onInit');
-		
-		//this.utils.getItem('AccessDataUser')
-		
+		await this.utils.getAccessData();
 	}
 
 
