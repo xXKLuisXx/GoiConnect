@@ -19,8 +19,6 @@ export class Utils {
         this.alertController = new AlertController();
         this.requestResponse = new RequestResponse();
         this.accessUserData = new AccessUserData();
-
-        console.log("finaliza");
     }
 
     public buildErrors(Errors: any): string {
@@ -56,7 +54,6 @@ export class Utils {
     }
 
     public buildAccessData(Response: any): AccessUserData {
-        //console.log(Response);
         let accessdata = Response;
         let accessUserData = new AccessUserData();
         Object.keys(accessdata).forEach(keyR => {
@@ -91,34 +88,35 @@ export class Utils {
             })
             .catch((error) => {
                 console.log(error);
+                reject(error);
             });
          });      
     }
     
     public async  getAccessData(){
-        await this.getItem('AccessDataUser').then( (data:string) => {
-            this.accessUserData = this.buildAccessData(JSON.parse(data));
-            
+        await this.getItem('AccessDataUser').then((data:string) => {
+            this.accessUserData = this.buildAccessData(JSON.parse(data)); 
         });
-
-        console.log("entra 2");
-        
     }
         
 
     public storeItem(key: string, data: any) {
+        console.log("entra set storage");
         this.secureStorage.create('private_storage')
             .then((storage) => {
                 storage.set(key, data)
                     .then((data) => {
+                        console.log("1");
                         console.log("set: " + data)
                     })
                     .catch((error) => {
+                        console.log("2");
                         console.log("error" + error)
                     });
             })
             .catch((error) => {
-                console.log(error);
+                console.log("3");
+                console.log("error store: " + error);
             });
     }
 

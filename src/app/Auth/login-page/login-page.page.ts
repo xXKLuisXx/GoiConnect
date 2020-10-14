@@ -37,6 +37,7 @@ export class LoginPagePage implements OnInit {
         this.authService.login(this.UserData).subscribe(
             (Response: (any)) => {
                 console.log('login');
+                console.log(Response);
                 this.utils.storeItem('AccessDataUser', JSON.stringify( this.utils.buildAccessData(Response)));
                 this.utils.loadingDismiss();
                 this.router.navigate(['/social']);
@@ -47,8 +48,6 @@ export class LoginPagePage implements OnInit {
             },
             () => {
                 this.utils.loadingDismiss();
-                console.log("Terminó")
-                
             }
         );
     }

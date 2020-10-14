@@ -55,6 +55,7 @@ export class HomePage implements OnInit {
 	}
 
 	async ngOnInit() {
+		console.log("entra 1")
 		await this.utils.getAccessData();
 		this.getPublications();
 	}
