@@ -19,7 +19,7 @@ import { Camera} from '@ionic-native/camera/ngx';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { CommonModule } from '@angular/common';
 import { Utils } from './Models/Classes/utils';
-import { SecureStorage } from '@ionic-native/secure-storage/ngx';
+import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { MediaCapture } from '@ionic-native/media-capture/ngx';
 
