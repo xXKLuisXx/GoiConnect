@@ -33,7 +33,6 @@ export class SocialHomePage implements OnInit {
 	}
 
 	async ngOnInit() {
-		console.log('onInit');
 		await this.utils.getAccessData();
 	}
 

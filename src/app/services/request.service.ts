@@ -13,7 +13,7 @@ export class RequestService {
 	constructor(
 		public httpClient : HttpClient
 	) { 
-		this.AUTH_SERVER_ADDRESS = 'http://192.168.0.15:8000/api/';
+		this.AUTH_SERVER_ADDRESS = 'http://192.168.0.14:8000/api/';
 		this.HEADERS = [['Content-Type', 'application/json'], ['Authorization', ''], ['responseType','text']];
 		this.END_POINTS = ['login', 'register', 'publications'];
 		this.headers = new HttpHeaders();
@@ -35,10 +35,8 @@ export class RequestService {
 
 	private createHeaders( tokenRequired: boolean, token?: string ) : HttpHeaders {
 		if( !tokenRequired ) this.headers = this.headers.set(this.HEADERS[0][0], this.HEADERS[0][1]);
-		
 		else{
 			this.HEADERS.forEach(Header => {
-				
 				if ( Header[0] === "Authorization"){
 					if(token != null ){
 						this.headers = this.headers.set(Header[0], token);

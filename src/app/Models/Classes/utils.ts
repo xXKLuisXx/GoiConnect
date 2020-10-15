@@ -63,7 +63,6 @@ export class Utils {
                 }
             })
         });
-        console.log(accessUserData);
         return accessUserData;
     }
 
@@ -94,31 +93,33 @@ export class Utils {
          });      
     }
     
-    public async  getAccessData(){
-        await this.getItem('AccessDataUser').then( (data:string) => {
-            this.accessUserData = this.buildAccessData(JSON.parse(data));
+    public getAccessData(){
+        return new Promise((resolve, reject) => {
+            this.getItem('AccessDataUser').then((data:string) => {
+                this.accessUserData = this.buildAccessData(JSON.parse(data));
+                resolve();
+            }).catch((error) => {
+                reject(error);
+            });
         });
     }
         
     public storeItem(key: string, data: any) {
-        console.log("entra set storage");
-        this.secureStorage.create('private_storage')
+        return new Promise((resolve, reject) => {
+            this.secureStorage.create('private_storage')
             .then((storage) => {
-                console.log('llega');
                 storage.set(key, data)
                     .then((data) => {
-                        console.log("1");
-                        console.log("set: " + data)
+                        resolve(data);
                     })
                     .catch((error) => {
-                        console.log("2");
-                        console.log("error" + error)
+                        reject(error);
                     });
             })
             .catch((error) => {
-                console.log("3");
-                console.log("error store: " + error);
+                reject(error);
             });
+        })
     }
 
     public async createAlert(header: string, messageAlert: string, text: string): Promise<HTMLIonAlertElement> {
