@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActionSheetController, IonInfiniteScroll, } from '@ionic/angular';
+import { ActionSheetController } from '@ionic/angular';
 import { PublicationService } from '../../../services/publication.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Multimedia, Publication } from '../../../services/publication';
@@ -10,8 +10,7 @@ import { Router } from '@angular/router';
 import { CaptureError, CaptureImageOptions, MediaCapture, MediaFile } from '@ionic-native/media-capture/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture/ngx';
-import { Content } from '@angular/compiler/src/render3/r3_ast';
+//import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
 	selector: 'app-home',
@@ -21,7 +20,7 @@ import { Content } from '@angular/compiler/src/render3/r3_ast';
 export class HomePage implements OnInit {
 
 	@ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-	@ViewChild(Content) content: Content;
+	//@ViewChild(Content) content: Content;
 
 	public publication: Publication = {
 		title: "",
@@ -59,7 +58,6 @@ export class HomePage implements OnInit {
 	}
 
 	async ngOnInit() {
-		console.log("entra 1")
 		await this.utils.getAccessData();
 		this.getPublications();
 	}

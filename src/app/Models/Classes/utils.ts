@@ -63,6 +63,7 @@ export class Utils {
                 }
             })
         });
+        console.log(accessUserData);
         return accessUserData;
     }
 
@@ -103,6 +104,7 @@ export class Utils {
         console.log("entra set storage");
         this.secureStorage.create('private_storage')
             .then((storage) => {
+                console.log('llega');
                 storage.set(key, data)
                     .then((data) => {
                         console.log("1");

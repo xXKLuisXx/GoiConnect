@@ -38,7 +38,7 @@ export class LoginPagePage implements OnInit {
             (Response: (any)) => {
                 console.log('login');
                 console.log(Response);
-                this.utils.storeItem('AccessDataUser', JSON.stringify( this.utils.buildAccessData(Response)));
+                this.utils.storeItem('AccessDataUser', JSON.stringify(this.utils.buildAccessData(Response)));
                 this.utils.loadingDismiss();
                 this.router.navigate(['/social']);
             },
