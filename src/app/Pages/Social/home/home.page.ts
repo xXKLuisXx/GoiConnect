@@ -57,18 +57,21 @@ export class HomePage implements OnInit {
 		private platform: Platform
 	) {
 		this.utils = new Utils();
-		
 	}
 
-	async ngOnInit() {
-		await this.platform.ready().then(async () => {
+	 async ngOnInit() {
+		/*await this.platform.ready().then(async () => {
 			await this.utils.getAccessData().then(() => {
 				console.log("exito");
+				
 			}).catch((error) => {
 				console.log(error);
 			});
-		});
-		
+		});*/
+		await this.utils.getAccessData();
+		console.log('home page');
+		this.getPublications();
+			
 	}
 
 	public async takeVideo() {
@@ -262,7 +265,6 @@ export class HomePage implements OnInit {
 			(Response: (any)) => {
 				console.log(Response);
 				Response.data.forEach(element => {
-					console.log(element);
 					this.publications.push(element);
 				});
 

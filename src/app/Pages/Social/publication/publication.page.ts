@@ -47,8 +47,6 @@ constructor(
 		private base64: Base64
 	) { 
 		this.utils = new Utils();
-		//this.checkIn = new Date().toISOString();
-		//this.checkOut = new Date().toISOString();
 	}
 
 	async ngOnInit() {		
@@ -57,9 +55,9 @@ constructor(
 		if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
 		else this.isVideo = true;
 
-		this.platform.backButton.subscribeWithPriority(10, () => {
+		/*this.platform.backButton.subscribeWithPriority(10, () => {
 			this.router.navigate(['social']);
-		});
+		});*/
 
 		await this.utils.getAccessData();
 	}
@@ -84,11 +82,11 @@ constructor(
 
 	public async post() {
 		await this.utils.loadingPresent();
-		console.log(this.publication);
+		//console.log(this.publication);
 		
-		if(this.checkIn != null){
+		/*if(this.checkIn != null){
 			this.dates();
-		}
+		}*/
 
 		this.publicationService.post(this.publication, this.utils.accessUserData.getAuthorization()).subscribe(
 			async (Response: (any)) => {
@@ -112,7 +110,8 @@ constructor(
 
 				this.utils.loadingDismiss();
 				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
-				this.home();
+				this.router.navigate(['social']);
+				//this.home();
 			},
 			(Errors: (any)) => {
 				this.utils.loadingDismiss();
@@ -177,7 +176,7 @@ constructor(
 				this.publicationService.publication = this.publication;
 				console.log('Tamanio: ',this.publication.multimedia.length);
 				if (this.publication.multimedia.length != 0){
-					this.router.navigate(['social/social-publication'], navigationExtras);
+					this.router.navigate(['social/social-publication']);
 				}
 		}, (err) => {
 			console.log(err);
