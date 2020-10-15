@@ -22,6 +22,8 @@ export class PublicationPage implements OnInit {
 		title: "",
 		description: "",
 		monetized:false,
+		checkIn:"",
+		checkOut:"",
 		multimedia: []
 	}
 	private utils: Utils;
@@ -31,8 +33,10 @@ export class PublicationPage implements OnInit {
 	private accessdata: AccessUserData;
 	public typePublication = '';
 	private hospedaje = false;
-	
-	constructor(
+	private checkIn: string; 
+	private checkOut: string;
+		
+constructor(
 		private router: Router,
 		private route: ActivatedRoute,
 		public publicationService: PublicationService,
@@ -43,6 +47,8 @@ export class PublicationPage implements OnInit {
 		private base64: Base64
 	) { 
 		this.utils = new Utils();
+		//this.checkIn = new Date().toISOString();
+		//this.checkOut = new Date().toISOString();
 	}
 
 	async ngOnInit() {		
@@ -71,15 +77,27 @@ export class PublicationPage implements OnInit {
 		this.router.navigate(['social'],navigationExtras);
 	}
 
+	public dates(){
+		this.publication.checkIn = this.checkIn.split('T')[0];
+		this.publication.checkOut = this.checkOut.split('T')[0];
+	}
+
 	public async post() {
 		await this.utils.loadingPresent();
 		console.log(this.publication);
+		
+		if(this.checkIn != null){
+			this.dates();
+		}
+
 		this.publicationService.post(this.publication, this.utils.accessUserData.getAuthorization()).subscribe(
 			async (Response: (any)) => {
 				this.publication={
 					title: "",
 					description: "",
 					monetized:false,
+					checkIn:"",
+					checkOut:"",
 					multimedia: []
 				}
 
@@ -87,6 +105,8 @@ export class PublicationPage implements OnInit {
 					title: "",
 					description: "",
 					monetized:false,
+					checkIn:"",
+					checkOut:"",
 					multimedia: []
 				}
 
@@ -159,7 +179,6 @@ export class PublicationPage implements OnInit {
 				if (this.publication.multimedia.length != 0){
 					this.router.navigate(['social/social-publication'], navigationExtras);
 				}
-			//}
 		}, (err) => {
 			console.log(err);
 		});

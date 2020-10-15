@@ -26,6 +26,8 @@ export class HomePage implements OnInit {
 		title: "",
 		description: "",
 		monetized: false,
+		checkIn: "",
+		checkOut:"",
 		multimedia: []
 	}
 
@@ -58,8 +60,8 @@ export class HomePage implements OnInit {
 	}
 
 	async ngOnInit() {
-		await this.utils.getAccessData();
-		this.getPublications();
+		//await this.utils.getAccessData();
+		//this.getPublications();
 	}
 
 	public async takeVideo() {
@@ -233,6 +235,8 @@ export class HomePage implements OnInit {
 					title: "",
 					description: "",
 					monetized: false,
+					checkIn:"",
+					checkOut:"",
 					multimedia: []
 				}
 				this.utils.loadingDismiss();

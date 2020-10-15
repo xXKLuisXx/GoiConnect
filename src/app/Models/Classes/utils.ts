@@ -104,7 +104,7 @@ export class Utils {
         console.log("entra set storage");
         this.secureStorage.create('private_storage')
             .then((storage) => {
-                console.log('llega');
+                console.log('llegas');
                 storage.set(key, data)
                     .then((data) => {
                         console.log("1");

@@ -48,19 +48,19 @@
   
       <ion-item>
         <ion-label>Check In</ion-label>
-        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
+        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" [(ngModel)]='checkIn'></ion-datetime>
       </ion-item>
   
       <ion-item>
         <ion-label>Check Out</ion-label>
-        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
+        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" [(ngModel)]='checkOut'></ion-datetime>
       </ion-item>
     </div>
 
     <div *ngSwitchCase="'evento'">
       <ion-item>
         <ion-label>Fecha</ion-label>
-        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
+        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" [(ngModel)]='checkIn'></ion-datetime>
       </ion-item>
 
       <ion-item>
@@ -78,12 +78,12 @@
   
       <ion-item>
         <ion-label>Check In</ion-label>
-        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
+        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" [(ngModel)]='checkIn'></ion-datetime>
       </ion-item>
   
       <ion-item>
         <ion-label>Check Out</ion-label>
-        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
+        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" [(ngModel)]='checkOut'></ion-datetime>
       </ion-item>
     </div>
 
