@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, Platform } from '@ionic/angular';
 import { PublicationService } from '../../../services/publication.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Multimedia, Publication } from '../../../services/publication';
@@ -53,15 +53,22 @@ export class HomePage implements OnInit {
 		private imagePicker: ImagePicker,
 		private router: Router,
 		private mediaCapture: MediaCapture,
-		private base64: Base64
+		private base64: Base64,
+		private platform: Platform
 	) {
 		this.utils = new Utils();
 		
 	}
 
 	async ngOnInit() {
-		//await this.utils.getAccessData();
-		//this.getPublications();
+		await this.platform.ready().then(async () => {
+			await this.utils.getAccessData().then(() => {
+				console.log("exito");
+			}).catch((error) => {
+				console.log(error);
+			});
+		});
+		
 	}
 
 	public async takeVideo() {

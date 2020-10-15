@@ -35,13 +35,14 @@ export class LoginPagePage implements OnInit {
     public async loginForm() {
         await this.utils.loadingPresent();
         this.authService.login(this.UserData).subscribe(
-            (Response: (any)) => {
-                console.log('login');
-                console.log(Response);
-                this.utils.storeItem('AccessDataUser', JSON.stringify(this.utils.buildAccessData(Response)));
-                console.log(JSON.stringify(this.utils.buildAccessData(Response)));
+            async (Response: (any)) => {
+                await this.utils.storeItem('AccessDataUser', JSON.stringify(this.utils.buildAccessData(Response))).then((data)=> {
+                    this.utils.loadingDismiss();
+                    this.router.navigate(['/social']);
+                }).catch((error) => {
+                    console.log(error);
+                });
                 this.utils.loadingDismiss();
-                this.router.navigate(['/social']);
             },
             (Errors: (any)) => {
                 this.utils.loadingDismiss();
