@@ -20,7 +20,6 @@ export class AuthGuard implements CanActivate {
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot
 	): Promise<boolean | UrlTree> {
-		return true;
 		/*
 		let promise = new Promise((resolve, reject) => {
 			this.utils.getAccessData().then((data) => {
@@ -32,5 +31,6 @@ export class AuthGuard implements CanActivate {
 
 		return promise;
 		*/
+		return true;
 	}
 }
