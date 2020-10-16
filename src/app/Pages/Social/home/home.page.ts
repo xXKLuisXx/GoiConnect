@@ -2,15 +2,16 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActionSheetController, Platform } from '@ionic/angular';
 import { PublicationService } from '../../../services/publication.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { Multimedia, Publication } from '../../../services/publication';
+import { Publication } from '../../../Models/Classes/publication';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Utils } from 'src/app/Models/Classes/utils';
-import { AccessUserData } from 'src/app/Models/Classes/access-user-data';
 import { Router } from '@angular/router';
 import { CaptureError, CaptureImageOptions, MediaCapture, MediaFile } from '@ionic-native/media-capture/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { IonContent } from '@ionic/angular';
+import { Observable, of } from 'rxjs';
+import { PublicationInt } from 'src/app/Models/Interfaces/publication-int';
 
 @Component({
 	selector: 'app-home',
@@ -22,16 +23,8 @@ export class HomePage implements OnInit {
 	@ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 	@ViewChild(IonContent) content: IonContent;
 
-	public publication: Publication = {
-		title: "",
-		description: "",
-		monetized: false,
-		checkIn: "",
-		checkOut:"",
-		multimedia: []
-	}
-
-	public publications: any = [];
+	public publication: Publication; 
+	public publications$: Observable <PublicationInt[]>;
 	public selectedVideo: string;
 	private utils: Utils;
 	private currentPage: number;
@@ -60,13 +53,13 @@ export class HomePage implements OnInit {
 	) {
 		this.utils = new Utils();
 		this.scrollEnd = true;
+		this.publication = new Publication();
 	}
 
 	 async ngOnInit() {
 		await this.platform.ready().then(async () => {
 			await this.utils.getAccessData().then(() => {
-				console.log("exito");
-				
+				console.log("exito");		
 			}).catch((error) => {
 				console.log(error);
 			});
@@ -76,9 +69,8 @@ export class HomePage implements OnInit {
 		this.total = 0;
 		this.contPublications = 0;
 		this.currentPage = 1;
-		//await this.utils.getAccessData();
-		console.log('home page');
-		this.getPublications();	
+		this.getPublications();
+		console.log(this.publications$);
 	}
 
 	public async takeVideo() {
@@ -249,7 +241,7 @@ export class HomePage implements OnInit {
 	public post() {
 		this.publicationService.post(this.publication, this.utils.accessUserData.getAuthorization()).subscribe(
 			async (Response: (any)) => {
-
+				/*
 				this.publication = {
 					title: "",
 					description: "",
@@ -258,6 +250,7 @@ export class HomePage implements OnInit {
 					checkOut:"",
 					multimedia: []
 				}
+				*/
 				this.utils.loadingDismiss();
 				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK');
 			},
@@ -270,18 +263,22 @@ export class HomePage implements OnInit {
 	}
 
 	public getPublications() {
-		console.log(this.currentPage);
 		this.publicationService.getPublications(this.utils.accessUserData.getAuthorization(), this.currentPage).subscribe(
 			(Response: (any)) => {
-				console.log(Response);
+				console.log(Response.data);
+				let array: Array<Publication>;
+				array = new Array();
+
 				Response.data.forEach(element => {
-					this.publications.push(element);
+					let $publicationObj = new Publication(element);
+					array.push($publicationObj);
 				});
+				
+				this.publications$ = of(array);
 
 				if(this.currentPage != Response.last_page){
 					let page = Response.next_page_url.split('=');
 					this.currentPage = Number(page[1]);
-					console.log(this.currentPage);
 					this.contPublications += Response.per_page;
 					this.total = Response.total;
 				}
@@ -289,8 +286,6 @@ export class HomePage implements OnInit {
 					this.contPublications += Response.data.length;
 					this.total = Response.total;
 				}
-
-				console.log('cont '+this.contPublications+' '+'total '+this.total);
 			},
 			(Errors: (any)) => {
 				console.log(Errors);
@@ -301,6 +296,7 @@ export class HomePage implements OnInit {
 	}
 
 	public isVideo(publication) {
+		console.log(publication);
 		let extension = publication.substr(13);
 		if (extension == 'mp4') return true;
 		else return false;

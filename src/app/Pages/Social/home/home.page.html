@@ -42,7 +42,7 @@
 		</ion-slide>
 	</ion-slides>
 
-	<ion-card class="cardHome" *ngFor="let publication of publications">
+	<ion-card class="cardHome" *ngFor="let publication of publications$ | async">
 		<ion-item color="dark">
 			<ion-avatar slot="start">
 				<img src="https://img.mobiscroll.com/demos/card_2.png">

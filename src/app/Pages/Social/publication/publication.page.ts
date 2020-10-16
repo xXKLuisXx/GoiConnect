@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router} from '@angular/router';
-import { Publication } from 'src/app/services/publication';
+//import { Publication } from 'src/app/services/publication';
+import { Publication } from '../../../Models/Classes/publication';
 import { PublicationService } from 'src/app/services/publication.service';
 import { Utils } from 'src/app/Models/Classes/utils';
 import { AccessUserData } from 'src/app/Models/Classes/access-user-data';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Platform } from '@ionic/angular';
+//import { Platform } from '@ionic/angular';
 import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
+import { ChangeDetectorRef } from '@angular/core';
 
 
 @Component({
@@ -18,14 +20,7 @@ import { Base64 } from '@ionic-native/base64/ngx';
 })
 export class PublicationPage implements OnInit {
 
-	public publication: Publication = {
-		title: "",
-		description: "",
-		monetized:false,
-		checkIn:"",
-		checkOut:"",
-		multimedia: []
-	}
+	public publication: Publication;
 	private utils: Utils;
 	private isVideo: boolean;
 	public src: string;
@@ -41,12 +36,14 @@ constructor(
 		private route: ActivatedRoute,
 		public publicationService: PublicationService,
 		private sanitizer: DomSanitizer,
-		private platform: Platform,
+		//private platform: Platform,
 		public actionSheetController: ActionSheetController,
 		private imagePicker: ImagePicker,
-		private base64: Base64
+		private base64: Base64,
+		private changeRef: ChangeDetectorRef
 	) { 
 		this.utils = new Utils();
+		this.publication = new Publication();
 	}
 
 	async ngOnInit() {		
@@ -90,24 +87,11 @@ constructor(
 
 		this.publicationService.post(this.publication, this.utils.accessUserData.getAuthorization()).subscribe(
 			async (Response: (any)) => {
-				this.publication={
-					title: "",
-					description: "",
-					monetized:false,
-					checkIn:"",
-					checkOut:"",
-					multimedia: []
-				}
-
-				this.publicationService.publication = {
-					title: "",
-					description: "",
-					monetized:false,
-					checkIn:"",
-					checkOut:"",
-					multimedia: []
-				}
-
+				this.publication = new Publication(); 
+				console.log(Response);
+				this.publicationService.publication = new Publication();
+				console.log('publicación terminada');
+				//this.changeRef.detectChanges();
 				this.utils.loadingDismiss();
 				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
 				this.router.navigate(['social']);

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from  'rxjs';
-
+import { Publication } from '../Models/Classes/publication';
 import { HttpClient } from '@angular/common/http';
 import { RequestService } from '../services/request.service';
-import { Publication } from './publication';
+//import { Publication } from './publication';
 import { RequestResponse } from '../Models/Classes/request-response';
 
 @Injectable({
@@ -15,14 +15,7 @@ export class PublicationService {
   authSubject  =  new  BehaviorSubject(false);
   private postValue: boolean;
 
-  public publication: Publication = {
-    title : "",
-    description : "",
-    monetized:false,
-    checkIn:"",
-    checkOut:"",
-    multimedia : []
-  }
+  public publication: Publication = new Publication();
   
   constructor(
     public httpClient : HttpClient,

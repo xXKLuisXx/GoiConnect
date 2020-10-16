@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
 	): Promise<boolean | UrlTree> {
 		return true;
 		/*
-		let promise = new Promise((resolve, reject) => {
+		let promise = await new Promise((resolve, reject) => {
 			this.utils.getAccessData().then((data) => {
 				resolve(this.router.parseUrl('social'));
 			}).catch((error) => {

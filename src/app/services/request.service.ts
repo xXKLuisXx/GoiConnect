@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root'
@@ -50,12 +51,12 @@ export class RequestService {
 		return this.headers;
 	}
 
-	public createRequest(object: any, endPoint: string, post: boolean, token?: string) : any {
+	public createRequest(object: any, endPoint: string, post: boolean, token?: string) : Observable<any> {
 		const headers = this.createHeaders( post, token);
 		return this.httpClient.post<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint), object,  { headers } );
 	}
 
-	public createRequestGet(endPoint: string, post: boolean, token?: string, page?:number) : any {
+	public createRequestGet(endPoint: string, post: boolean, token?: string, page?:number) : Observable<any> {
 		const headers = this.createHeaders( post, token);
 		return this.httpClient.get<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint)+'?page='+page, { headers } );
 	}
