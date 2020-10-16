@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { CaptureError, CaptureImageOptions, MediaCapture, MediaFile } from '@ionic-native/media-capture/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { IonInfiniteScroll } from '@ionic/angular';
-//import { Content } from '@angular/compiler/src/render3/r3_ast';
+import { IonContent } from '@ionic/angular';
 
 @Component({
 	selector: 'app-home',
@@ -20,20 +20,24 @@ import { IonInfiniteScroll } from '@ionic/angular';
 export class HomePage implements OnInit {
 
 	@ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-	//@ViewChild(Content) content: Content;
+	@ViewChild(IonContent) content: IonContent;
 
 	public publication: Publication = {
 		title: "",
 		description: "",
 		monetized: false,
+		checkIn: "",
+		checkOut:"",
 		multimedia: []
 	}
 
 	public publications: any = [];
 	public selectedVideo: string;
 	private utils: Utils;
-	private nextPage = 1;
-	private lastPage = 0;
+	private currentPage: number;
+	private contPublications: number;
+	private total: number;
+	private scrollEnd: boolean;
 
 	croppedImagepath = "";
 	isLoading = false;
@@ -55,18 +59,26 @@ export class HomePage implements OnInit {
 		private platform: Platform
 	) {
 		this.utils = new Utils();
-		
+		this.scrollEnd = true;
 	}
 
-	async ngOnInit() {
+	 async ngOnInit() {
 		await this.platform.ready().then(async () => {
 			await this.utils.getAccessData().then(() => {
 				console.log("exito");
+				
 			}).catch((error) => {
 				console.log(error);
 			});
 		});
-		
+
+
+		this.total = 0;
+		this.contPublications = 0;
+		this.currentPage = 1;
+		//await this.utils.getAccessData();
+		console.log('home page');
+		this.getPublications();	
 	}
 
 	public async takeVideo() {
@@ -89,18 +101,20 @@ export class HomePage implements OnInit {
 
 	loadData(event) {
 		setTimeout(() => {
-			console.log('Cargando siguientes...');
-			event.target.complete();
-			this.getPublications();
-
-			if (this.nextPage == this.lastPage) {
+			if(this.contPublications == this.total){
+				this.scrollEnd = true;
 				event.target.disabled = true;
+			}
+			else{
+				console.log('Cargando siguientes...');
+				this.getPublications();
+				event.target.complete();
 			}
 		}, 500);
 	}
 
 	scrollToTop() {
-		//this.content.scrollToTop();
+		this.content.scrollToTop(400);
 	  }
 
 	toggleInfiniteScroll() {
@@ -240,6 +254,8 @@ export class HomePage implements OnInit {
 					title: "",
 					description: "",
 					monetized: false,
+					checkIn:"",
+					checkOut:"",
 					multimedia: []
 				}
 				this.utils.loadingDismiss();
@@ -254,22 +270,27 @@ export class HomePage implements OnInit {
 	}
 
 	public getPublications() {
-		this.publicationService.getPublications(this.utils.accessUserData.getAuthorization(), this.nextPage).subscribe(
+		console.log(this.currentPage);
+		this.publicationService.getPublications(this.utils.accessUserData.getAuthorization(), this.currentPage).subscribe(
 			(Response: (any)) => {
 				console.log(Response);
 				Response.data.forEach(element => {
-					console.log(element);
 					this.publications.push(element);
 				});
 
-				if (Response.last_page != 1) {
-					this.nextPage = Response.current_page + 1;
-					this.lastPage = Response.last_page;
+				if(this.currentPage != Response.last_page){
+					let page = Response.next_page_url.split('=');
+					this.currentPage = Number(page[1]);
+					console.log(this.currentPage);
+					this.contPublications += Response.per_page;
+					this.total = Response.total;
 				}
-				else {
-					this.nextPage = 1;
-					this.lastPage = Response.last_page;
+				else{
+					this.contPublications += Response.data.length;
+					this.total = Response.total;
 				}
+
+				console.log('cont '+this.contPublications+' '+'total '+this.total);
 			},
 			(Errors: (any)) => {
 				console.log(Errors);

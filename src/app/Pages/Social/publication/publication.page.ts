@@ -22,6 +22,8 @@ export class PublicationPage implements OnInit {
 		title: "",
 		description: "",
 		monetized:false,
+		checkIn:"",
+		checkOut:"",
 		multimedia: []
 	}
 	private utils: Utils;
@@ -31,8 +33,10 @@ export class PublicationPage implements OnInit {
 	private accessdata: AccessUserData;
 	public typePublication = '';
 	private hospedaje = false;
-	
-	constructor(
+	private checkIn: string; 
+	private checkOut: string;
+		
+constructor(
 		private router: Router,
 		private route: ActivatedRoute,
 		public publicationService: PublicationService,
@@ -51,9 +55,9 @@ export class PublicationPage implements OnInit {
 		if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
 		else this.isVideo = true;
 
-		this.platform.backButton.subscribeWithPriority(10, () => {
+		/*this.platform.backButton.subscribeWithPriority(10, () => {
 			this.router.navigate(['social']);
-		});
+		});*/
 
 		await this.utils.getAccessData();
 	}
@@ -71,15 +75,27 @@ export class PublicationPage implements OnInit {
 		this.router.navigate(['social'],navigationExtras);
 	}
 
+	public dates(){
+		this.publication.checkIn = this.checkIn.split('T')[0];
+		this.publication.checkOut = this.checkOut.split('T')[0];
+	}
+
 	public async post() {
 		await this.utils.loadingPresent();
-		console.log(this.publication);
+		//console.log(this.publication);
+		
+		/*if(this.checkIn != null){
+			this.dates();
+		}*/
+
 		this.publicationService.post(this.publication, this.utils.accessUserData.getAuthorization()).subscribe(
 			async (Response: (any)) => {
 				this.publication={
 					title: "",
 					description: "",
 					monetized:false,
+					checkIn:"",
+					checkOut:"",
 					multimedia: []
 				}
 
@@ -87,12 +103,15 @@ export class PublicationPage implements OnInit {
 					title: "",
 					description: "",
 					monetized:false,
+					checkIn:"",
+					checkOut:"",
 					multimedia: []
 				}
 
 				this.utils.loadingDismiss();
 				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
-				this.home();
+				this.router.navigate(['social']);
+				//this.home();
 			},
 			(Errors: (any)) => {
 				this.utils.loadingDismiss();
@@ -157,9 +176,8 @@ export class PublicationPage implements OnInit {
 				this.publicationService.publication = this.publication;
 				console.log('Tamanio: ',this.publication.multimedia.length);
 				if (this.publication.multimedia.length != 0){
-					this.router.navigate(['social/social-publication'], navigationExtras);
+					this.router.navigate(['social/social-publication']);
 				}
-			//}
 		}, (err) => {
 			console.log(err);
 		});

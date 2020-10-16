@@ -19,6 +19,8 @@ export class PublicationService {
     title : "",
     description : "",
     monetized:false,
+    checkIn:"",
+    checkOut:"",
     multimedia : []
   }
   

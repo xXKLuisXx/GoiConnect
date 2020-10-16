@@ -7,5 +7,7 @@ export interface Publication {
     title: string,
     description: string,
     monetized:boolean,
+    checkIn: string,
+    checkOut: string,
     multimedia: Multimedia[] 
 }
