@@ -20,17 +20,14 @@ export class AuthGuard implements CanActivate {
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot
 	): Promise<boolean | UrlTree> {
-		/*
-		let promise = new Promise((resolve, reject) => {
-			this.utils.getAccessData().then((data) => {
-				resolve(this.router.parseUrl('social'));
-			}).catch((error) => {
-				reject(true);
-			});
+		let promise = await this.utils.getAccessData().then((data) => {
+			console.log(data);
+			return this.router.parseUrl('social');
+		}).catch((error) => {
+			console.log(error)
+			return true;
 		});
 
 		return promise;
-		*/
-		return true;
 	}
 }
