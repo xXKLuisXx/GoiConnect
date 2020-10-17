@@ -138,6 +138,7 @@ export class HomePage implements OnInit {
 			this.publicationService.publication = this.publication;
 			console.log('Tamanio: ', this.publication.multimedia.length);
 			if (this.publication.multimedia.length != 0) {
+				this.publication = new Publication();
 				this.router.navigate(['social/social-publication']);
 			}
 		}, (err) => {
@@ -146,7 +147,6 @@ export class HomePage implements OnInit {
 	}
 
 	async pickImage(sourceType) {
-		//this.publication = new Publication();
 		const options: CameraOptions = {
 			quality: 100,
 			sourceType: sourceType,
@@ -245,19 +245,12 @@ export class HomePage implements OnInit {
 	}
 
 	public post() {
+		this.utils.loadingPresent();
+		this.publication.title = 'lo que sea';
 		this.publicationService.post(this.publication, this.utils.accessUserData.getAuthorization()).subscribe(
 			async (Response: (any)) => {
-				/*
-				this.publication = {
-					title: "",
-					description: "",
-					monetized: false,
-					checkIn:"",
-					checkOut:"",
-					multimedia: []
-				}
-				*/
 				this.utils.loadingDismiss();
+				this.publication = new Publication();
 				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK');
 			},
 			(Errors: (any)) => {
@@ -314,5 +307,9 @@ export class HomePage implements OnInit {
 		}, (err) => {
 			return false;
 		});
+	}
+
+	public pagePublication(){
+		this.router.navigate(['social/social-publication']);
 	}
 }

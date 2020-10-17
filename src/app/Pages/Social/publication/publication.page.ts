@@ -110,17 +110,41 @@ constructor(
 		);
 	}
 
-	async menuImage() {
+	async menuCamera() {
 		const actionSheet = await this.actionSheetController.create({
 			header: "Select Image source",
 			buttons: [{
-				text: 'Load from Library',
+				text: 'Foto',
 				handler: () => {
-					this.pickImages();
+					//this.pickImages();
 				}
 			},
 			{
-				text: 'Use Camera',
+				text: 'Video',
+				handler: () => {
+					//this.pickImage(this.camera.PictureSourceType.CAMERA);
+				}
+			},
+			{
+				text: 'Cancel',
+				role: 'cancel'
+			}
+			]
+		});
+		await actionSheet.present();
+	}
+
+	async menuMultimedia(){
+		const actionSheet = await this.actionSheetController.create({
+			header: "Select gallery",
+			buttons: [{
+				text: 'Imagen',
+				handler: () => {
+					//this.pickImages();
+				}
+			},
+			{
+				text: 'Video',
 				handler: () => {
 					//this.pickImage(this.camera.PictureSourceType.CAMERA);
 				}
