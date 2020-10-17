@@ -56,7 +56,12 @@ export class HomePage implements OnInit {
 		this.publication = new Publication();
 	}
 
-	 async ngOnInit() {
+	/*ionViewWillEnter() {
+		console.log('1 - Toc, Toc!!! ¿Puedo pasar? Se lanza antes de que la vista pueda entrar.');
+	}*/		
+
+	
+	async ngOnInit() {
 		await this.platform.ready().then(async () => {
 			await this.utils.getAccessData().then(() => {
 				console.log("exito");		
@@ -64,7 +69,6 @@ export class HomePage implements OnInit {
 				console.log(error);
 			});
 		});
-
 
 		this.total = 0;
 		this.contPublications = 0;
@@ -142,6 +146,7 @@ export class HomePage implements OnInit {
 	}
 
 	async pickImage(sourceType) {
+		//this.publication = new Publication();
 		const options: CameraOptions = {
 			quality: 100,
 			sourceType: sourceType,
@@ -154,6 +159,7 @@ export class HomePage implements OnInit {
 			this.publication.multimedia.push({ base: 'data:image/' + 'jpg' + ';base64,' + imageData, ext: 'jpg' });
 			this.publicationService.publication = this.publication;
 			if (this.publication.multimedia != null) {
+				this.publication = new Publication();
 				this.router.navigate(['social/social-publication']);
 			}
 

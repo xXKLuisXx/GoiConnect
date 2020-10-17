@@ -44,10 +44,10 @@ constructor(
 	) { 
 		this.utils = new Utils();
 		this.publication = new Publication();
+		this.publication = this.publicationService.publication;
 	}
 
 	async ngOnInit() {		
-		this.publication = this.publicationService.publication;
 		this.src = this.publication.multimedia[0].base;
 		if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
 		else this.isVideo = true;
@@ -81,9 +81,11 @@ constructor(
 		await this.utils.loadingPresent();
 		//console.log(this.publication);
 		
-		/*if(this.checkIn != null){
+		if(this.checkIn != null){
 			this.dates();
-		}*/
+		}
+
+		//console.log(this.publication);
 
 		this.publicationService.post(this.publication, this.utils.accessUserData.getAuthorization()).subscribe(
 			async (Response: (any)) => {
@@ -91,6 +93,7 @@ constructor(
 				console.log(Response);
 				this.publicationService.publication = new Publication();
 				console.log('publicación terminada');
+				console.log(this.publicationService.publication);
 				//this.changeRef.detectChanges();
 				this.utils.loadingDismiss();
 				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
