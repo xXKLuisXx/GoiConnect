@@ -54,12 +54,13 @@ export class HomePage implements OnInit {
 		this.utils = new Utils();
 		this.scrollEnd = true;
 		this.publication = new Publication();
+
+		publicationService.updatePublication$.subscribe(
+			update => {
+			  console.log('Actualizado');
+			  this.getPublications();
+			});
 	}
-
-	/*ionViewWillEnter() {
-		console.log('1 - Toc, Toc!!! ¿Puedo pasar? Se lanza antes de que la vista pueda entrar.');
-	}*/		
-
 	
 	async ngOnInit() {
 		await this.platform.ready().then(async () => {
@@ -75,24 +76,6 @@ export class HomePage implements OnInit {
 		this.currentPage = 1;
 		this.getPublications();
 		console.log(this.publications$);
-	}
-
-	public async takeVideo() {
-		let options: CaptureImageOptions = { limit: 1 }
-		await this.mediaCapture.captureVideo(options).then(async (data: MediaFile[]) => {
-			await this.base64.encodeFile(data[0].fullPath).then((base64File: string) => {
-
-				this.publication.multimedia.push({ base: base64File, ext: 'mp4' });
-				this.publicationService.publication = this.publication
-				if (this.publication.multimedia != null) {
-					this.router.navigate(['social/social-publication']);
-				}
-			}, (err) => {
-				console.log(err);
-			});
-		}, (err: CaptureError) => {
-			console.log(err);
-		});
 	}
 
 	loadData(event) {
@@ -111,139 +94,12 @@ export class HomePage implements OnInit {
 
 	scrollToTop() {
 		this.content.scrollToTop(400);
-	  }
+	}
 
 	toggleInfiniteScroll() {
 		this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
 	}
-
-	public pickImages() {
-
-		const options = {
-			maximumImagesCount: 5,
-			quality: 100,
-			outputType: 0
-		};
-
-		this.imagePicker.getPictures(options).then(async (images) => {
-			for (var i = 0; i < images.length; i++) {
-				const extensionImage = images[i].substr(images[i].lastIndexOf('.') + 1);
-				await this.base64.encodeFile(images[i]).then((base64File: string) => {
-					this.publication.multimedia.push({ base: base64File, ext: extensionImage });
-				}, (err) => {
-					console.log(err);
-				});
-			}
-
-			this.publicationService.publication = this.publication;
-			console.log('Tamanio: ', this.publication.multimedia.length);
-			if (this.publication.multimedia.length != 0) {
-				this.publication = new Publication();
-				this.router.navigate(['social/social-publication']);
-			}
-		}, (err) => {
-			console.log(err);
-		});
-	}
-
-	async pickImage(sourceType) {
-		const options: CameraOptions = {
-			quality: 100,
-			sourceType: sourceType,
-			destinationType: this.camera.DestinationType.DATA_URL,
-			encodingType: this.camera.EncodingType.JPEG,
-			mediaType: this.camera.MediaType.PICTURE,
-			correctOrientation: true
-		}
-		this.camera.getPicture(options).then((imageData) => {
-			this.publication.multimedia.push({ base: 'data:image/' + 'jpg' + ';base64,' + imageData, ext: 'jpg' });
-			this.publicationService.publication = this.publication;
-			if (this.publication.multimedia != null) {
-				this.publication = new Publication();
-				this.router.navigate(['social/social-publication']);
-			}
-
-		}, (err) => {
-		});
-	}
-
-	pickVideo(sourceType) {
-		const options: CameraOptions = {
-			mediaType: this.camera.MediaType.VIDEO,
-			sourceType: sourceType
-		}
-		this.camera.getPicture(options)
-		.then(async (videoUrl) => {
-			if (videoUrl) {
-				var dirpath = videoUrl.substr(0, videoUrl.lastIndexOf('/') + 1);
-				dirpath = dirpath.includes("file://") ? dirpath : "file://" + dirpath;
-
-				await this.base64.encodeFile('file://' + videoUrl).then((base64File: string) => {
-					this.publication.multimedia.push({ base: base64File, ext: 'mp4' });
-					this.publicationService.publication = this.publication;
-
-					if (this.publication.multimedia != null) {
-						this.router.navigate(['social/social-publication']);
-					}
-				}, (err) => {
-					console.log(err);
-				});
-			}
-		})
-		.catch(err => {
-				console.log(err);
-		});
-	}
-
-	async menuVideo() {
-		const actionSheet = await this.actionSheetController.create({
-			header: "Select Video source",
-			buttons: [{
-				text: 'Load from Library',
-				handler: () => {
-					this.pickVideo(this.camera.PictureSourceType.PHOTOLIBRARY);
-				}
-			},
-			{
-				text: 'Use Camera',
-				handler: () => {
-					this.takeVideo();
-				}
-			},
-
-			{
-				text: 'Cancel',
-				role: 'cancel'
-			}
-			]
-		});
-		await actionSheet.present();
-	}
-
-	async menuImage() {
-		const actionSheet = await this.actionSheetController.create({
-			header: "Select Image source",
-			buttons: [{
-				text: 'Load from Library',
-				handler: () => {
-					this.pickImages();
-				}
-			},
-			{
-				text: 'Use Camera',
-				handler: () => {
-					this.pickImage(this.camera.PictureSourceType.CAMERA);
-				}
-			},
-			{
-				text: 'Cancel',
-				role: 'cancel'
-			}
-			]
-		});
-		await actionSheet.present();
-	}
-
+	
 	public post() {
 		this.utils.loadingPresent();
 		this.publication.title = 'lo que sea';
