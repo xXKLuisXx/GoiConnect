@@ -120,7 +120,7 @@ export class HomePage implements OnInit {
 	public getPublications() {
 		this.publicationService.getPublications(this.utils.accessUserData.getAuthorization(), this.currentPage).subscribe(
 			(Response: (any)) => {
-				console.log(Response.data);
+				
 				let array: Array<Publication>;
 				array = new Array();
 
@@ -130,6 +130,10 @@ export class HomePage implements OnInit {
 				});
 				
 				this.publications$ = of(array);
+				
+				this.publications$.subscribe(data=>{
+					console.log(data);
+				});
 
 				if(this.currentPage != Response.last_page){
 					let page = Response.next_page_url.split('=');

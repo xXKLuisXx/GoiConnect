@@ -10,7 +10,8 @@ export class Publication implements PublicationInt {
     checkOut: string;
     hour: string;
     path: string;
-    multimedia: Multimedia[] 
+    multimedia: Multimedia[];
+    typePublication: string;
     
     constructor(object?: any){
         if(object != null){
@@ -18,11 +19,12 @@ export class Publication implements PublicationInt {
             this.description = object.description ?? "";
             this.monetized = object.monetized ?? "";
             this.price = object.price ?? null;
-            this.checkIn = object.checkIn ?? "";
-            this.checkOut = object.checkOut ?? "";
+            this.checkIn = object.check_in ?? "";
+            this.checkOut = object.check_out ?? "";
             this.hour = object.hour ?? "";
             this.multimedia = object.multimedia ?? [];
             this.path = object.path ??  "";
+            this.typePublication = object.typePublication ?? "";
         }else{
             this.title = "";
             this.description = "";
@@ -33,6 +35,7 @@ export class Publication implements PublicationInt {
             this.hour = "";
             this.multimedia = [];
             this.path = "";
+            this.typePublication = "";
         }
         
     }

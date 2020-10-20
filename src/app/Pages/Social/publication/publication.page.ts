@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router} from '@angular/router';
-//import { Publication } from 'src/app/services/publication';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { CaptureError, CaptureImageOptions, MediaCapture, MediaFile } from '@ionic-native/media-capture/ngx';
 import { Publication } from '../../../Models/Classes/publication';
@@ -8,7 +7,6 @@ import { PublicationService } from 'src/app/services/publication.service';
 import { Utils } from 'src/app/Models/Classes/utils';
 import { AccessUserData } from 'src/app/Models/Classes/access-user-data';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-//import { Platform } from '@ionic/angular';
 import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
@@ -24,21 +22,20 @@ export class PublicationPage implements OnInit {
 	public publication: Publication;
 	private utils: Utils;
 	private isVideo: boolean;
-	public src: string;
-	public videoExist: boolean = false;
+	private src: string;
+	private videoExist: boolean = false;
 	private accessdata: AccessUserData;
-	public typePublication = '';
+	private typePublication = '';
 	private hospedaje = false;
 	private checkIn: string; 
 	private checkOut: string;
 	private multimediaSelected: boolean;
 		
-constructor(
+	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
 		public publicationService: PublicationService,
 		private sanitizer: DomSanitizer,
-		//private platform: Platform,
 		private camera: Camera,
 		private mediaCapture: MediaCapture,
 		public actionSheetController: ActionSheetController,
@@ -47,7 +44,6 @@ constructor(
 	) { 
 		this.utils = new Utils();
 		this.publication = new Publication();
-		//this.publication = this.publicationService.publication;
 	}
 
 	async ngOnInit() {		
@@ -66,34 +62,10 @@ constructor(
         return this.sanitizer.bypassSecurityTrustUrl(this.src);
     }
 
-	public  home() {
-		let navigationExtras: NavigationExtras = {
-			queryParams: {
-				accessdata: JSON.stringify(this.accessdata),
-			},
-			replaceUrl: true,
-		};
-		this.router.navigate(['social'],navigationExtras);
-	}
-
-	public dates(){
-		this.publication.checkIn = this.checkIn.split('T')[0];
-		this.publication.checkOut = this.checkOut.split('T')[0];
-	}
-	public event(){
-		this.publication.checkIn = this.checkIn.split('T')[0];
-		this.publication.hour = this.publication.hour.split('T')[1];
-		this.publication.hour = this.publication.hour.split('.')[0];
-	}
-
 	public async post() {
+		this.publication.typePublication = this.typePublication;
+
 		await this.utils.loadingPresent();
-		if(this.publication.hour != ""){
-			this.event();
-		}
-		else{
-			this.dates();
-		}
 
 		console.log(this.publication);
 
@@ -279,5 +251,9 @@ constructor(
 
 	updatePublications() {
 		this.publicationService.updatePublications();
+	}
+
+	showData(){
+		console.log(this.typePublication);
 	}
 }

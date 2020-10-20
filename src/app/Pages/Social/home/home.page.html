@@ -15,18 +15,6 @@
 		</ion-avatar>
 		<ion-input placeholder="¿Qué estás pensando?" readonly class="inppost" (click)="pagePublication()" name="description"></ion-input>
 	</ion-toolbar>
-	<!--<ion-toolbar color="secondary">
-	<ion-button shape="round" class="btnup" size="small" (click)="menuImage()">
-			<ion-text>Subir foto</ion-text>
-		</ion-button>
-		<ion-button shape="round" class="btnvi" size="small" (click)="menuVideo()">
-			<ion-text>Subir video</ion-text>
-		</ion-button>
-		<ion-button shape="round" size="small" horizontal="end" class="btnpost" (click)="pagePublication()">
-			<ion-text>Publicar</ion-text>
-		</ion-button>
-
-	</ion-toolbar>-->
 	<br>
 
 	<ion-slides>
@@ -41,7 +29,11 @@
 		</ion-slide>
 	</ion-slides>
 
-	<ion-card class="cardHome" *ngFor="let publication of publications$ | async">
+	<div *ngFor="let publication of publications$ | async">
+		<app-lodging-view [publication]="publication"></app-lodging-view>
+	</div>
+
+	<!--<ion-card class="cardHome" *ngFor="let publication of publications$ | async">
 		<ion-item color="dark">
 			<ion-avatar slot="start">
 				<img src="https://img.mobiscroll.com/demos/card_2.png">
@@ -54,12 +46,12 @@
 
 		<div *ngIf="isVideo(publication['path'])"  controls class="videoPlayer">
 			<video controls preload="metadata" class="videoPlayer" width="100%" height="240">
-				<source src="http://192.168.0.15:8000/storage/{{publication.path}}" type="video/mp4">
+				<source src="http://192.168.0.14:8000/storage/{{publication.path}}" type="video/mp4">
 			</video>
 		</div>
 
 		<div *ngIf="!isVideo(publication['path'])">
-			<img src="http://192.168.0.15:8000/storage/{{publication.path}}"alt="ion">
+			<img src="http://192.168.0.14:8000/storage/{{publication.path}}"alt="ion">
 		</div>
 		
 		<ion-card-header>
@@ -78,8 +70,7 @@
 		</ion-card-content>
 
 	</ion-card>
-
-	
+	-->
 		<ion-fab vertical="bottom" horizontal="end" slot="fixed">
 			<ion-fab-button (click)="scrollToTop()">
 			  <ion-icon name="arrow-up-circle"></ion-icon>
