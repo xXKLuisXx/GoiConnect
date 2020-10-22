@@ -11,7 +11,7 @@ export class Publication implements PublicationInt {
     hour: string;
     path: string;
     multimedia: Multimedia[];
-    typePublication: string;
+    typeContent: number;
     
     constructor(object?: any){
         if(object != null){
@@ -24,7 +24,7 @@ export class Publication implements PublicationInt {
             this.hour = object.hour ?? "";
             this.multimedia = object.multimedia ?? [];
             this.path = object.path ??  "";
-            this.typePublication = object.typePublication ?? "";
+            this.typeContent = object.content_type_id ?? null;
         }else{
             this.title = "";
             this.description = "";
@@ -35,7 +35,7 @@ export class Publication implements PublicationInt {
             this.hour = "";
             this.multimedia = [];
             this.path = "";
-            this.typePublication = "";
+            this.typeContent = null;
         }
         
     }

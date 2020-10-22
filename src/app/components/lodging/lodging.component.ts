@@ -54,6 +54,7 @@ export class LodgingComponent implements OnInit {
             this.publication.checkIn = data.checkIn;
             this.publication.checkOut = data.checkOut;
             this.publication.price = Number(data.price);
+            this.publication.typeContent = 8;
           }
         }
       ]

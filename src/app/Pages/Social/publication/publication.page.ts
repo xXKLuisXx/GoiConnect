@@ -25,7 +25,7 @@ export class PublicationPage implements OnInit {
 	private src: string;
 	private videoExist: boolean = false;
 	private accessdata: AccessUserData;
-	private typePublication = '';
+	private typePublication = null;
 	private hospedaje = false;
 	private checkIn: string; 
 	private checkOut: string;
@@ -63,7 +63,8 @@ export class PublicationPage implements OnInit {
     }
 
 	public async post() {
-		this.publication.typePublication = this.typePublication;
+
+		if(this.publication.typeContent == null) this.publication.typeContent = 7;
 
 		await this.utils.loadingPresent();
 

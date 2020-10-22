@@ -1,13 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActionSheetController, Platform } from '@ionic/angular';
 import { PublicationService } from '../../../services/publication.service';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Publication } from '../../../Models/Classes/publication';
-import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Utils } from 'src/app/Models/Classes/utils';
-import { Router } from '@angular/router';
-import { CaptureError, CaptureImageOptions, MediaCapture, MediaFile } from '@ionic-native/media-capture/ngx';
-import { Base64 } from '@ionic-native/base64/ngx';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { IonContent } from '@ionic/angular';
 import { Observable, of } from 'rxjs';
@@ -32,23 +27,9 @@ export class HomePage implements OnInit {
 	private total: number;
 	private scrollEnd: boolean;
 
-	croppedImagepath = "";
-	isLoading = false;
-
-	imagePickerOptions = {
-		maximumImagesCount: 1,
-		quality: 50
-	};
-
-
 	constructor(
-		private camera: Camera,
 		public actionSheetController: ActionSheetController,
 		public publicationService: PublicationService,
-		private imagePicker: ImagePicker,
-		private router: Router,
-		private mediaCapture: MediaCapture,
-		private base64: Base64,
 		private platform: Platform
 	) {
 		this.utils = new Utils();
@@ -99,28 +80,10 @@ export class HomePage implements OnInit {
 	toggleInfiniteScroll() {
 		this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
 	}
-	
-	public post() {
-		this.utils.loadingPresent();
-		this.publication.title = 'lo que sea';
-		this.publicationService.post(this.publication, this.utils.accessUserData.getAuthorization()).subscribe(
-			async (Response: (any)) => {
-				this.utils.loadingDismiss();
-				this.publication = new Publication();
-				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK');
-			},
-			(Errors: (any)) => {
-				console.log(Errors);
-			},
-			() => {
-			}
-		);
-	}
 
 	public getPublications() {
 		this.publicationService.getPublications(this.utils.accessUserData.getAuthorization(), this.currentPage).subscribe(
 			(Response: (any)) => {
-				
 				let array: Array<Publication>;
 				array = new Array();
 
@@ -154,22 +117,4 @@ export class HomePage implements OnInit {
 		);
 	}
 
-	public isVideo(publication) {
-		console.log(publication);
-		let extension = publication.substr(13);
-		if (extension == 'mp4') return true;
-		else return false;
-	}
-
-	public async convertToBase64(path) {
-		return await this.base64.encodeFile(path).then((base64File: string) => {
-			return base64File;
-		}, (err) => {
-			return false;
-		});
-	}
-
-	public pagePublication(){
-		this.router.navigate(['social/social-publication']);
-	}
 }

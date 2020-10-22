@@ -74,7 +74,7 @@ export class Utils {
         return loading;
     }
 
-   public getItem(key: string){   
+   public getItem(key: string){ 
          return new Promise((resolve, reject)=> {
             this.secureStorage.create('private_storage')
             .then((storage) => {

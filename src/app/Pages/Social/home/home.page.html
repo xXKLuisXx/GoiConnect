@@ -30,7 +30,9 @@
 	</ion-slides>
 
 	<div *ngFor="let publication of publications$ | async">
-		<app-lodging-view [publication]="publication"></app-lodging-view>
+		
+			<app-publication-template [publication] = "publication"></app-publication-template>
+
 	</div>
 
 	<!--<ion-card class="cardHome" *ngFor="let publication of publications$ | async">
@@ -61,6 +63,8 @@
 			{{publication.description}}
 		</ion-card-content>
 
+		<app-lodging-template [publication] = "publication"></app-lodging-template>
+
 		<ion-card-content>
 			<ion-icon name="heart-outline" size="large" class="heartBtn"></ion-icon>
 
@@ -69,8 +73,8 @@
 			<ion-icon name="bookmark-outline" size="large" style="float: right;" class="bookBtn"></ion-icon>
 		</ion-card-content>
 
-	</ion-card>
-	-->
+	</ion-card>-->
+
 		<ion-fab vertical="bottom" horizontal="end" slot="fixed">
 			<ion-fab-button (click)="scrollToTop()">
 			  <ion-icon name="arrow-up-circle"></ion-icon>

@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { PublicationViewComponent } from './publication-view.component';
+import { PublicationTemplateComponent } from './publication-template.component';
 
-describe('PublicationViewComponent', () => {
-  let component: PublicationViewComponent;
-  let fixture: ComponentFixture<PublicationViewComponent>;
+describe('PublicationTemplateComponent', () => {
+  let component: PublicationTemplateComponent;
+  let fixture: ComponentFixture<PublicationTemplateComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PublicationViewComponent ],
+      declarations: [ PublicationTemplateComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PublicationViewComponent);
+    fixture = TestBed.createComponent(PublicationTemplateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

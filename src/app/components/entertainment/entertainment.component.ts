@@ -47,6 +47,7 @@ export class EntertainmentComponent implements OnInit {
             console.log(data.hour);
             this.publication.checkIn = data.date;
             this.publication.hour = data.hour;
+            this.publication.typeContent = 9;
           }
         }
       ]

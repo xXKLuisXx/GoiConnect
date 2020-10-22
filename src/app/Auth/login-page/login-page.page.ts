@@ -33,6 +33,7 @@ export class LoginPagePage implements OnInit {
     }
 
     public async loginForm() {
+        console.log('entrar login');
         await this.utils.loadingPresent();
         this.authService.login(this.UserData).subscribe(
             async (Response: (any)) => {
