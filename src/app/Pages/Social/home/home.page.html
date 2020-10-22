@@ -35,57 +35,18 @@
 
 	</div>
 
-	<!--<ion-card class="cardHome" *ngFor="let publication of publications$ | async">
-		<ion-item color="dark">
-			<ion-avatar slot="start">
-				<img src="https://img.mobiscroll.com/demos/card_2.png">
-			</ion-avatar>
-			<ion-label>
-				<h3>John Doe</h3>
-				<p>New York City</p>
-			</ion-label>
-		</ion-item>
+	<ion-fab *ngIf="scrollEnd" vertical="bottom" horizontal="end" slot="fixed">
+		<ion-fab-button (click)="scrollToTop()">
+		  <ion-icon name="arrow-up-circle"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
 
-		<div *ngIf="isVideo(publication['path'])"  controls class="videoPlayer">
-			<video controls preload="metadata" class="videoPlayer" width="100%" height="240">
-				<source src="http://192.168.0.14:8000/storage/{{publication.path}}" type="video/mp4">
-			</video>
-		</div>
 
-		<div *ngIf="!isVideo(publication['path'])">
-			<img src="http://192.168.0.14:8000/storage/{{publication.path}}"alt="ion">
-		</div>
-		
-		<ion-card-header>
-			<ion-card-title>{{publication.title}}</ion-card-title>
-		</ion-card-header>
-		<ion-card-content>
-			{{publication.description}}
-		</ion-card-content>
-
-		<app-lodging-template [publication] = "publication"></app-lodging-template>
-
-		<ion-card-content>
-			<ion-icon name="heart-outline" size="large" class="heartBtn"></ion-icon>
-
-			<ion-icon name="chatbubble-ellipses-sharp" size="large" class="chatIcon"></ion-icon>
-
-			<ion-icon name="bookmark-outline" size="large" style="float: right;" class="bookBtn"></ion-icon>
-		</ion-card-content>
-
-	</ion-card>-->
-
-		<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-			<ion-fab-button (click)="scrollToTop()">
-			  <ion-icon name="arrow-up-circle"></ion-icon>
-			</ion-fab-button>
-		  </ion-fab>
-
-		<ion-infinite-scroll threshold="20px" (ionInfinite)="loadData($event)">
-			<ion-infinite-scroll-content
-			  loadingSpinner="crescent"
-			  loadingText="Loading more data...">
-			</ion-infinite-scroll-content>
-		</ion-infinite-scroll>
+	<ion-infinite-scroll threshold="20px" (ionInfinite)="loadData($event)">
+		<ion-infinite-scroll-content
+		  loadingSpinner="crescent"
+		  loadingText="Loading more data...">
+		</ion-infinite-scroll-content>
+	</ion-infinite-scroll>
 	
 </ion-content>

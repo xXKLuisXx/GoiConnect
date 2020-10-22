@@ -6,10 +6,23 @@
   <app-image-video-template [publication]="publication"></app-image-video-template>
   
   <ion-card-content>
-    <ion-card-title>Disponible: {{publication.checkIn}}</ion-card-title>
-    <ion-card-title>Hasta: {{publication.checkOut}}</ion-card-title>
-    <ion-card-title>Precio: ${{publication.price}}</ion-card-title>
-                    {{publication.description}}
+    {{publication.description}}
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            <ion-card-subtitle>Disponible: {{publication.checkIn}}</ion-card-subtitle>
+            <ion-card-subtitle>Hasta: {{publication.checkOut}}</ion-card-subtitle>
+            <ion-card-subtitle>Precio: ${{publication.price}}</ion-card-subtitle>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            <ion-button>Alquilar</ion-button>     
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>                        
   </ion-card-content>
   
 

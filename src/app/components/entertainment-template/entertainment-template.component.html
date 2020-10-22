@@ -6,6 +6,7 @@
   <app-image-video-template [publication]="publication"></app-image-video-template>
 
   <ion-card-content>
+    {{publication.description}}  
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -16,12 +17,11 @@
         </ion-col>
         <ion-col>
           <div>
-            <ion-button color="success">Asistir</ion-button>     
+            <ion-button>Asistir</ion-button>     
           </div>
         </ion-col>
       </ion-row>
-    </ion-grid>
-    {{publication.description}}                
+    </ion-grid>              
   </ion-card-content>
 
   

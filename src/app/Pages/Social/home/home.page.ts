@@ -7,6 +7,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
 import { IonContent } from '@ionic/angular';
 import { Observable, of } from 'rxjs';
 import { PublicationInt } from 'src/app/Models/Interfaces/publication-int';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-home',
@@ -30,10 +31,11 @@ export class HomePage implements OnInit {
 	constructor(
 		public actionSheetController: ActionSheetController,
 		public publicationService: PublicationService,
-		private platform: Platform
+		private platform: Platform,
+		private router: Router
 	) {
 		this.utils = new Utils();
-		this.scrollEnd = true;
+		this.scrollEnd = false;
 		this.publication = new Publication();
 
 		publicationService.updatePublication$.subscribe(
@@ -78,6 +80,7 @@ export class HomePage implements OnInit {
 	}
 
 	toggleInfiniteScroll() {
+		this.scrollEnd = false;
 		this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
 	}
 
@@ -117,4 +120,7 @@ export class HomePage implements OnInit {
 		);
 	}
 
+	pagePublication(){
+		this.router.navigate(['social/social-publication']);
+	}
 }
