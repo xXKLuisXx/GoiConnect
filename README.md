@@ -89,7 +89,15 @@ with this we managed to transpile the TypeScript code and the application will r
 
 Now we must restore the status of the project.
 
-`$ ionic cordova prepare`
+`$ ionic build`
 
 
 With this command, the platforms that the app has added (Android or IOS) and the Ionic and Cordova plugins that are in the config.xml file will be restored. Some plugins need certain parameters fir installation, these are also saved in the config.xml file, and when restoring we will not have any problem, we just have to take it into account and look at the moment of incorporating a new plugin into the project.
+
+`$ ionic cap sync`
+
+`$ npx jetify`
+
+`$ npx cap sync android`
+
+`$ npm cap run android -l --external`
