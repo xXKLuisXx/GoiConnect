@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router} from '@angular/router';
-import { Publication } from 'src/app/services/publication';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { CaptureError, CaptureImageOptions, MediaCapture, MediaFile } from '@ionic-native/media-capture/ngx';
+import { Publication } from '../../../Models/Classes/publication';
 import { PublicationService } from 'src/app/services/publication.service';
 import { Utils } from 'src/app/Models/Classes/utils';
 import { AccessUserData } from 'src/app/Models/Classes/access-user-data';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Platform } from '@ionic/angular';
 import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
@@ -18,42 +19,42 @@ import { Base64 } from '@ionic-native/base64/ngx';
 })
 export class PublicationPage implements OnInit {
 
-	public publication: Publication = {
-		title: "",
-		description: "",
-		monetized:false,
-		multimedia: []
-	}
+	public publication: Publication;
 	private utils: Utils;
 	private isVideo: boolean;
-	public src: string;
-	public videoExist: boolean = false;
+	private src: string;
+	private videoExist: boolean = false;
 	private accessdata: AccessUserData;
-	public typePublication = '';
+	private typePublication = null;
 	private hospedaje = false;
-	
+	private checkIn: string; 
+	private checkOut: string;
+	private multimediaSelected: boolean;
+		
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
 		public publicationService: PublicationService,
 		private sanitizer: DomSanitizer,
-		private platform: Platform,
+		private camera: Camera,
+		private mediaCapture: MediaCapture,
 		public actionSheetController: ActionSheetController,
 		private imagePicker: ImagePicker,
 		private base64: Base64
 	) { 
 		this.utils = new Utils();
+		this.publication = new Publication();
 	}
 
 	async ngOnInit() {		
-		this.publication = this.publicationService.publication;
-		this.src = this.publication.multimedia[0].base;
+		/*this.src = this.publication.multimedia[0].base;
 		if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
-		else this.isVideo = true;
+		else this.isVideo = true;*/
 
-		this.platform.backButton.subscribeWithPriority(10, () => {
+		/*this.platform.backButton.subscribeWithPriority(10, () => {
 			this.router.navigate(['social']);
-		});
+		});*/
+		this.multimediaSelected = true;
 
 		await this.utils.getAccessData();
 	}
@@ -61,38 +62,26 @@ export class PublicationPage implements OnInit {
         return this.sanitizer.bypassSecurityTrustUrl(this.src);
     }
 
-	public  home() {
-		let navigationExtras: NavigationExtras = {
-			queryParams: {
-				accessdata: JSON.stringify(this.accessdata),
-			},
-			replaceUrl: true,
-		};
-		this.router.navigate(['social'],navigationExtras);
-	}
-
 	public async post() {
+		//console.log(this.publication);
+		if(this.publication.typeContent == null) this.publication.typeContent = 7;
+
 		await this.utils.loadingPresent();
+
 		console.log(this.publication);
+
 		this.publicationService.post(this.publication, this.utils.accessUserData.getAuthorization()).subscribe(
 			async (Response: (any)) => {
-				this.publication={
-					title: "",
-					description: "",
-					monetized:false,
-					multimedia: []
-				}
-
-				this.publicationService.publication = {
-					title: "",
-					description: "",
-					monetized:false,
-					multimedia: []
-				}
-
+				this.publication = new Publication();
+				console.log(Response);
+				this.publicationService.publication = new Publication();
+				console.log('publicación terminada');
+				console.log(this.publication);
 				this.utils.loadingDismiss();
+				this.updatePublications();
+				this.src = ""; 
 				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
-				this.home();
+				this.router.navigate(['social']);
 			},
 			(Errors: (any)) => {
 				this.utils.loadingDismiss();
@@ -104,19 +93,43 @@ export class PublicationPage implements OnInit {
 		);
 	}
 
-	async menuImage() {
+	async menuCamera() {
 		const actionSheet = await this.actionSheetController.create({
 			header: "Select Image source",
 			buttons: [{
-				text: 'Load from Library',
+				text: 'Foto',
+				handler: () => {
+					this.takePhoto(this.camera.PictureSourceType.CAMERA);
+				}
+			},
+			{
+				text: 'Video',
+				handler: () => {
+					this.takeVideo();
+				}
+			},
+			{
+				text: 'Cancel',
+				role: 'cancel'
+			}
+			]
+		});
+		await actionSheet.present();
+	}
+
+	async menuMultimedia(){
+		const actionSheet = await this.actionSheetController.create({
+			header: "Select gallery",
+			buttons: [{
+				text: 'Imagen',
 				handler: () => {
 					this.pickImages();
 				}
 			},
 			{
-				text: 'Use Camera',
+				text: 'Video',
 				handler: () => {
-					//this.pickImage(this.camera.PictureSourceType.CAMERA);
+					this.pickVideo(this.camera.PictureSourceType.PHOTOLIBRARY);
 				}
 			},
 			{
@@ -130,13 +143,6 @@ export class PublicationPage implements OnInit {
 
 	public pickImages() {
 
-		let navigationExtras: NavigationExtras = {
-			queryParams: {
-				accessdata: JSON.stringify(this.accessdata),
-			},
-			replaceUrl: true,
-		};
-
 		const options = {
 			maximumImagesCount: 5,
 			quality: 100,
@@ -144,7 +150,6 @@ export class PublicationPage implements OnInit {
 		};
 
 		this.imagePicker.getPictures(options).then(async(images) => {
-			console.log(images);
 				for (var i = 0; i < images.length; i++) {
 					const extensionImage = images[i].substr(images[i].lastIndexOf('.') + 1); 
 					 await this.base64.encodeFile(images[i]).then((base64File: string) => {
@@ -154,14 +159,102 @@ export class PublicationPage implements OnInit {
 					});
 				}
 
-				this.publicationService.publication = this.publication;
-				console.log('Tamanio: ',this.publication.multimedia.length);
+				//this.publicationService.publication = this.publication;
 				if (this.publication.multimedia.length != 0){
-					this.router.navigate(['social/social-publication'], navigationExtras);
+					this.multimediaSelected = false;
+					this.src = this.publication.multimedia[0].base;
+					if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
 				}
-			//}
 		}, (err) => {
 			console.log(err);
 		});
+	}
+
+	public async takePhoto(sourceType) {
+		const options: CameraOptions = {
+			quality: 100,
+			sourceType: sourceType,
+			destinationType: this.camera.DestinationType.DATA_URL,
+			encodingType: this.camera.EncodingType.JPEG,
+			mediaType: this.camera.MediaType.PICTURE,
+			correctOrientation: true
+		}
+		this.camera.getPicture(options).then((imageData) => {
+			this.publication.multimedia.push({ base: 'data:image/jpg;base64,' + imageData, ext: 'jpg' });
+			this.publicationService.publication = this.publication;
+			if (this.publication.multimedia != null) {
+				//this.publication = new Publication();
+				this.multimediaSelected = false;
+				this.src = this.publication.multimedia[0].base;
+				if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
+			}
+		}, (err) => {
+			
+		});
+	}
+
+	public async takeVideo() {
+		let options: CaptureImageOptions = { limit: 1 }
+		await this.mediaCapture.captureVideo(options).then(async (data: MediaFile[]) => {
+			await this.base64.encodeFile(data[0].fullPath).then((base64File: string) => {
+
+				this.publication.multimedia.push({ base: base64File, ext: 'mp4' });
+				this.publicationService.publication = this.publication
+				if (this.publication.multimedia != null) {
+					this.multimediaSelected = false;
+					this.src = this.publication.multimedia[0].base;
+					if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
+					else{
+						this.isVideo = true;
+					}
+					//this.router.navigate(['social/social-publication']);
+				}
+			}, (err) => {
+				console.log(err);
+			});
+		}, (err: CaptureError) => {
+			console.log(err);
+		});
+	}
+
+	public pickVideo(sourceType) {
+		const options: CameraOptions = {
+			mediaType: this.camera.MediaType.VIDEO,
+			sourceType: sourceType
+		}
+		this.camera.getPicture(options)
+		.then(async (videoUrl) => {
+			if (videoUrl) {
+				var dirpath = videoUrl.substr(0, videoUrl.lastIndexOf('/') + 1);
+				dirpath = dirpath.includes("file://") ? dirpath : "file://" + dirpath;
+
+				await this.base64.encodeFile('file://' + videoUrl).then((base64File: string) => {
+					this.publication.multimedia.push({ base: base64File, ext: 'mp4' });
+					this.publicationService.publication = this.publication;
+
+					if (this.publication.multimedia != null) {
+						this.src = this.publication.multimedia[0].base;
+						if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
+						else{
+							this.isVideo = true;
+						}
+						this.multimediaSelected = false;
+					}
+				}, (err) => {
+					console.log(err);
+				});
+			}
+		})
+		.catch(err => {
+				console.log(err);
+		});
+	}
+
+	updatePublications() {
+		this.publicationService.updatePublications();
+	}
+
+	showData(){
+		console.log(this.typePublication);
 	}
 }

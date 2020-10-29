@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { promise } from 'protractor';
 import { Utils } from '../Models/Classes/utils';
 
 @Injectable({
@@ -19,7 +20,6 @@ export class AuthGuard implements CanActivate {
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot
 	): Promise<boolean | UrlTree> {
-		console.log("entra");
 		let promise = await this.utils.getAccessData().then((data) => {
 			console.log(data);
 			return this.router.parseUrl('social');

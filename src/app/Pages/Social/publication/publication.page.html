@@ -6,13 +6,15 @@
 
 <ion-content>
 
-  <div *ngIf="isVideo" width="320" height="240" controls class="videoPlayer">
-    <video controls preload="metadata" class="videoPlayer" width="100%" height="240">
-      <source [src]="getImgContent()" type="video/mp4">
-      </video>
-  </div>
-  <div *ngIf="!isVideo">
-    <img [src]="getImgContent()"/>
+  <div *ngIf="!multimediaSelected">
+    <div *ngIf="isVideo" width="320" height="240" controls class="videoPlayer">
+      <video controls preload="metadata" class="videoPlayer" width="100%" height="240">
+        <source [src]="getImgContent()" type="video/mp4">
+        </video>
+    </div>
+    <div *ngIf="!isVideo">
+      <img [src]="getImgContent()"/>
+    </div>
   </div>
 
   <ion-item lines="full">
@@ -30,72 +32,55 @@
   <ion-item>
     <ion-label>Tipo de publicación</ion-label>
     <ion-select [(ngModel)]='typePublication' [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Seleccionar">
-      <ion-select-option value="hospedaje">Hospedaje</ion-select-option>
-      <ion-select-option value="evento">Evento</ion-select-option>
-      <ion-select-option value="viaje">Viaje</ion-select-option>
-      <ion-select-option value="">Estado</ion-select-option>
+      <ion-select-option value="8">Hospedaje</ion-select-option>
+      <ion-select-option value="9">Evento</ion-select-option>
+      <ion-select-option value="10">Viaje</ion-select-option>
+      <ion-select-option value="2">Estado</ion-select-option>
     </ion-select>
   </ion-item>
 
   <div [ngSwitch]="typePublication">
     
-    <div *ngSwitchCase="'hospedaje'">
-      <ion-item lines="full">
-        <ion-icon name="cash-outline" slot="start"></ion-icon>
-        <ion-label position="floating">Precio</ion-label>
-        <ion-input type="number" name="price" required></ion-input>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Check In</ion-label>
-        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Check Out</ion-label>
-        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
-      </ion-item>
+    <div *ngSwitchCase="8">
+      <app-entertainment [publication]="publication" [typePublication]="typePublication"></app-entertainment>
     </div>
 
-    <div *ngSwitchCase="'evento'">
-      <ion-item>
-        <ion-label>Fecha</ion-label>
-        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>Hora</ion-label>
-        <ion-datetime displayFormat="HH:mm"></ion-datetime>
-      </ion-item>
+    <div *ngSwitchCase="9">
+      <app-entertainment [publication]="publication" [typePublication]="typePublication"></app-entertainment>
     </div>
 
-    <div *ngSwitchCase="'viaje'">
-      <ion-item lines="full">
-        <ion-icon name="cash-outline" slot="start"></ion-icon>
-        <ion-label position="floating">Precio</ion-label>
-        <ion-input type="number" name="price" required></ion-input>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Check In</ion-label>
-        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Check Out</ion-label>
-        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" value="2030-01-01"></ion-datetime>
-      </ion-item>
+    <div *ngSwitchCase="10">
+      <app-entertainment [publication]="publication" [typePublication]="typePublication"></app-entertainment>
     </div>
 
     <div *ngSwitchDefault>
     </div>
   </div>
 
+  <div *ngIf="multimediaSelected">
+    <ion-item lines="full">
+      <ion-icon name="images-outline" slot="start"></ion-icon>
+      <ion-label>Imagen / Video</ion-label>
+      <ion-input type="text" readonly name="image" (click)="menuMultimedia()"></ion-input>
+    </ion-item>
+  
+    <ion-item lines="full">
+      <ion-icon name="camera-outline" slot="start"></ion-icon>
+      <ion-label>Cámara</ion-label>
+      <ion-input type="text" readonly name="camera" (click)="menuCamera()"></ion-input>
+    </ion-item>
+  </div>
+  
   <ion-item lines="full">
     <ion-icon name="card-outline" slot="start"></ion-icon>
     <ion-toggle  [(ngModel)]="publication.monetized" name="monetized"></ion-toggle><ion-label>Monetizar</ion-label>
   </ion-item>
 
+
   <ion-button type="submit" color="primary" expand="block" (click)="post()">Publicar</ion-button>
+
+  
   
 </ion-content>
+
+

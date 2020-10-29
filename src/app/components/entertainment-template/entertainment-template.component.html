@@ -1,0 +1,54 @@
+
+  <ion-card-header>
+    <ion-card-title>{{publication.title}}</ion-card-title>
+  </ion-card-header>
+  
+  <app-image-video-template [publication]="publication"></app-image-video-template>
+   
+  <ion-card-content>
+    {{publication.description}}  
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            <ion-card-subtitle>Fecha del: {{publication.startDate | date: 'EE, d LLL'}}</ion-card-subtitle>
+            <ion-card-subtitle>Hasta: {{publication.endDate | date: 'EE, d LLL'}}</ion-card-subtitle>
+            <ion-card-subtitle>Precio: ${{publication.price}}</ion-card-subtitle>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            <ion-card-subtitle>Hora inicio: {{publication.startHour}}</ion-card-subtitle>
+            <ion-card-subtitle>Hora fin: {{publication.endHour}}</ion-card-subtitle>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div>
+            <div [ngSwitch]="typeContent">
+              <div *ngSwitchCase="9">
+                
+                <ion-badge color="success">{{publication.partakers}} asistirán</ion-badge>
+            </div>
+            <div *ngSwitchDefault></div>
+          </div>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div [ngSwitch]="typeContent">
+            <div *ngSwitchCase="9">
+              <ion-button *ngIf="!joined" (click)="changeUnion()">Asistir</ion-button>
+              <ion-button *ngIf="joined" (click)="changeUnion()" color="danger">No asistir</ion-button>
+            </div>
+            <div *ngSwitchCase="8">
+              <ion-button (click)="joinEvent()">Alquilar</ion-button> 
+            </div>
+            <div *ngSwitchDefault></div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>              
+  </ion-card-content>
+ 
+  

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from  'rxjs';
-
+import { Publication } from '../Models/Classes/publication';
 import { HttpClient } from '@angular/common/http';
 import { RequestService } from '../services/request.service';
-import { Publication } from './publication';
+//import { Publication } from './publication';
 import { RequestResponse } from '../Models/Classes/request-response';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,28 +14,30 @@ import { RequestResponse } from '../Models/Classes/request-response';
 export class PublicationService {
 
   authSubject  =  new  BehaviorSubject(false);
-  private postValue: boolean;
+  private tokenRequired: boolean;
+  public publication: Publication = new Publication();
 
-  public publication: Publication = {
-    title : "",
-    description : "",
-    monetized:false,
-    multimedia : []
-  }
+  
+  private updatePublication = new Subject<string>();
+  updatePublication$ = this.updatePublication.asObservable();
   
   constructor(
     public httpClient : HttpClient,
     private request: RequestService
   ) { 
-    this.postValue = true;
+    this.tokenRequired = true;
+  }
+
+  updatePublications() {
+    this.updatePublication.next();
   }
 
   post(publication: Publication, authorization?: string): Observable<RequestResponse> {
-    return this.request.createRequest(publication, 'publication', this.postValue, authorization);
+    return this.request.createRequest(publication, 'publication', this.tokenRequired, authorization);
   }
 
   getPublications( authorization: string, page?: number): Observable<RequestResponse> {
-    return this.request.createRequestGet('publication', this.postValue, authorization, page);
+    return this.request.createRequestGet('publication', this.tokenRequired, authorization, page, 'page');
   }
   
 }
