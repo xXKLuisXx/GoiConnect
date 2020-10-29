@@ -39,7 +39,7 @@ export class RequestService {
 			case 'join':
 				return this.END_POINTS[4];
 			case 'joined':
-				return this.END_POINTS[5];			
+				return this.END_POINTS[5];
 			default:
 				break;
 		}
@@ -53,7 +53,7 @@ export class RequestService {
 			case 'id_detail':
 				return this.PARAMETERS[1];
 			case 'id':
-				return this.PARAMETERS[2];			
+				return this.PARAMETERS[2];
 			default:
 				break;
 		}
