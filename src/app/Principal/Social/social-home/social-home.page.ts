@@ -10,6 +10,7 @@ import { SuperTabChangeEventDetail } from '@ionic-super-tabs/core';
 import { ActivatedRoute } from '@angular/router';
 import { AccessUserData } from 'src/app/Models/Classes/access-user-data';
 import { Utils } from 'src/app/Models/Classes/utils';
+import { LodgingPage } from 'src/app/Pages/Social/lodging/lodging.page';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class SocialHomePage implements OnInit {
 	chatPage = ChatPage;
 	profilePage = ProfilePage;
 	menuAppsPage = MenuAppsPage;
+	lodgingPage = LodgingPage;
 
 	public accessdata: AccessUserData;
 	private utils: Utils;
