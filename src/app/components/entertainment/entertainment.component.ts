@@ -64,8 +64,8 @@ export class EntertainmentComponent implements OnInit {
             this.publication.startHour = data.startHour;
             this.publication.endHour = data.endHour;
             this.publication.price = Number(data.price);
-            console.log(this.typePublication);
             this.publication.typeContent = Number(this.typePublication);
+           
           }
         }
       ]

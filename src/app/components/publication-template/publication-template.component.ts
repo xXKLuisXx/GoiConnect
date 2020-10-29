@@ -17,5 +17,6 @@ export class PublicationTemplateComponent implements OnInit {
   ngOnInit() {
     this.typeContent = this.publication.typeContent.toString();  
   }  
+  
 }
 

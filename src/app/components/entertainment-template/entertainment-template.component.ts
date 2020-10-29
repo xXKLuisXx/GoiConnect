@@ -23,8 +23,10 @@ export class EntertainmentTemplateComponent implements OnInit {
 
   async ngOnInit() {
 	this.typeContent = this.publication.typeContent.toString(); 
-	await this.utils.getAccessData();
-	this.isJoined();	
+	await this.utils.getAccessData().then(()=>{
+		this.isJoined();
+	});
+		
   }
 
   public async joinEvent(){
@@ -90,6 +92,7 @@ export class EntertainmentTemplateComponent implements OnInit {
   }
 
   public async isJoined(){
+	  console.log(this.publication.id_detail);
 	this.joinService.isJoined(this.utils.accessUserData.getAuthorization(), this.publication.id_detail).subscribe(
 		(Response: (any)) => {
 			if(Response == 0) this.joined = true;
@@ -101,6 +104,5 @@ export class EntertainmentTemplateComponent implements OnInit {
 		() => {
 		}
 	);
-
   }
 }

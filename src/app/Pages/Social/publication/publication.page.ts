@@ -257,4 +257,29 @@ export class PublicationPage implements OnInit {
 	showData(){
 		console.log(this.typePublication);
 	}
+	
+
+	async publications() {
+		const actionSheet = await this.actionSheetController.create({
+			header: "Select Type Publication",
+			buttons: [{
+				text: 'Hospedaje',
+				handler: () => {
+					this.router.navigate(['social/social-publication/lodging']);
+				}
+			},
+			{
+				text: 'Evento',
+				handler: () => {
+					this.takeVideo();
+				}
+			},
+			{
+				text: 'Cancel',
+				role: 'cancel'
+			}
+			]
+		});
+		await actionSheet.present();
+	}
 }

@@ -76,20 +76,19 @@ const routes: Routes = [
 			},
 			{
 				path: 'social-publication',
-				//loadChildren: () => import('./Pages/Social/publication/publication.module').then(m => m.PublicationPageModule),
-				children: [
-					{
-						path: '',
-						loadChildren: () => import('./Pages/Social/publication/publication.module').then(m => m.PublicationPageModule)
-					}
-				]
+				loadChildren: () => import('./Pages/Social/publication/publication.module').then(m => m.PublicationPageModule),
 			},
 			{
 				path: 'social-chat',
 				loadChildren: () => import('./Pages/Social/chat/chat.module').then(m => m.ChatPageModule)
-			}
+			},
+			{
+				path: 'lodging',
+				loadChildren: () => import('./Pages/Social/lodging/lodging.module').then( m => m.LodgingPageModule)
+			},
 		]
 	},
+
   
 
 	/*
