@@ -6,6 +6,7 @@ import { LodgingTemplateComponent } from './lodging-template/lodging-template.co
 import { ImageVideoTemplateComponent } from './image-video-template/image-video-template.component';
 import { PublicationTemplateComponent } from './publication-template/publication-template.component';
 import { EntertainmentTemplateComponent } from './entertainment-template/entertainment-template.component';
+import { NormalPublicationTemplateComponent } from './normal-publication-template/normal-publication-template.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { EntertainmentTemplateComponent } from './entertainment-template/enterta
                  LodgingTemplateComponent,
                  ImageVideoTemplateComponent,
                  PublicationTemplateComponent,
-                 EntertainmentTemplateComponent],
+                 EntertainmentTemplateComponent,
+                 NormalPublicationTemplateComponent],
   imports: [
     CommonModule
   ],
@@ -24,7 +26,8 @@ import { EntertainmentTemplateComponent } from './entertainment-template/enterta
             LodgingTemplateComponent,
             ImageVideoTemplateComponent,
             PublicationTemplateComponent,
-            EntertainmentTemplateComponent],
+            EntertainmentTemplateComponent,
+            NormalPublicationTemplateComponent],
 })
 export class ComponentsModule { }
 

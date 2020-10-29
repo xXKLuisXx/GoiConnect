@@ -51,8 +51,8 @@ export class LodgingComponent implements OnInit {
           text: 'Ok',
           handler: (data) => {
 
-            this.publication.checkIn = data.checkIn;
-            this.publication.checkOut = data.checkOut;
+            //this.publication.checkIn = data.checkIn;
+            //this.publication.checkOut = data.checkOut;
             this.publication.price = Number(data.price);
             this.publication.typeContent = 8;
           }

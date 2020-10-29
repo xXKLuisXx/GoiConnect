@@ -63,7 +63,7 @@ export class PublicationPage implements OnInit {
     }
 
 	public async post() {
-
+		//console.log(this.publication);
 		if(this.publication.typeContent == null) this.publication.typeContent = 7;
 
 		await this.utils.loadingPresent();

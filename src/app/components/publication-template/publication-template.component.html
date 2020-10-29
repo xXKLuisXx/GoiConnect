@@ -10,27 +10,14 @@
     </ion-label>
   </ion-item>
 
-  <div>
-    <!--<div *ngIf="isVideo(publication['path'])"  controls class="videoPlayer">
-    <video controls preload="metadata" class="videoPlayer" width="100%" height="240">
-      <source src="http://192.168.0.14:8000/storage/{{publication.path}}" type="video/mp4">
-    </video>
-  </div>
-
-  <div *ngIf="!isVideo(publication['path'])">
-    <img src="http://192.168.0.14:8000/storage/{{publication.path}}"alt="ion">
-  </div>
--->
-  </div>
-  
   <div [ngSwitch]="typeContent">
     
     <div *ngSwitchCase="7">
-      <app-image-video-template [publication]="publication"></app-image-video-template>
+      <app-normal-publication-template [publication]="publication"></app-normal-publication-template>
     </div>
 
     <div *ngSwitchCase="8">
-      <app-lodging-template [publication]="publication"></app-lodging-template>
+      <app-entertainment-template [publication]="publication"></app-entertainment-template>
     </div>
       
     <div *ngSwitchCase="9">

@@ -32,40 +32,25 @@
   <ion-item>
     <ion-label>Tipo de publicación</ion-label>
     <ion-select [(ngModel)]='typePublication' [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Seleccionar">
-      <ion-select-option value="hospedaje">Hospedaje</ion-select-option>
-      <ion-select-option value="evento">Evento</ion-select-option>
-      <ion-select-option value="viaje">Viaje</ion-select-option>
-      <ion-select-option value="Estado">Estado</ion-select-option>
+      <ion-select-option value="8">Hospedaje</ion-select-option>
+      <ion-select-option value="9">Evento</ion-select-option>
+      <ion-select-option value="10">Viaje</ion-select-option>
+      <ion-select-option value="2">Estado</ion-select-option>
     </ion-select>
   </ion-item>
 
   <div [ngSwitch]="typePublication">
     
-    <div *ngSwitchCase="'hospedaje'">
-      <app-lodging [publication]="publication"></app-lodging>
+    <div *ngSwitchCase="8">
+      <app-entertainment [publication]="publication" [typePublication]="typePublication"></app-entertainment>
     </div>
 
-    <div *ngSwitchCase="'evento'">
-      <app-entertainment [publication]="publication"></app-entertainment>
+    <div *ngSwitchCase="9">
+      <app-entertainment [publication]="publication" [typePublication]="typePublication"></app-entertainment>
     </div>
-      
 
-    <div *ngSwitchCase="'viaje'">
-      <ion-item lines="full">
-        <ion-icon name="cash-outline" slot="start"></ion-icon>
-        <ion-label position="floating">Precio</ion-label>
-        <ion-input type="number" name="price" [(ngModel)]='publication.price'></ion-input>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Check In</ion-label>
-        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" [(ngModel)]='checkIn'></ion-datetime>
-      </ion-item>
-  
-      <ion-item>
-        <ion-label>Check Out</ion-label>
-        <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2020" max="2030" [(ngModel)]='checkOut'></ion-datetime>
-      </ion-item>
+    <div *ngSwitchCase="10">
+      <app-entertainment [publication]="publication" [typePublication]="typePublication"></app-entertainment>
     </div>
 
     <div *ngSwitchDefault>
@@ -93,5 +78,9 @@
 
 
   <ion-button type="submit" color="primary" expand="block" (click)="post()">Publicar</ion-button>
+
+  
   
 </ion-content>
+
+

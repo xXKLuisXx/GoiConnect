@@ -10,6 +10,7 @@ import { AlertController } from '@ionic/angular';
 export class EntertainmentComponent implements OnInit {
 
   @Input() publication: Publication;
+  @Input() typePublication: string;
 
   constructor(public alertController: AlertController) { }
 
@@ -22,14 +23,29 @@ export class EntertainmentComponent implements OnInit {
       header: 'Evento',
       inputs: [
         {
-          name: 'date',
+          name: 'startDate',
           type: 'date',
           min: '2019-01-01',
           max: '2030-12-12'
         },
         {
-          name: 'hour',
+          name: 'endDate',
+          type: 'date',
+          min: '2019-01-01',
+          max: '2030-12-12'
+        },
+        {
+          name: 'startHour',
           type: 'time'
+        },
+        {
+          name: 'endHour',
+          type: 'time'
+        },
+        {
+          name: 'price',
+          type: 'number',
+          placeholder: 'Precio $'
         },
       ],
       buttons: [
@@ -43,11 +59,13 @@ export class EntertainmentComponent implements OnInit {
         }, {
           text: 'Ok',
           handler: (data) => {
-            console.log(data.date);
-            console.log(data.hour);
-            this.publication.checkIn = data.date;
-            this.publication.hour = data.hour;
-            this.publication.typeContent = 9;
+            this.publication.startDate = data.startDate;
+            this.publication.endDate = data.endDate;
+            this.publication.startHour = data.startHour;
+            this.publication.endHour = data.endHour;
+            this.publication.price = Number(data.price);
+            console.log(this.typePublication);
+            this.publication.typeContent = Number(this.typePublication);
           }
         }
       ]

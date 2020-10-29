@@ -14,7 +14,7 @@ import { Subject } from 'rxjs';
 export class PublicationService {
 
   authSubject  =  new  BehaviorSubject(false);
-  private postValue: boolean;
+  private tokenRequired: boolean;
   public publication: Publication = new Publication();
 
   
@@ -25,7 +25,7 @@ export class PublicationService {
     public httpClient : HttpClient,
     private request: RequestService
   ) { 
-    this.postValue = true;
+    this.tokenRequired = true;
   }
 
   updatePublications() {
@@ -33,11 +33,11 @@ export class PublicationService {
   }
 
   post(publication: Publication, authorization?: string): Observable<RequestResponse> {
-    return this.request.createRequest(publication, 'publication', this.postValue, authorization);
+    return this.request.createRequest(publication, 'publication', this.tokenRequired, authorization);
   }
 
   getPublications( authorization: string, page?: number): Observable<RequestResponse> {
-    return this.request.createRequestGet('publication', this.postValue, authorization, page);
+    return this.request.createRequestGet('publication', this.tokenRequired, authorization, page, 'page');
   }
   
 }

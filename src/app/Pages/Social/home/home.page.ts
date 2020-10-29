@@ -44,11 +44,13 @@ export class HomePage implements OnInit {
 			  this.getPublications();
 			});
 	}
+
 	
 	async ngOnInit() {
 		await this.platform.ready().then(async () => {
 			await this.utils.getAccessData().then(() => {
-				console.log("exito");		
+				console.log("exito");
+				this.getPublications();		
 			}).catch((error) => {
 				console.log(error);
 			});
@@ -57,9 +59,10 @@ export class HomePage implements OnInit {
 		this.total = 0;
 		this.contPublications = 0;
 		this.currentPage = 1;
-		this.getPublications();
 		console.log(this.publications$);
+
 	}
+
 
 	loadData(event) {
 		setTimeout(() => {
@@ -77,6 +80,7 @@ export class HomePage implements OnInit {
 
 	scrollToTop() {
 		this.content.scrollToTop(400);
+		this.scrollEnd = false;
 	}
 
 	toggleInfiniteScroll() {
@@ -90,14 +94,18 @@ export class HomePage implements OnInit {
 				let array: Array<Publication>;
 				array = new Array();
 
+				console.log(Response);
+
 				Response.data.forEach(element => {
 					let $publicationObj = new Publication(element);
 					array.push($publicationObj);
+					
 				});
 				
 				this.publications$ = of(array);
 				
 				this.publications$.subscribe(data=>{
+					console.log('subscriber');
 					console.log(data);
 				});
 
