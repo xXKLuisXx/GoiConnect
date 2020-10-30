@@ -36,8 +36,8 @@ export class PublicationService {
     return this.request.createRequest(publication, 'publication', this.tokenRequired, authorization);
   }
 
-  getPublications( authorization: string, page?: number): Observable<RequestResponse> {
-    return this.request.createRequestGet('publication', this.tokenRequired, authorization, page, 'page');
+  getPublications( authorization: string, publicationGetType: string, page?: number): Observable<RequestResponse> {
+    return this.request.createRequestGet(publicationGetType, this.tokenRequired, authorization, page, 'page');
   }
   
 }

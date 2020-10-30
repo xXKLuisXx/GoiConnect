@@ -89,12 +89,12 @@ export class HomePage implements OnInit {
 	}
 
 	public getPublications() {
-		this.publicationService.getPublications(this.utils.accessUserData.getAuthorization(), this.currentPage).subscribe(
+		this.publicationService.getPublications(this.utils.accessUserData.getAuthorization(), 'publication',this.currentPage).subscribe(
 			(Response: (any)) => {
 				let array: Array<Publication>;
 				array = new Array();
 
-				console.log(Response);
+				//console.log(Response);
 
 				Response.data.forEach(element => {
 					let $publicationObj = new Publication(element);
@@ -105,8 +105,8 @@ export class HomePage implements OnInit {
 				this.publications$ = of(array);
 				
 				this.publications$.subscribe(data=>{
-					console.log('subscriber');
-					console.log(data);
+					//console.log('subscriber');
+					//console.log(data);
 				});
 
 				if(this.currentPage != Response.last_page){
