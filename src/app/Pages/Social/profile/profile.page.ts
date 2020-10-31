@@ -24,7 +24,7 @@ export class ProfilePage implements OnInit {
   }
 
   public getPublications() {
-    this.publicationService.getPublications(this.token).subscribe(
+   /* this.publicationService.getPublications(this.token).subscribe(
       async (Response: (any)) => {
         console.log(Response);
       },
@@ -34,7 +34,8 @@ export class ProfilePage implements OnInit {
       () => {
         
       }
-    );
+    );*/
+    
   }
 
   takePhoto() {

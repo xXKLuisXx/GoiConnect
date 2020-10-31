@@ -1,58 +1,17 @@
-<ion-content fullscreen>
-  <ion-card>
+<ion-content fullscreen color="dark">
+  <ion-card *ngFor="let publication of publications$ | async" color="primary">
     <img src="https://www.eluniversal.com.mx/sites/default/files/2019/04/17/hotel_san_gabriel_de_las_palmas.jpg"/>
-    <ion-card-header>
-      <ion-card-title>Hotel Los cocos Puerto Vallarta</ion-card-title>
-      <ion-card-subtitle>Destination</ion-card-subtitle>
+    <ion-card-header (click)="saludo()">
+      <ion-card-title>{{publication.title}}</ion-card-title>
+      <ion-card-subtitle>{{publication.description}}</ion-card-subtitle>
       <ion-row>
         <ion-col></ion-col>
         <ion-col>
-          <ion-card-title>MXN $1000.00</ion-card-title>
+          <ion-card-title>MXN ${{publication.price}}</ion-card-title>
         </ion-col>
       </ion-row>
     </ion-card-header>
-    <ion-card-content>
-      Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the Wisconsin Territory in 1836.
-    </ion-card-content>
   </ion-card>
- 
   <br>
   <br>
- 
-  <ion-card>
-    <img src="https://www.hotellastrojes.com.mx/images/galerias/alberca-1541007388.jpg"/>
-    <ion-card-header>
-      <ion-card-title>Hotel La habana acapulco</ion-card-title>
-      <ion-card-subtitle>Destination</ion-card-subtitle>
-      <ion-row>
-        <ion-col></ion-col>
-        <ion-col>
-          <ion-card-title>MXN $1500.00</ion-card-title>
-        </ion-col>
-      </ion-row>
-    </ion-card-header>
-    <ion-card-content>
-      Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the Wisconsin Territory in 1836.
-    </ion-card-content>
-  </ion-card>
-  
-  <br>
-  <br>
- 
-  <ion-card>
-    <img src="https://www.entornoturistico.com/wp-content/uploads/2020/05/Alberca-de-un-hotel-RIU-1280x720.jpg"/>
-    <ion-card-header color="primary">
-      <ion-card-title>Hotel 7 mares los cabos</ion-card-title>
-      <ion-card-subtitle>Destination</ion-card-subtitle>
-      <ion-row>
-        <ion-col></ion-col>
-        <ion-col>
-          <ion-card-title>MXN $1200.00</ion-card-title>
-        </ion-col>
-      </ion-row>
-    </ion-card-header>
-    <ion-card-content>
-      Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the Wisconsin Territory in 1836.
-    </ion-card-content>
-  </ion-card>
 </ion-content>

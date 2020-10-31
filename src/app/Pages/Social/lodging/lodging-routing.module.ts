@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: LodgingPage
+  },  {
+    path: 'lodging-detail',
+    loadChildren: () => import('../../../Pages/Social/lodging/lodging-detail/lodging-detail.module').then( m => m.LodgingDetailPageModule)
   }
+
 ];
 
 @NgModule({

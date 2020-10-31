@@ -17,7 +17,7 @@ export class RequestService {
 	) { 
 		this.AUTH_SERVER_ADDRESS = 'http://192.168.100.100:8000/api/';
 		this.HEADERS = [['Content-Type', 'application/json'], ['Authorization', ''], ['responseType','text']];
-		this.END_POINTS = ['login', 'register', 'publications', 'assist', 'join', 'joined'];
+		this.END_POINTS = ['login', 'register', 'publications', 'assist', 'join', 'joined','lodgings'];
 		this.PARAMETERS = ['?page=', '?id_detail=', '/'];
 		this.headers = new HttpHeaders();
 	}
@@ -36,6 +36,8 @@ export class RequestService {
 				return this.END_POINTS[4];
 			case 'joined':
 				return this.END_POINTS[5];
+			case 'lodgings':
+				return this.END_POINTS[6];	
 			default:
 				break;
 		}
@@ -92,5 +94,4 @@ export class RequestService {
 		console.log(headers);
 		return this.httpClient.put<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint) + this.selectParameters(parameter) + id , id, { headers } );
 	}
-
 }
