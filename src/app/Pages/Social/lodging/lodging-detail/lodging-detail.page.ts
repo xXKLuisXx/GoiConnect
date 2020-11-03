@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LodgingDetailPage implements OnInit {
 
+  private images = [1,2,3,4,5];
   constructor() { }
 
   ngOnInit() {

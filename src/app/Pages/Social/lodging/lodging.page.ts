@@ -58,6 +58,7 @@ export class LodgingPage implements OnInit {
 					array.push($publicationObj);
 					
 				});
+
 				
 				this.publications$ = of(array);
 				this.publications$.subscribe(data=>{
@@ -84,8 +85,7 @@ export class LodgingPage implements OnInit {
 		);
 	}
 
-	saludo(){
-		console.log('Hola qué tal');
+	goToDetail(){
 		this.router.navigate(['social/lodging/lodging-detail']);
 	}
 

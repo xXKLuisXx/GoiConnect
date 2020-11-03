@@ -15,7 +15,7 @@ export class RequestService {
 	constructor(
 		public httpClient : HttpClient
 	) { 
-		this.AUTH_SERVER_ADDRESS = 'http://192.168.0.10:8000/api/';
+		this.AUTH_SERVER_ADDRESS = 'http://18.216.139.199/api/';
 		this.HEADERS = [['Content-Type', 'application/json'], ['Authorization', ''], ['responseType','text']];
 		this.END_POINTS = ['login', 'register', 'publications', 'assist', 'join', 'joined','lodgings'];
 		this.PARAMETERS = ['?page=', '?id_detail=', '/'];
