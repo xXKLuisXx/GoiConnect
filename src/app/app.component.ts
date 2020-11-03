@@ -44,7 +44,13 @@ export class AppComponent {
 				text: 'Mis Eventos',
 				handler: () => {
 				}
-			},
+      },
+      {
+        text: 'Amigos',
+        handler: () => {
+          this.router.navigate(['/friends']);
+        }
+      },
 			{
 				text: 'Cancel',
 				role: 'cancel'

@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>friends</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-searchbar placeholder="Buscar" inputmode="decimal" type="decimal" [debounce]="250" showCancelButton="always"></ion-searchbar>
+
+  <h1>Personas que quizás conoscas</h1>
+
+  <ion-list>
+    <ion-item *ngFor="let i of [1,1,1,1,1,1,1,1,1,1,1]">
+
+      <ion-avatar slot="start">
+        <img src="https://www.aconsciousrethink.com/wp-content/uploads/2019/05/reserved-person-line.jpg" style="width: 100%; height:100%">
+      </ion-avatar>
+
+      <ion-label>
+        <ion-text color="dark">
+          Contacto n
+        </ion-text>
+      </ion-label>
+
+      <ion-button color="primary">
+        <ion-text>
+          Agregar
+        </ion-text>
+      </ion-button>
+
+      <ion-button vertical="start" horizontal="end">
+        <ion-icon name="ellipsis-horizontal"></ion-icon>
+      </ion-button>
+
+    </ion-item>
+  </ion-list>
+
+</ion-content>

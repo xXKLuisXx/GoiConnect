@@ -88,6 +88,11 @@ const routes: Routes = [
 			},
 		]
 	},
+  {
+    path: 'friends',
+    loadChildren: () => import('./Pages/Social/friends/friends.module').then( m => m.FriendsPageModule)  
+  },
+
 
   
 
