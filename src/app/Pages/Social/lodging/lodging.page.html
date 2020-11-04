@@ -1,5 +1,5 @@
 <ion-content fullscreen color="dark">
-  <ion-card *ngFor="let publication of publications$ | async" color="primary">
+  <ion-card *ngFor="let publication of publications$ | async" color="primary" class="ion-margin-bottom">
     <img src="https://www.eluniversal.com.mx/sites/default/files/2019/04/17/hotel_san_gabriel_de_las_palmas.jpg"/>
     <ion-card-header (click)="goToDetail()">
       <ion-card-title>{{publication.title}}</ion-card-title>

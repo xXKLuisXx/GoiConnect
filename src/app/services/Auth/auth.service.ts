@@ -11,7 +11,6 @@ export class AuthService {
 
   authSubject = new BehaviorSubject(false);
 	authResponse: Response;
-	postOff = false;
 
 	constructor(
 		public httpClient: HttpClient,
@@ -19,10 +18,10 @@ export class AuthService {
 	) { }
 
 	register(user: User): Observable<any>{
-		return this.request.createRequest(user, 'register', this.postOff);
+		return this.request.createRequest(user, 'register');
 	}
 
 	login(user: User): Observable<any> {
-		return this.request.createRequest(user, 'login', this.postOff);
+		return this.request.createRequest(user, 'login');
 	}
 }

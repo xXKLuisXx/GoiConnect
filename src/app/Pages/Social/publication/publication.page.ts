@@ -10,6 +10,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
+import { ModalController } from '@ionic/angular';
+import { LodgingComponent } from 'src/app/components/lodging/lodging.component';
 
 
 @Component({
@@ -40,7 +42,8 @@ export class PublicationPage implements OnInit {
 		private mediaCapture: MediaCapture,
 		public actionSheetController: ActionSheetController,
 		private imagePicker: ImagePicker,
-		private base64: Base64
+		private base64: Base64,
+		public modalController: ModalController
 	) { 
 		this.utils = new Utils();
 		this.publication = new Publication();
@@ -60,23 +63,31 @@ export class PublicationPage implements OnInit {
 	}
 	public getImgContent():SafeUrl {
         return this.sanitizer.bypassSecurityTrustUrl(this.src);
-    }
+	}
+	
+	async presentModal() {
+
+		if(this.typePublication == 8){
+			let modal = await this.modalController.create({
+				component: LodgingComponent
+			  });
+			  return await modal.present();
+		}
+		
+	}
 
 	public async post() {
-		//console.log(this.publication);
+
 		if(this.publication.typeContent == null) this.publication.typeContent = 7;
 
 		await this.utils.loadingPresent();
-
-		console.log(this.publication);
 
 		this.publicationService.post(this.publication, this.utils.accessUserData.getAuthorization()).subscribe(
 			async (Response: (any)) => {
 				this.publication = new Publication();
 				console.log(Response);
 				this.publicationService.publication = new Publication();
-				console.log('publicación terminada');
-				console.log(this.publication);
+
 				this.utils.loadingDismiss();
 				this.updatePublications();
 				this.src = ""; 
@@ -159,7 +170,6 @@ export class PublicationPage implements OnInit {
 					});
 				}
 
-				//this.publicationService.publication = this.publication;
 				if (this.publication.multimedia.length != 0){
 					this.multimediaSelected = false;
 					this.src = this.publication.multimedia[0].base;

@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Hospedaje</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button color="tertiary" expand="full">
+        Listo
+        <ion-icon slot="end" name="create" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  </ion-header>
+
+<ion-content color="dark">
+    <ion-card>
+        <form (ngSubmit)="logForm()">
+            <ion-row>
+                <ion-col>
+                    <ion-item lines="full">
+                        <ion-icon name="calendar-outline" slot="start"></ion-icon>
+                        <ion-label position="floating">Llegada</ion-label>
+                        <ion-datetime displayFormat="D MMM YYYY H:mm" min="2020" max="2030"></ion-datetime>
+                      </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item lines="full">
+                        <ion-icon name="calendar-outline" slot="start"></ion-icon>
+                        <ion-label position="floating">Salida</ion-label>
+                        <ion-datetime displayFormat="D MMM YYYY H:mm" min="2020" max="2030"></ion-datetime>
+                      </ion-item>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col>
+                    <ion-item lines="full">
+                        <ion-icon name="time-outline" slot="start"></ion-icon>
+                        <ion-label position="floating">Check In</ion-label>
+                        <ion-datetime displayFormat="h:mm a"></ion-datetime>
+                      </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item lines="full">
+                        <ion-icon name="time-outline" slot="start"></ion-icon>
+                        <ion-label position="floating">Check Out</ion-label>
+                        <ion-datetime displayFormat="h:mm a"></ion-datetime>
+                      </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-item lines="full">
+                        <ion-icon name="cash-outline" slot="start"></ion-icon>
+                        <ion-label position="floating">Precio $</ion-label>
+                        <ion-input type="number"></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+              
+          </form>
+    </ion-card>
+
+    <ion-card>
+        <ion-list>
+            <ion-radio-group>
+              <ion-list-header>
+                <ion-label>
+                  Servicios
+                </ion-label>
+              </ion-list-header>
+          
+              <ion-item>
+                <ion-label>Aire acondicionado</ion-label>
+                <ion-checkbox color="primary"></ion-checkbox>
+              </ion-item>
+          
+              <ion-item>
+                <ion-label>Gym</ion-label>
+                <ion-checkbox color="primary"></ion-checkbox>
+              </ion-item>
+          
+              <ion-item>
+                <ion-label>Wi-Fi</ion-label>
+                <ion-checkbox color="primary"></ion-checkbox>
+              </ion-item>
+          
+              <ion-item>
+                <ion-label>Alberca</ion-label>
+                <ion-checkbox color="primary"></ion-checkbox>
+              </ion-item>
+          
+              <ion-item>
+                <ion-label>Restaurante</ion-label>
+                <ion-checkbox color="primary"></ion-checkbox>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Spa</ion-label>
+                <ion-checkbox color="primary"></ion-checkbox>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+    </ion-card>
+    
+</ion-content>
+
+   
+   
+    

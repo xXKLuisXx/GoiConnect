@@ -33,11 +33,12 @@ export class PublicationService {
   }
 
   post(publication: Publication, authorization?: string): Observable<RequestResponse> {
-    return this.request.createRequest(publication, 'publication', this.tokenRequired, authorization);
+    return this.request.createRequest(publication, 'publication', authorization);
   }
 
-  getPublications( authorization: string, publicationGetType: string, page?: number): Observable<RequestResponse> {
-    return this.request.createRequestGet(publicationGetType, this.tokenRequired, authorization, page, 'page');
+  getPublications( authorization: string, endPoint: string, page?: number): Observable<RequestResponse> {
+    return this.request.createRequestGet(endPoint, authorization, page, 'page');
   }
+
   
 }

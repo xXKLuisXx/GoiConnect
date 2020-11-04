@@ -26,12 +26,12 @@
   <ion-item lines="full">
     <ion-icon name="document-text-outline" slot="start"></ion-icon>
     <ion-label position="floating">Descripcción</ion-label>
-    <ion-input type="text" [(ngModel)]='publication.description' name="description" required></ion-input>
+    <ion-input type="text" [(ngModel)]='publication.description' name="description" required class="inputBigger"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label>Tipo de publicación</ion-label>
-    <ion-select [(ngModel)]='typePublication' [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Seleccionar">
+    <ion-select [(ngModel)]='typePublication' [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Seleccionar" (ionChange)="presentModal()">
       <ion-select-option value="8">Hospedaje</ion-select-option>
       <ion-select-option value="9">Evento</ion-select-option>
       <ion-select-option value="10">Viaje</ion-select-option>
@@ -42,7 +42,7 @@
   <div [ngSwitch]="typePublication">
     
     <div *ngSwitchCase="8">
-      <app-entertainment [publication]="publication" [typePublication]="typePublication"></app-entertainment>
+      <!--<app-entertainment [publication]="publication" [typePublication]="typePublication"></app-entertainment>-->
     </div>
 
     <div *ngSwitchCase="9">
