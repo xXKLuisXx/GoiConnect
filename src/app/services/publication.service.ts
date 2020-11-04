@@ -39,5 +39,9 @@ export class PublicationService {
   getPublications( authorization: string, publicationGetType: string, page?: number): Observable<RequestResponse> {
     return this.request.createRequestGet(publicationGetType, this.tokenRequired, authorization, page, 'page');
   }
+
+  getFriends( authorization: string): Observable<RequestResponse> {
+    return this.request.createRequestGet("", true, authorization, 0);
+  }
   
 }
