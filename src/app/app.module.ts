@@ -8,7 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
@@ -35,7 +35,8 @@ import { MediaCapture } from '@ionic-native/media-capture/ngx';
     IonicStorageModule.forRoot(),
     FormsModule,
     HttpClientModule,
-    SuperTabsModule.forRoot()
+    SuperTabsModule.forRoot(),
+    ReactiveFormsModule,
   ],
   providers: [
     Utils,
