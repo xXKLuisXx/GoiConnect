@@ -18,7 +18,7 @@ export class LoginPagePage implements OnInit {
         private utils: Utils
     ) { }
 
-    async ngOnInit() {
+    ngOnInit() {
 
     }
 
@@ -48,8 +48,6 @@ export class LoginPagePage implements OnInit {
         });
     }
 
-    public RegisterPage() {
-        this.router.navigate(['/register'], { replaceUrl: true });
     }
 
 }
