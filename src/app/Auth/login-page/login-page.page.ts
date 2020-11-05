@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/Auth/auth.service';
 import { User } from 'src/app/Models/Classes/user';
 import { Utils } from 'src/app/Models/Classes/utils';
-import { stringify } from 'querystring';
 
 
 @Component({
@@ -12,24 +11,15 @@ import { stringify } from 'querystring';
     styleUrls: ['./login-page.page.scss'],
 })
 export class LoginPagePage implements OnInit {
-    private UserData: User;
-    private utils: Utils;
-    
-    
     constructor(
         private router: Router,
+        private UserData: User,
         private authService: AuthService,
-    ) {
-        this.UserData = new User();
-        this.utils = new Utils();
-    }
+        private utils: Utils
+    ) { }
 
     async ngOnInit() {
 
-    }
-
-    async ionViewDidEnter(){
-        
     }
 
     public async loginForm() {
@@ -37,6 +27,7 @@ export class LoginPagePage implements OnInit {
         await this.utils.loadingPresent();
         this.authService.login(this.UserData).subscribe(
             async (Response: (any)) => {
+                console.log(Response);
                 await this.utils.storeItem('AccessDataUser', JSON.stringify(this.utils.buildAccessData(Response))).then((data)=> {
                     this.utils.loadingDismiss();
                     this.router.navigate(['/social']);
@@ -46,6 +37,7 @@ export class LoginPagePage implements OnInit {
                 this.utils.loadingDismiss();
             },
             (Errors: (any)) => {
+                console.log(Errors);
                 this.utils.loadingDismiss();
                 this.utils.alertPresent('Errors', this.utils.buildErrors(Errors), 'OK');
             },

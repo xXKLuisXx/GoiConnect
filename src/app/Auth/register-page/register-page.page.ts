@@ -12,13 +12,12 @@ import { AuthService } from 'src/app/services/Auth/auth.service';
 })
 export class RegisterPagePage implements OnInit {
 	public UserData: User;
-	private utils: Utils;
 	constructor(
 		private router: Router,
-        private authService: AuthService,
+		private authService: AuthService,
+		private utils: Utils,
 	) { 
 		this.UserData = new User();
-        this.utils = new Utils();
 	}
 
 	ngOnInit() {

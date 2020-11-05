@@ -19,10 +19,9 @@ export class HomePage implements OnInit {
 	@ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 	@ViewChild(IonContent) content: IonContent;
 
-	public publication: Publication; 
-	public publications$: Observable <PublicationInt[]>;
+	public publication: Publication;
+	public publications$: Observable<PublicationInt[]>;
 	public selectedVideo: string;
-	private utils: Utils;
 	private currentPage: number;
 	private contPublications: number;
 	private total: number;
@@ -32,25 +31,26 @@ export class HomePage implements OnInit {
 		public actionSheetController: ActionSheetController,
 		public publicationService: PublicationService,
 		private platform: Platform,
-		private router: Router
+		private router: Router,
+		private utils: Utils
 	) {
-		this.utils = new Utils();
 		this.scrollEnd = false;
 		this.publication = new Publication();
 
 		publicationService.updatePublication$.subscribe(
 			update => {
-			  console.log('Actualizado');
-			  this.getPublications();
-			});
+				console.log('Actualizado');
+				this.getPublications();
+			}
+		);
 	}
 
-	
+
 	async ngOnInit() {
 		await this.platform.ready().then(async () => {
 			await this.utils.getAccessData().then(() => {
 				console.log("exito");
-				this.getPublications();		
+				this.getPublications();
 			}).catch((error) => {
 				console.log(error);
 			});
@@ -66,11 +66,11 @@ export class HomePage implements OnInit {
 
 	loadData(event) {
 		setTimeout(() => {
-			if(this.contPublications == this.total){
+			if (this.contPublications == this.total) {
 				this.scrollEnd = true;
 				event.target.disabled = true;
 			}
-			else{
+			else {
 				console.log('Cargando siguientes...');
 				this.getPublications();
 				event.target.complete();
@@ -90,7 +90,7 @@ export class HomePage implements OnInit {
 
 	//getPublications() Obtiene las publicaciones del usuario
 	public getPublications() {
-		this.publicationService.getPublications(this.utils.accessUserData.getAuthorization(), 'publication',this.currentPage).subscribe(
+		this.publicationService.getPublications(this.currentPage).subscribe(
 			(Response: (any)) => {
 				let array: Array<Publication>;
 				array = new Array();
@@ -98,21 +98,21 @@ export class HomePage implements OnInit {
 				Response.data.forEach(element => {
 					let $publicationObj = new Publication(element);
 					array.push($publicationObj);
-					
-				});
-				
-				this.publications$ = of(array);
-				
-				this.publications$.subscribe(data=>{
+
 				});
 
-				if(this.currentPage != Response.last_page){
+				this.publications$ = of(array);
+
+				this.publications$.subscribe(data => {
+				});
+
+				if (this.currentPage != Response.last_page) {
 					let page = Response.next_page_url.split('=');
 					this.currentPage = Number(page[1]);
 					this.contPublications += Response.per_page;
 					this.total = Response.total;
 				}
-				else{
+				else {
 					this.contPublications += Response.data.length;
 					this.total = Response.total;
 				}
@@ -125,7 +125,7 @@ export class HomePage implements OnInit {
 		);
 	}
 
-	pagePublication(){
+	pagePublication() {
 		this.router.navigate(['social/social-publication']);
 	}
 }

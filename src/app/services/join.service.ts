@@ -6,32 +6,30 @@ import { RequestResponse } from '../Models/Classes/request-response';
 import { RequestService } from './request.service';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class JoinService {
+	private tokenRequired: boolean;
 
-  private tokenRequired: boolean;
-  //private join: Publication = new Publication();
+	constructor(public httpClient: HttpClient, private request: RequestService) {
+		this.tokenRequired = true;
+	}
 
-  constructor(public httpClient : HttpClient, private request: RequestService) {
-    this.tokenRequired = true;
-  }
+	public join(join: Join): Observable<RequestResponse> {
+		return this.request.createRequestPost('assist', join);
+	}
 
-  public join(join: Join, authorization?: string): Observable<RequestResponse> {
-    return this.request.createRequest(join, 'assist', authorization);
-  }
+	public existJoin(id_detail: number): Observable<RequestResponse> {
+		return this.request.createRequestGet('join', id_detail);
+	}
 
-  public existJoin(authorization: string, id_detail:number): Observable<RequestResponse> {
-    return this.request.createRequestGet('join', authorization, id_detail, 'id_detail');
-  }
+	public isJoined(id_detail: number): Observable<RequestResponse> {
+		return this.request.createRequestGet('joined', id_detail);
+	}
 
-  public isJoined(authorization: string, id_detail:number): Observable<RequestResponse> {
-    return this.request.createRequestGet('joined', authorization, id_detail, 'id_detail');
-  }
-
-  public updateJoin(authorization: string, id:number): Observable<RequestResponse> {
-    return this.request.createRequestUpdate('assist', authorization, id);
-  }
+	public updateJoin(id: number): Observable<RequestResponse> {
+		return this.request.createRequestUpdate('assist', id);
+	}
 
 }
 

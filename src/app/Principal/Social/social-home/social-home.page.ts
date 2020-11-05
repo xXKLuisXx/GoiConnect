@@ -28,11 +28,11 @@ export class SocialHomePage implements OnInit {
 	lodgingPage = LodgingPage;
 
 	public accessdata: AccessUserData;
-	private utils: Utils;
 
-	constructor(private route: ActivatedRoute) { 
-		this.utils = new Utils();
-	}
+	constructor(
+		private route: ActivatedRoute,
+		private utils: Utils,
+	) { }
 
 	ngOnInit() {
 		this.utils.getAccessData();

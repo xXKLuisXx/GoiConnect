@@ -22,7 +22,6 @@ import { LodgingComponent } from 'src/app/components/lodging/lodging.component';
 export class PublicationPage implements OnInit {
 
 	public publication: Publication;
-	private utils: Utils;
 	private isVideo: boolean;
 	private src: string;
 	private videoExist: boolean = false;
@@ -35,7 +34,6 @@ export class PublicationPage implements OnInit {
 		
 	constructor(
 		private router: Router,
-		private route: ActivatedRoute,
 		public publicationService: PublicationService,
 		private sanitizer: DomSanitizer,
 		private camera: Camera,
@@ -43,20 +41,13 @@ export class PublicationPage implements OnInit {
 		public actionSheetController: ActionSheetController,
 		private imagePicker: ImagePicker,
 		private base64: Base64,
-		public modalController: ModalController
-	) { 
-		this.utils = new Utils();
+		public modalController: ModalController,
+		private utils: Utils
+	) {
 		this.publication = new Publication();
 	}
 
-	async ngOnInit() {		
-		/*this.src = this.publication.multimedia[0].base;
-		if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
-		else this.isVideo = true;*/
-
-		/*this.platform.backButton.subscribeWithPriority(10, () => {
-			this.router.navigate(['social']);
-		});*/
+	async ngOnInit() {
 		this.multimediaSelected = true;
 
 		await this.utils.getAccessData();
@@ -82,7 +73,7 @@ export class PublicationPage implements OnInit {
 
 		await this.utils.loadingPresent();
 
-		this.publicationService.post(this.publication, this.utils.accessUserData.getAuthorization()).subscribe(
+		this.publicationService.post(this.publication).subscribe(
 			async (Response: (any)) => {
 				this.publication = new Publication();
 				console.log(Response);
@@ -165,8 +156,8 @@ export class PublicationPage implements OnInit {
 					const extensionImage = images[i].substr(images[i].lastIndexOf('.') + 1); 
 					 await this.base64.encodeFile(images[i]).then((base64File: string) => {
 						 this.publication.multimedia.push({ base: base64File, ext: extensionImage  });			
-					}, (err) => {
-						console.log(err);
+					}, (error) => {
+						console.log(error);
 					});
 				}
 
@@ -175,8 +166,8 @@ export class PublicationPage implements OnInit {
 					this.src = this.publication.multimedia[0].base;
 					if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
 				}
-		}, (err) => {
-			console.log(err);
+		}, (error) => {
+			console.log(error);
 		});
 	}
 
@@ -193,12 +184,11 @@ export class PublicationPage implements OnInit {
 			this.publication.multimedia.push({ base: 'data:image/jpg;base64,' + imageData, ext: 'jpg' });
 			this.publicationService.publication = this.publication;
 			if (this.publication.multimedia != null) {
-				//this.publication = new Publication();
 				this.multimediaSelected = false;
 				this.src = this.publication.multimedia[0].base;
 				if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
 			}
-		}, (err) => {
+		}, (error) => {
 			
 		});
 	}
@@ -219,11 +209,11 @@ export class PublicationPage implements OnInit {
 					}
 					//this.router.navigate(['social/social-publication']);
 				}
-			}, (err) => {
-				console.log(err);
+			}, (error) => {
+				console.log(error);
 			});
-		}, (err: CaptureError) => {
-			console.log(err);
+		}, (error: CaptureError) => {
+			console.log(error);
 		});
 	}
 
@@ -250,13 +240,13 @@ export class PublicationPage implements OnInit {
 						}
 						this.multimediaSelected = false;
 					}
-				}, (err) => {
-					console.log(err);
+				}, (error) => {
+					console.log(error);
 				});
 			}
 		})
-		.catch(err => {
-				console.log(err);
+		.catch(error => {
+				console.log(error);
 		});
 	}
 

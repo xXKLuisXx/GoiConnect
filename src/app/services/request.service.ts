@@ -5,21 +5,21 @@ import { Observable } from 'rxjs';
 @Injectable({
 	providedIn: 'root'
 })
+
+
 export class RequestService {
 	private AUTH_SERVER_ADDRESS : string;
 	private HEADERS : Array<Array<string>>;
-	private END_POINTS : Array<string>;
+	private END_POINTS : Array<Array<string>>;
 	private PARAMETERS : Array<string>;
-	private headers : HttpHeaders;
 
 	constructor(
 		public httpClient : HttpClient
 	) { 
-		this.AUTH_SERVER_ADDRESS = 'http://192.168.0.10:8000/api/';
-		this.HEADERS = [['Content-Type', 'application/json'], ['Authorization', ''], ['responseType','text']];
-		this.END_POINTS = ['login', 'register', 'publications', 'assist', 'join', 'joined','lodgings'];
+		this.AUTH_SERVER_ADDRESS = 'http://192.168.0.8:8000/api/';
+		this.HEADERS = [['Content-Type', 'application/json'], ['Authorization', '']];
+		this.END_POINTS = [['login', '0'], ['register', '0'], ['publications', '1'], ['assist', '1'], ['join', '1'], ['joined', '1'], ['lodgings', '1']];
 		this.PARAMETERS = ['?page=', '?id_detail=', '/'];
-		this.headers = new HttpHeaders();
 	}
 
 	private selectEnpoint(endPoint:string){
@@ -41,71 +41,38 @@ export class RequestService {
 			default:
 				break;
 		}
-		return 
+		return null
 	}
 
-	private selectParameters(parameters:string){
-		switch (parameters) {
-			case 'page':
-				return this.PARAMETERS[0];
-			case 'id_detail':
-				return this.PARAMETERS[1];
-			case 'id':
-				return this.PARAMETERS[2];
-			default:
-				break;
-		}
-		return 
-	}
+	private createHeaders(endPoint: string) : HttpHeaders {
+		let headers = new HttpHeaders();
+		let endPointArray = this.selectEnpoint(endPoint);
 
-	private getParameters( parameters: Array<any>){
-		parameters.forEach((value, index, parameters)=>{
-			
-		})
-	}
-
-	private createHeaders( token?: string ) : HttpHeaders {
-		if(token){
-			this.HEADERS.forEach(Header => {
-				if ( Header[0] === "Authorization"){
-					if(token != null ){
-						this.headers = this.headers.set(Header[0], token);
-					}
+		this.HEADERS.forEach(Header => {
+			if(Header[0] == "Authorization"){
+				if(endPointArray[1] == '1'){
+					headers = headers.set(Header[0], Header[1]);
 				}
-				else {
-					this.headers = this.headers.set(Header[0], Header[1]);
-				}	
-			});
-		} 
-		else{
-			this.headers = this.headers.set(this.HEADERS[0][0], this.HEADERS[0][1]);
-		}
-		return this.headers;
+			}else{
+				headers = headers.set(Header[0], Header[1]);
+			}
+		});
+
+		return headers;
 	}
 
-	public createRequest(object: any, endPoint: string, token?: string) : Observable<any> {
-		let headers:any;
-		if(token != null){
-			headers = this.createHeaders(token);
-		}
-		else{
-			headers = this.createHeaders();
-		}
+	public createRequestPost(endPoint: string, object?: any) : Observable<any> {
+		let headers = this.createHeaders(endPoint);
 		return this.httpClient.post<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint), object, { headers } );
 	}
 
-	public createRequestGet(endPoint: string, token?: string, parameters?:number, typeParameter?:string) : Observable<any> {
-		const headers = this.createHeaders(token);
-		if(parameters){
-			return this.httpClient.get<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint)+ this.selectParameters(typeParameter) + parameters, { headers } );
-		}else{
-			return this.httpClient.get<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint), { headers } );
-		}
+	public createRequestGet(endPoint: string, object?: any) : Observable<any> {
+		let headers = this.createHeaders(endPoint);
+		return this.httpClient.get<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint), { headers } );
 	}
 
-	public createRequestUpdate(endPoint: string, token?: string, id?:number) : Observable<any> {
-		const headers = this.createHeaders(token);
-		console.log(headers);
-		return this.httpClient.put<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint), id, { headers } );
+	public createRequestUpdate(endPoint: string, object?:any) : Observable<any> {
+		let headers = this.createHeaders(endPoint);
+		return this.httpClient.put<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint), object, { headers } );
 	}
 }

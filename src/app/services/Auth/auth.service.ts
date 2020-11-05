@@ -1,15 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from  'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from 'src/app/Models/Classes/user';
 import { RequestService } from '../request.service';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
+
 export class AuthService {
 
-  authSubject = new BehaviorSubject(false);
+	authSubject = new BehaviorSubject(false);
 	authResponse: Response;
 
 	constructor(
@@ -17,11 +18,11 @@ export class AuthService {
 		private request: RequestService
 	) { }
 
-	register(user: User): Observable<any>{
-		return this.request.createRequest(user, 'register');
+	register(user: User): Observable<any> {
+		return this.request.createRequestPost('register', user);
 	}
 
 	login(user: User): Observable<any> {
-		return this.request.createRequest(user, 'login');
+		return this.request.createRequestPost('login', user);
 	}
 }
