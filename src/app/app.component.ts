@@ -48,7 +48,7 @@ export class AppComponent {
       {
         text: 'Amigos',
         handler: () => {
-          this.router.navigate(['/friends']);
+          this.router.navigate(['social/friends']);
         }
       },
 			{

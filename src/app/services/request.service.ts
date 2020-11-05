@@ -16,8 +16,8 @@ export class RequestService {
 		public httpClient : HttpClient
 	) { 
 		this.AUTH_SERVER_ADDRESS = 'http://192.168.100.100:8000/api/';
-		this.HEADERS = [['Content-Type', 'application/json'], ['Authorization', ''], ['responseType','text']];
-		this.END_POINTS = ['login', 'register', 'publications', 'assist', 'join', 'joined','lodgings'];
+		this.HEADERS = [['Content-Type', 'application/json'], ['Authorization', ''], ['responseType', 'text']];
+		this.END_POINTS = ['login', 'register', 'publications', 'assist', 'join', 'joined', 'lodgings', 'friends', 'add'];
 		this.PARAMETERS = ['?page=', '?id_detail=', '/'];
 		this.headers = new HttpHeaders();
 	}
@@ -37,7 +37,11 @@ export class RequestService {
 			case 'joined':
 				return this.END_POINTS[5];
 			case 'lodgings':
-				return this.END_POINTS[6];	
+				return this.END_POINTS[6];
+			case 'friends':
+				return this.END_POINTS[7];
+			case 'add':
+				return this.END_POINTS[8];
 			default:
 				break;
 		}
@@ -83,6 +87,7 @@ export class RequestService {
 	public createRequestGet(endPoint: string, post: boolean, token?: string, parameter?:number, typeParameter?:string) : Observable<any> {
 		const headers = this.createHeaders( post, token);
 		if(parameter){
+			// tslint:disable-next-line: max-line-length
 			return this.httpClient.get<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint)+ this.selectParameters(typeParameter) +parameter, { headers } );
 		}else{
 			return this.httpClient.get<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint), { headers } );
@@ -92,6 +97,7 @@ export class RequestService {
 	public createRequestUpdate(parameter: string, endPoint: string, post: boolean, token?: string, id?:number) : Observable<any> {
 		const headers = this.createHeaders( post, token);
 		console.log(headers);
+		// tslint:disable-next-line: max-line-length
 		return this.httpClient.put<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint) + this.selectParameters(parameter) + id , id, { headers } );
 	}
 }

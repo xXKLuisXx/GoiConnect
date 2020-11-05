@@ -6,7 +6,7 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo: 'login',
+		redirectTo: 'login', //Change it back to login
 		pathMatch: 'full'
 	},
 	{
@@ -86,15 +86,15 @@ const routes: Routes = [
 				path: 'lodging',
 				loadChildren: () => import('./Pages/Social/lodging/lodging.module').then( m => m.LodgingPageModule)
 			},
+			{
+				path: 'friends',
+				loadChildren: () => import('./Pages/Social/friends/friends.module').then( m => m.FriendsPageModule)  
+			}
 		]
 	},
-  {
-    path: 'friends',
-    loadChildren: () => import('./Pages/Social/friends/friends.module').then( m => m.FriendsPageModule)  
-  },
 
 
-  
+
 
 	/*
 	

@@ -17,7 +17,7 @@ export class AccessUserData {
         }
     }
 
-    public getAuthorization():string{
-        return this.token_type + " " + this.access_token;
+    public getAuthorization(): string{
+        return this.token_type + ' ' + this.access_token;
     }
 }
