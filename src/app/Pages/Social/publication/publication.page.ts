@@ -73,26 +73,30 @@ export class PublicationPage implements OnInit {
 
 		await this.utils.loadingPresent();
 
-		this.publicationService.post(this.publication).subscribe(
-			async (Response: (any)) => {
-				this.publication = new Publication();
-				console.log(Response);
-				this.publicationService.publication = new Publication();
-
-				this.utils.loadingDismiss();
-				this.updatePublications();
-				this.src = ""; 
-				this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
-				this.router.navigate(['social']);
-			},
-			(Errors: (any)) => {
-				this.utils.loadingDismiss();
-				console.log(Errors);
-				this.utils.alertPresent('Errors', this.utils.buildErrors(Errors), 'OK');
-			},
-			() => {		
-			}
-		);
+		this.publicationService.postPublication(this.publication).then((subscriber) => {
+			subscriber.subscribe(
+				async (Response: (any)) => {
+					this.publication = new Publication();
+					console.log(Response);
+					this.publicationService.publication = new Publication();
+	
+					this.utils.loadingDismiss();
+					this.updatePublications();
+					this.src = ""; 
+					this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
+					this.router.navigate(['social']);
+				},
+				(Errors: (any)) => {
+					this.utils.loadingDismiss();
+					console.log(Errors);
+					this.utils.alertPresent('Errors', this.utils.buildErrors(Errors), 'OK');
+				},
+				() => {		
+				}
+			);
+		}).catch((error) => {
+			console.log(error);
+		})
 	}
 
 	async menuCamera() {

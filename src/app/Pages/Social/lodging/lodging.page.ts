@@ -46,7 +46,13 @@ export class LodgingPage implements OnInit {
 
 
 	public getPublications() {
-		this.publicationService.getPublications(this.currentPage).subscribe(
+		this.publicationService.getPublications(this.currentPage).then((response) => {
+			console.log("ultimo");
+			console.log(response);
+		}).catch(() => {
+
+		});
+		/*
 			(Response: (any)) => {
 				let array: Array<Publication>;
 				array = new Array();
@@ -83,6 +89,7 @@ export class LodgingPage implements OnInit {
 			() => {
 			}
 		);
+		*/
 	}
 
 	goToDetail() {

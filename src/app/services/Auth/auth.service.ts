@@ -18,11 +18,25 @@ export class AuthService {
 		private request: RequestService
 	) { }
 
-	register(user: User): Observable<any> {
-		return this.request.createRequestPost('register', user);
+	public register(user: User): Promise<Observable<any>> {
+		return new Promise((resolve, reject) => {
+			this.request.createRequestPost('register', user).then((client) => {
+				resolve(client);
+			}).catch((error)=> {
+				reject(error)
+			})
+		});
+		//return this.request.createRequestPost('register', user);
 	}
 
-	login(user: User): Observable<any> {
-		return this.request.createRequestPost('login', user);
+	public login(user: User): Promise<Observable<any>> {
+		return new Promise((resolve, reject) => {
+			this.request.createRequestPost('login', user).then((client) => {
+				resolve(client);
+			}).catch((error) => {
+				reject(error);
+			});
+		});
+		//return this.request.createRequestPost('login', user);
 	}
 }

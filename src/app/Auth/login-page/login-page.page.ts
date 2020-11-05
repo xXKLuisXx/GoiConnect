@@ -25,26 +25,27 @@ export class LoginPagePage implements OnInit {
     public async loginForm() {
         console.log('entrar login');
         await this.utils.loadingPresent();
-        this.authService.login(this.UserData).subscribe(
-            async (Response: (any)) => {
-                console.log(Response);
-                await this.utils.storeItem('AccessDataUser', JSON.stringify(this.utils.buildAccessData(Response))).then((data)=> {
+        this.authService.login(this.UserData).then((subscriber) => {
+            subscriber.subscribe(
+                async (Response: (any)) => {
+                    console.log(Response);
+                    await this.utils.storeItem('AccessDataUser', JSON.stringify(this.utils.buildAccessData(Response))).then((data)=> {
+                        this.router.navigate(['/social']);
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+                },
+                (Errors: (any)) => {
+                    console.log(Errors);
+                    this.utils.alertPresent('Errors', this.utils.buildErrors(Errors), 'OK');
+                },
+                () => {
                     this.utils.loadingDismiss();
-                    this.router.navigate(['/social']);
-                }).catch((error) => {
-                    console.log(error);
-                });
-                this.utils.loadingDismiss();
-            },
-            (Errors: (any)) => {
-                console.log(Errors);
-                this.utils.loadingDismiss();
-                this.utils.alertPresent('Errors', this.utils.buildErrors(Errors), 'OK');
-            },
-            () => {
-                this.utils.loadingDismiss();
-            }
-        );
+                }
+            );
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     public RegisterPage() {

@@ -59,8 +59,6 @@ export class HomePage implements OnInit {
 		this.total = 0;
 		this.contPublications = 0;
 		this.currentPage = 1;
-		console.log(this.publications$);
-
 	}
 
 
@@ -90,39 +88,52 @@ export class HomePage implements OnInit {
 
 	//getPublications() Obtiene las publicaciones del usuario
 	public getPublications() {
-		this.publicationService.getPublications(this.currentPage).subscribe(
-			(Response: (any)) => {
-				let array: Array<Publication>;
-				array = new Array();
+		this.publicationService.getPublications(this.currentPage).then((observable) => {
+			console.log(observable);
+			observable.subscribe(
+				(response) => {
+					console.log(response);
+				},
+				(error) => {
+					console.log(error);
+				},
+				() => {
 
-				Response.data.forEach(element => {
-					let $publicationObj = new Publication(element);
-					array.push($publicationObj);
-
-				});
-
-				this.publications$ = of(array);
-
-				this.publications$.subscribe(data => {
-				});
-
-				if (this.currentPage != Response.last_page) {
-					let page = Response.next_page_url.split('=');
-					this.currentPage = Number(page[1]);
-					this.contPublications += Response.per_page;
-					this.total = Response.total;
 				}
-				else {
-					this.contPublications += Response.data.length;
-					this.total = Response.total;
-				}
-			},
-			(Errors: (any)) => {
-				console.log(Errors);
-			},
-			() => {
+			)
+		}).catch(error => {
+		});
+		/*
+		(Response: (any)) => {
+			let array: Array<Publication>;
+			array = new Array();
+
+			Response.data.forEach(element => {
+				let $publicationObj = new Publication(element);
+				array.push($publicationObj);
+
+			});
+
+			this.publications$ = of(array);
+
+			this.publications$.subscribe(data => {
+			});
+
+			if (this.currentPage != Response.last_page) {
+				let page = Response.next_page_url.split('=');
+				this.currentPage = Number(page[1]);
+				this.contPublications += Response.per_page;
+				this.total = Response.total;
 			}
-		);
+			else {
+				this.contPublications += Response.data.length;
+				this.total = Response.total;
+			}
+		},
+		(Errors: (any)) => {
+			console.log(Errors);
+		}
+		*/
 	}
 
 	pagePublication() {

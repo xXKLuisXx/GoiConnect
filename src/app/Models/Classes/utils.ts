@@ -1,4 +1,4 @@
-import { Component, Injectable, NgModule } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { SecureStorage } from '@ionic-native/secure-storage/ngx';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { AccessUserData } from './access-user-data';
@@ -9,7 +9,6 @@ import { RequestResponse } from './request-response';
 })
 
 export class Utils {
-    private accessUserData: AccessUserData;
     private loading: HTMLIonLoadingElement;
     private alert: HTMLIonAlertElement;
     constructor(
@@ -95,8 +94,7 @@ export class Utils {
     public getAccessData() {
         return new Promise((resolve, reject) => {
             this.getItem('AccessDataUser').then((data: string) => {
-                this.accessUserData = this.buildAccessData(JSON.parse(data));
-                resolve();
+                resolve(this.buildAccessData(JSON.parse(data)));
             }).catch((error) => {
                 reject(error);
             });

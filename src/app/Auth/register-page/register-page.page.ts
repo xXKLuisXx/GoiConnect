@@ -26,20 +26,22 @@ export class RegisterPagePage implements OnInit {
 
 	async registerForm() {
 		await this.utils.loadingPresent();
-		this.authService.register(this.UserData).subscribe(
-			(Response: (any)) => {
-				this.utils.storeItem('AccessDataUser', this.utils.buildAccessData(Response));
-				this.utils.loadingDismiss();
-				this.router.navigate(['/home']);
-			},
-			(Errors: (any)) => {
-				this.utils.loadingDismiss();
-				this.utils.alertPresent('Errors', this.utils.buildErrors(Errors), 'OK');
-			},
-			() => {
-				this.utils.loadingDismiss();
-			}
-		);
+		this.authService.register(this.UserData).then((subscriber) => {
+			subscriber.subscribe(
+				(response: (any)) => {
+					this.utils.storeItem('AccessDataUser', this.utils.buildAccessData(response));
+					this.router.navigate(['/home']);
+				},
+				(errors: (any)) => {
+					this.utils.alertPresent('Errors', this.utils.buildErrors(errors), 'OK');
+				},
+				() => {
+					this.utils.loadingDismiss();
+				}
+			);
+		}).catch((error)=>{
+			console.log(error);
+		});
 	}
 
 	public LoginPage() {
