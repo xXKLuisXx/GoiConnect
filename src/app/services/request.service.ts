@@ -9,7 +9,7 @@ import { Utils } from '../Models/Classes/utils';
 })
 
 export class RequestService {
-	private AUTH_SERVER_ADDRESS = 'http://192.168.0.8:8000/api/';
+	private AUTH_SERVER_ADDRESS = 'http://18.216.139.199/api/';
 	private HEADERS = [['Content-Type', 'application/json'], ['Authorization', '']];
 	private END_POINTS = [['login', '0'], ['register', '0'], ['publications', '1'], ['assist', '1'], ['join', '1'], ['joined', '1'], ['lodgings', '1']];
 	constructor(
