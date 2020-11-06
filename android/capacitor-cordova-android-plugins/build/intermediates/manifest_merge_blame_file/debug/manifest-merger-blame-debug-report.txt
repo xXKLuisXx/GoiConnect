@@ -1,0 +1,61 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:amazon="http://schemas.amazon.com/apk/res/android"
+3    xmlns:android="http://schemas.android.com/apk/res/android"
+4    package="capacitor.android.plugins"
+5    android:versionCode="1"
+6    android:versionName="1.0" >
+7
+8    <uses-sdk
+9        android:minSdkVersion="21"
+9-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml
+10        android:targetSdkVersion="29" />
+10-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml
+11
+12    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+12-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:11:1-76
+12-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:11:18-74
+13    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+13-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:12:1-66
+13-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:12:18-64
+14    <uses-permission android:name="android.permission.RECORD_VIDEO" />
+14-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:13:1-66
+14-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:13:18-64
+15    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+15-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:14:1-75
+15-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:14:18-73
+16
+17    <application
+17-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:5:1-10:15
+18        android:requestLegacyExternalStorage="true"
+18-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:5:14-57
+19        android:usesCleartextTraffic="true" >
+19-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:5:58-93
+20        <activity
+20-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:6:1-151
+21            android:name="com.synconset.MultiImageChooserActivity"
+21-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:6:50-104
+22            android:label="@string/multi_app_name"
+22-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:6:11-49
+23            android:theme="@style/Theme.AppCompat.Light" />
+23-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:6:105-149
+24
+25        <provider
+25-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:7:1-9:12
+26            android:name="org.apache.cordova.camera.FileProvider"
+26-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:7:11-64
+27            android:authorities="${applicationId}.provider"
+27-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:7:65-112
+28            android:exported="false"
+28-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:7:113-137
+29            android:grantUriPermissions="true" >
+29-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:7:138-172
+30            <meta-data
+30-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:8:3-112
+31                android:name="android.support.FILE_PROVIDER_PATHS"
+31-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:8:14-64
+32                android:resource="@xml/camera_provider_paths" />
+32-->C:\Users\erek_\Documents\GitHub\GoiConnectProj\GoiConnect\android\capacitor-cordova-android-plugins\src\main\AndroidManifest.xml:8:65-110
+33        </provider>
+34    </application>
+35
+36</manifest>

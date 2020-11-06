@@ -1,0 +1,32 @@
+R_DEF: Internal format may change without notice
+local
+anim image_pop_in
+drawable grid_background
+drawable ic_action_discard_dark
+drawable ic_action_discard_light
+drawable ic_action_done_dark
+drawable ic_action_done_light
+drawable ic_launcher
+drawable image_bg
+drawable loading_icon
+id actionbar_discard
+id actionbar_discard_textview
+id actionbar_done
+id actionbar_done_textview
+id gridview
+layout actionbar_custom_view_done_discard
+layout actionbar_discard_button
+layout actionbar_done_button
+layout multiselectorgrid
+string discard
+string done
+string error_database
+string free_version_label
+string max_count_photos_message
+string max_count_photos_title
+string multi_app_name
+string multi_image_picker_processing_images_message
+string multi_image_picker_processing_images_title
+string requesting_thumbnails
+style MyTheme
+xml camera_provider_paths
