@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActionSheetController, Platform } from '@ionic/angular';
+import { ActionSheetController, ModalController, Platform } from '@ionic/angular';
 import { PublicationService } from '../../../services/publication.service';
 import { Publication } from '../../../Models/Classes/publication';
 import { Utils } from 'src/app/Models/Classes/utils';
@@ -7,7 +7,8 @@ import { IonInfiniteScroll } from '@ionic/angular';
 import { IonContent } from '@ionic/angular';
 import { Observable, of } from 'rxjs';
 import { PublicationInt } from 'src/app/Models/Interfaces/publication-int';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
+import { LodgingComponent } from 'src/app/components/lodging/lodging.component';
 
 @Component({
 	selector: 'app-home',
@@ -32,6 +33,7 @@ export class HomePage implements OnInit {
 		public publicationService: PublicationService,
 		private platform: Platform,
 		private router: Router,
+		public modalController: ModalController,
 		private utils: Utils
 	) {
 		this.scrollEnd = false;
@@ -136,7 +138,63 @@ export class HomePage implements OnInit {
 		*/
 	}
 
-	pagePublication() {
-		this.router.navigate(['social/social-publication']);
+
+	pagePublication(typePublication:number){
+		let navigationExtras: NavigationExtras = {
+			queryParams: {
+				type: typePublication
+			}
+		};
+		this.router.navigate(['social/social-publication'], navigationExtras);
 	}
+
+	async presentActionSheet() {
+		const actionSheet = await this.actionSheetController.create({
+		  header: 'Publicaciones',
+		  cssClass: 'my-custom-class',
+		  buttons: [{
+			text: 'Estado',
+			icon: 'bulb',
+			handler: () => {
+				this.pagePublication(1);
+			}
+		  }, {
+			text: 'Hospedajes',
+			icon: 'bed',
+			handler: () => {
+				this.pagePublication(2);
+			}
+		  }, {
+			text: 'Eventos',
+			icon: 'american-football',
+			handler: () => {
+			  console.log('Play clicked');
+			}
+		  }, {
+			text: 'Viajes',
+			icon: 'airplane',
+			handler: () => {
+			  console.log('Favorite clicked');
+			}
+		  }, {
+			text: 'Cancel',
+			icon: 'close',
+			role: 'cancel',
+			handler: () => {
+			  console.log('Cancel clicked');
+			}
+		  }]
+		});
+		await actionSheet.present();
+	  }
+
+	  async presentModal() {
+
+			let modal = await this.modalController.create({
+				component: LodgingComponent
+			  });
+			  return await modal.present();
+		
+	}
+	
 }

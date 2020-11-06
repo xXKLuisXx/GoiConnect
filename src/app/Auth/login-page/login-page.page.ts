@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/Auth/auth.service';
 import { User } from 'src/app/Models/Classes/user';
 import { Utils } from 'src/app/Models/Classes/utils';
+import { FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
@@ -11,19 +12,50 @@ import { Utils } from 'src/app/Models/Classes/utils';
     styleUrls: ['./login-page.page.scss'],
 })
 export class LoginPagePage implements OnInit {
+
+    /* VARIABLES DEL FORMULARIO */
+    get email(){   return this.LoginForm.get("email"); }
+    get pass(){     return this.LoginForm.get('pass');   }
+
+    /* MENSAJES DE ERROR DURANTE LLENADO DE DATOS */
+    public errorMessages = {
+        email: [
+            { type: 'required', message: 'Debes añadir un correo'},
+            { type: 'pattern', message: 'El texto ingresado no parece ser un correo electrónico' }
+            ],
+        pass: [
+            { type: 'required', message: 'Debes añadir una contraseña'},
+            { type: 'maxlength', message: 'Tu contraseña no puede exceder los 50 carácteres' },
+            { type: 'minlength', message: 'Debes de ingresar al menos 8 carácteres' },
+            ]
+    };
+
+    /* REGLAS DEL FORMULARIO */
+    LoginForm = this.formBuilder.group({
+        email:['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$')]],
+        pass: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(8),]],
+    });
+
+     /* CONSTRUCTOR */
     constructor(
         private router: Router,
         private UserData: User,
         private authService: AuthService,
-        private utils: Utils
+        private utils: Utils,
+        private formBuilder: FormBuilder
     ) { }
 
-    async ngOnInit() {
-
+    ngOnInit() {
     }
 
-    public async loginForm() {
+    /* FUNCIÓN SUBMIT Se activa para enviar los datos en el formulario */
+    public async submit() {
+
+        /* Loading Mensaje */
         await this.utils.loadingPresent();
+        this.UserData.email =  this.LoginForm.get('email').value;
+        this.UserData.password =  this.LoginForm.get('pass').value;
+
         this.authService.login(this.UserData).then((subscriber) => {
             subscriber.subscribe(
                 async (Response: (any)) => {
@@ -45,10 +77,6 @@ export class LoginPagePage implements OnInit {
         }).catch((error) => {
             console.log(error);
         });
-    }
-    
-    public RegisterPage() {
-        this.router.navigate(['/register'], { replaceUrl: true });
     }
 
 }

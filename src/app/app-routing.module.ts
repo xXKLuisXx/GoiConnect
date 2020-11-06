@@ -6,8 +6,13 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo: 'login',
+		redirectTo: 'home',
 		pathMatch: 'full'
+	},
+	{
+		path: 'home',
+		loadChildren: () => import('./Auth/home/home.module').then( m => m.HomePageModule),
+		canActivate: [AuthGuard]
 	},
 	{
 		path: 'login',
@@ -87,7 +92,13 @@ const routes: Routes = [
 				loadChildren: () => import('./Pages/Social/lodging/lodging.module').then( m => m.LodgingPageModule)
 			},
 		]
-	},
+	},  {
+    path: 'profile',
+    loadChildren: () => import('./Auth/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+
+  
+
 
   
 

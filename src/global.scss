@@ -36,3 +36,74 @@ ion-searchbar{
         }
     }
 }
+
+:root{
+    --color-fondo : black;
+    //--color-fondo : linear-gradient(0deg, rgba(132,219,202,1)  , rgb(79, 121, 113) 90%) !important;
+
+    --color-fondo-botones: rgb(55,86,79);
+    --color-texto-botones: white;
+}
+
+
+.background-app {
+    --background: var(--color-fondo);
+    background: var(--color-fondo);
+
+    width: 100%;
+    height: 100%;
+}
+
+.white-buttons{
+    --background : white;
+    color: black;
+    --border-radius: 50px;
+    text-transform: none;
+    font-weight: bold;
+    font-size: 4vw;
+    height: 10vw;
+}
+
+.white-input{
+    --background :rgb(228,228,228);
+    background: rgb(228,228,228);
+
+    color: black;
+    --color: black;
+
+    --border-radius: 50px;
+    border-radius: 50px; 
+
+    text-transform: none;
+    font-size: 3vw;
+
+    padding: 0 35px 0 35px;
+}
+
+.error-message {
+    color: red;
+    font-size: medium;
+    font-weight: bold;
+}
+
+.buttons-color-rounded{
+    --background : var(--color-fondo-botones);
+    color: var(--color-texto-botones);
+    --border-radius: 50px;
+    text-transform: none;
+    font-weight: bold;
+    font-size: 4vw;
+    height: 10vw;
+}
+
+.row-error{
+    padding-bottom: 5%; 
+    padding-top: 3%; 
+    justify-content: center;
+    text-align: center;
+}
+
+.item-without-color{
+    --background: none; 
+    color: black;
+}

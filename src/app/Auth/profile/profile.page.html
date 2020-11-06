@@ -1,0 +1,124 @@
+<ion-header [translucent]="true">
+	<ion-toolbar>
+		<ion-buttons slot="start">
+		<ion-back-button text="Regresar" >
+		</ion-back-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="background-app">
+  <div style="height: 100%; display: flex; align-items: center; place-content: center; text-align: center;">
+    <ion-grid style="width: 85%;">
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-button style="width: 85%;" class="white-buttons" (click)="login_button()">
+            <ion-label style="margin-right: auto;">
+              Nombre(s)
+            </ion-label>
+            <ion-icon slot="end" name="create-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-button style="width: 85%;" class="white-buttons" (click)="register_button()">
+            <ion-label style="margin-right: auto;">
+              Primer apellido
+            </ion-label>
+            <ion-icon slot="end" name="create-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-button style="width: 85%;" class="white-buttons" (click)="register_button()">
+            <ion-label style="margin-right: auto;">
+              Segundo apellido
+            </ion-label>
+            <ion-icon slot="end" name="create-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12" class="ion-text-center">
+          <ion-item style="width: 85%; height: 15vw; display: inline-flex;" class="white-buttons">
+            <ion-label color="primary" position="floating">Fecha de Nacimiento</ion-label>
+            <ion-datetime 
+              style="color: black;"
+              placeholder="Seleccionar Fecha"
+              min="1900" max="2020"
+              cancelText="Cancelar"
+              doneText="Aceptar"
+              displayFormat="DDDD MMM D, YYYY" 
+              dayNames="Domingo, Lunes, Martes, Miércoles, Jueves, Viernes, Sabado"
+              monthShortNames="Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre">
+            </ion-datetime>
+            <ion-icon slot="end" name="create-outline" style="color: black; align-self: center;"></ion-icon>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-button style="width: 85%;" class="white-buttons" (click)="register_button()">
+            <ion-label style="margin-right: auto;">
+              RFC
+            </ion-label>
+            <ion-icon slot="end" name="create-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <ion-button style="width: 85%;" class="white-buttons" (click)="register_button()">
+            <ion-label style="margin-right: auto;">
+              No. identificación
+            </ion-label>
+            <ion-button (click)="info_INE()" slot="end" style="--background : var(--color-fondo-botones); color: var(--color-texto-botones); --border-radius: 100%; width: 8vw; height: 8vw; font-size: 2vw;">
+              <ion-icon name="help-outline"></ion-icon>
+            </ion-button>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="place-content: center;">
+    
+          <ion-col size="5">
+            <ion-button style="width: 100%; height: 25vw;" class="white-buttons" (click)="register_button()">
+              <div style="font-size: 3vw;">
+                <ion-icon name="camera-outline" slot="top"  style="zoom: 3;"></ion-icon><br>
+                <ion-label style="font-size: 2vw;">
+                  Frente de identificación
+                </ion-label>
+              </div>
+              <!--div [hidden]=!div_oculto_ine_frente >
+                <img [src]="base64Image_frente">
+              </div-->
+            </ion-button>
+          </ion-col>
+
+          <ion-col size="5">
+            <ion-button style="width: 100%; height: 25vw;" class="white-buttons" (click)="register_button()">
+              <div style="font-size: 3vw;">
+                <ion-icon name="camera-outline" slot="top" style="zoom: 3;"></ion-icon><br>
+                <ion-label  style="font-size: 2vw;">
+                  Reverso de identificación
+                </ion-label>
+              </div>
+              <!--div [hidden]=!div_oculto_ine_frente >
+                <img [src]="base64Image_frente">
+              </div-->
+            </ion-button>
+          </ion-col>
+
+      </ion-row>
+    </ion-grid>
+    
+  </div>
+</ion-content>
