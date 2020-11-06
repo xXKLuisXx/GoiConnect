@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { Publication } from 'src/app/Models/Classes/publication';
 
 @Component({
@@ -10,8 +9,6 @@ import { Publication } from 'src/app/Models/Classes/publication';
 export class LodgingPublicationComponent implements OnInit {
 
   @Input() publication: Publication;
-
-  public myForm: FormControl;
 
   constructor() { 
     
