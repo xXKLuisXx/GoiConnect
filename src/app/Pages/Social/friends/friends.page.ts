@@ -35,6 +35,7 @@ export class FriendsPage implements OnInit {
   }
 
   get userToken(): string{
+    console.log(this.utils.accessUserData.getAuthorization());
     return this.utils.accessUserData.getAuthorization();
   }
 
@@ -44,11 +45,12 @@ export class FriendsPage implements OnInit {
 
   public fetchUsers() {
 
+    console.log(this.utils.accessUserData.getAuthorization());
     this.utils.createAlert('Subscribe', this.utils.accessUserData.getAuthorization(), 'Mmm').then();
 
-     this.friendshipService.getUsers(this.utils.accessUserData.getAuthorization())
+    this.friendshipService.getUsers(this.utils.accessUserData.getAuthorization())
       .subscribe((res: any) => {
-        
+
         this.utils.createAlert('Subscribe', 'Solicitud enviada...', 'Mmm').then();
         this.users = res.users;
         console.log(this.users);

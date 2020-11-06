@@ -25,7 +25,7 @@ export class FriendshipService {
   }
 
   getUsers(authorization: string): Observable<any> { // Mientras tanto buscas la solucion
-    return this.request.createRequestGet('friends', this.tokenRequired, authorization);
+    return this.request.createRequestGet('friends', this.tokenRequired, authorization, 1, 'page');
   }
 
    
