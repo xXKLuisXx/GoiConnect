@@ -33,11 +33,8 @@ export class HomePage implements OnInit {
 		public publicationService: PublicationService,
 		private platform: Platform,
 		private router: Router,
-<<<<<<< HEAD
-		public modalController: ModalController
-=======
+		public modalController: ModalController,
 		private utils: Utils
->>>>>>> newPages
 	) {
 		this.scrollEnd = false;
 		this.publication = new Publication();
@@ -141,7 +138,6 @@ export class HomePage implements OnInit {
 		*/
 	}
 
-<<<<<<< HEAD
 
 	pagePublication(typePublication:number){
 		let navigationExtras: NavigationExtras = {
@@ -150,10 +146,6 @@ export class HomePage implements OnInit {
 			}
 		};
 		this.router.navigate(['social/social-publication'], navigationExtras);
-=======
-	pagePublication() {
-		this.router.navigate(['social/social-publication']);
->>>>>>> newPages
 	}
 
 	async presentActionSheet() {

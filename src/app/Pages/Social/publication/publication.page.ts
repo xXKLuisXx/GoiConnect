@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router} from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { CaptureError, CaptureImageOptions, MediaCapture, MediaFile } from '@ionic-native/media-capture/ngx';
 import { Publication } from '../../../Models/Classes/publication';
@@ -12,6 +12,7 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { ModalController } from '@ionic/angular';
 import { LodgingComponent } from 'src/app/components/lodging/lodging.component';
+import { Route } from '@angular/compiler/src/core';
 
 
 @Component({
@@ -28,11 +29,11 @@ export class PublicationPage implements OnInit {
 	private accessdata: AccessUserData;
 	private typePublication = null;
 	private hospedaje = false;
-	private checkIn: string; 
+	private checkIn: string;
 	private checkOut: string;
 	private multimediaSelected: boolean;
-	public postPublication:boolean;
-		
+	public postPublication: boolean;
+
 	constructor(
 		private router: Router,
 		public publicationService: PublicationService,
@@ -43,24 +44,19 @@ export class PublicationPage implements OnInit {
 		private imagePicker: ImagePicker,
 		private base64: Base64,
 		public modalController: ModalController,
-		private utils: Utils
+		private utils: Utils,
+		private route: ActivatedRoute
 	) {
 		this.publication = new Publication();
 	}
-
-<<<<<<< HEAD
-	async ngOnInit() {	
-
-=======
 	async ngOnInit() {
->>>>>>> newPages
 		this.multimediaSelected = true;
 		this.postPublication = true;
 
 		await this.utils.getAccessData();
 
-		this.route.queryParams.subscribe(params=>{
-			if(params){
+		this.route.queryParams.subscribe(params => {
+			if (params) {
 				let queryParams = params;
 				this.typePublication = queryParams.type;
 			}
@@ -72,24 +68,24 @@ export class PublicationPage implements OnInit {
 		console.log(this.postPublication);
 	}
 
-	public getImgContent():SafeUrl {
-        return this.sanitizer.bypassSecurityTrustUrl(this.src);
+	public getImgContent(): SafeUrl {
+		return this.sanitizer.bypassSecurityTrustUrl(this.src);
 	}
-	
+
 	async presentModal() {
 
-		if(this.typePublication == 8){
+		if (this.typePublication == 8) {
 			let modal = await this.modalController.create({
 				component: LodgingComponent
-			  });
-			  return await modal.present();
+			});
+			return await modal.present();
 		}
-		
+
 	}
 
 	public async post() {
 
-		if(this.publication.typeContent == null) this.publication.typeContent = 7;
+		if (this.publication.typeContent == null) this.publication.typeContent = 7;
 
 		await this.utils.loadingPresent();
 
@@ -99,11 +95,11 @@ export class PublicationPage implements OnInit {
 					this.publication = new Publication();
 					console.log(Response);
 					this.publicationService.publication = new Publication();
-	
+
 					this.utils.loadingDismiss();
 					this.updatePublications();
-					this.src = ""; 
-					this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK' );
+					this.src = "";
+					this.utils.alertPresent('Exito', 'Publicación realizada con exito', 'OK');
 					this.router.navigate(['social']);
 				},
 				(Errors: (any)) => {
@@ -111,7 +107,7 @@ export class PublicationPage implements OnInit {
 					console.log(Errors);
 					this.utils.alertPresent('Errors', this.utils.buildErrors(Errors), 'OK');
 				},
-				() => {		
+				() => {
 				}
 			);
 		}).catch((error) => {
@@ -143,7 +139,7 @@ export class PublicationPage implements OnInit {
 		await actionSheet.present();
 	}
 
-	async menuMultimedia(){
+	async menuMultimedia() {
 		const actionSheet = await this.actionSheetController.create({
 			header: "Select gallery",
 			buttons: [{
@@ -175,21 +171,21 @@ export class PublicationPage implements OnInit {
 			outputType: 0
 		};
 
-		this.imagePicker.getPictures(options).then(async(images) => {
-				for (var i = 0; i < images.length; i++) {
-					const extensionImage = images[i].substr(images[i].lastIndexOf('.') + 1); 
-					 await this.base64.encodeFile(images[i]).then((base64File: string) => {
-						 this.publication.multimedia.push({ base: base64File, ext: extensionImage  });			
-					}, (error) => {
-						console.log(error);
-					});
-				}
+		this.imagePicker.getPictures(options).then(async (images) => {
+			for (var i = 0; i < images.length; i++) {
+				const extensionImage = images[i].substr(images[i].lastIndexOf('.') + 1);
+				await this.base64.encodeFile(images[i]).then((base64File: string) => {
+					this.publication.multimedia.push({ base: base64File, ext: extensionImage });
+				}, (error) => {
+					console.log(error);
+				});
+			}
 
-				if (this.publication.multimedia.length != 0){
-					this.multimediaSelected = false;
-					this.src = this.publication.multimedia[0].base;
-					if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
-				}
+			if (this.publication.multimedia.length != 0) {
+				this.multimediaSelected = false;
+				this.src = this.publication.multimedia[0].base;
+				if (this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
+			}
 		}, (error) => {
 			console.log(error);
 		});
@@ -210,10 +206,10 @@ export class PublicationPage implements OnInit {
 			if (this.publication.multimedia != null) {
 				this.multimediaSelected = false;
 				this.src = this.publication.multimedia[0].base;
-				if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
+				if (this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
 			}
 		}, (error) => {
-			
+
 		});
 	}
 
@@ -227,8 +223,8 @@ export class PublicationPage implements OnInit {
 				if (this.publication.multimedia != null) {
 					this.multimediaSelected = false;
 					this.src = this.publication.multimedia[0].base;
-					if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
-					else{
+					if (this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
+					else {
 						this.isVideo = true;
 					}
 					//this.router.navigate(['social/social-publication']);
@@ -247,41 +243,41 @@ export class PublicationPage implements OnInit {
 			sourceType: sourceType
 		}
 		this.camera.getPicture(options)
-		.then(async (videoUrl) => {
-			if (videoUrl) {
-				var dirpath = videoUrl.substr(0, videoUrl.lastIndexOf('/') + 1);
-				dirpath = dirpath.includes("file://") ? dirpath : "file://" + dirpath;
+			.then(async (videoUrl) => {
+				if (videoUrl) {
+					var dirpath = videoUrl.substr(0, videoUrl.lastIndexOf('/') + 1);
+					dirpath = dirpath.includes("file://") ? dirpath : "file://" + dirpath;
 
-				await this.base64.encodeFile('file://' + videoUrl).then((base64File: string) => {
-					this.publication.multimedia.push({ base: base64File, ext: 'mp4' });
-					this.publicationService.publication = this.publication;
+					await this.base64.encodeFile('file://' + videoUrl).then((base64File: string) => {
+						this.publication.multimedia.push({ base: base64File, ext: 'mp4' });
+						this.publicationService.publication = this.publication;
 
-					if (this.publication.multimedia != null) {
-						this.src = this.publication.multimedia[0].base;
-						if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
-						else{
-							this.isVideo = true;
+						if (this.publication.multimedia != null) {
+							this.src = this.publication.multimedia[0].base;
+							if (this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
+							else {
+								this.isVideo = true;
+							}
+							this.multimediaSelected = false;
 						}
-						this.multimediaSelected = false;
-					}
-				}, (error) => {
-					console.log(error);
-				});
-			}
-		})
-		.catch(error => {
+					}, (error) => {
+						console.log(error);
+					});
+				}
+			})
+			.catch(error => {
 				console.log(error);
-		});
+			});
 	}
 
 	updatePublications() {
 		this.publicationService.updatePublications();
 	}
 
-	showMessage(){
+	showMessage() {
 		console.log(this.publication);
 	}
-	
+
 
 	async publications() {
 		const actionSheet = await this.actionSheetController.create({
@@ -309,29 +305,29 @@ export class PublicationPage implements OnInit {
 
 	async addMultimedia() {
 		const actionSheet = await this.actionSheetController.create({
-		  header: 'Publicaciones',
-		  cssClass: 'my-custom-class',
-		  buttons: [{
-			text: 'Imagen / Video',
-			icon: 'image',
-			handler: () => {
-			  this.menuMultimedia();
-			}
-		  }, {
-			text: 'Cámara',
-			icon: 'camera',
-			handler: () => {
-			  this.menuCamera();
-			}
-		  }, {
-			text: 'Cancel',
-			icon: 'close',
-			role: 'cancel',
-			handler: () => {
-			  console.log('Cancel clicked');
-			}
-		  }]
+			header: 'Publicaciones',
+			cssClass: 'my-custom-class',
+			buttons: [{
+				text: 'Imagen / Video',
+				icon: 'image',
+				handler: () => {
+					this.menuMultimedia();
+				}
+			}, {
+				text: 'Cámara',
+				icon: 'camera',
+				handler: () => {
+					this.menuCamera();
+				}
+			}, {
+				text: 'Cancel',
+				icon: 'close',
+				role: 'cancel',
+				handler: () => {
+					console.log('Cancel clicked');
+				}
+			}]
 		});
 		await actionSheet.present();
-	  }
+	}
 }

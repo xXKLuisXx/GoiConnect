@@ -37,13 +37,8 @@ import { User } from './Models/Classes/user';
     IonicStorageModule.forRoot(),
     HttpClientModule,
     SuperTabsModule.forRoot(),
-<<<<<<< HEAD
     FormsModule,
-    ReactiveFormsModule
-    
-=======
     ReactiveFormsModule,
->>>>>>> newPages
   ],
   providers: [
     Utils,
