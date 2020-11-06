@@ -23,7 +23,6 @@ export class LoginPagePage implements OnInit {
     }
 
     public async loginForm() {
-        console.log('entrar login');
         await this.utils.loadingPresent();
         this.authService.login(this.UserData).then((subscriber) => {
             subscriber.subscribe(
@@ -47,7 +46,7 @@ export class LoginPagePage implements OnInit {
             console.log(error);
         });
     }
-
+    
     public RegisterPage() {
         this.router.navigate(['/register'], { replaceUrl: true });
     }
