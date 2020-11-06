@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-searchbar></ion-searchbar>
+    <ion-buttons slot="end" class="btnmen">
+      <ion-icon name="heart-circle-sharp" slot="end"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-avatar slot="start">
+      <img src="https://www.aconsciousrethink.com/wp-content/uploads/2019/05/reserved-person-line.jpg" style="width: 100%; height:100%">
+    </ion-avatar>
+    <ion-label>Nombre Apellido Apellido</ion-label>
+  </ion-item>
+
+  <ion-card>
+    <ion-card-header class="cardheaderArticle">
+      <img src="../../../../assets/27002.jpg" class="imgHead">
+    </ion-card-header>
+    <br>
+    <ion-card-content>
+      <div style="display: flex; background-color: #e4e4e4;" class="divMore">
+        <img src="../../../../assets/27002.jpg" width="30%" height="70px" class="imgMore">
+        
+        <ion-icon name="add-circle-sharp" class="addicon"></ion-icon>
+      </div>
+      <br>
+
+      <form class="formSell">
+        <ion-item class="title">
+          <ion-input type="text" name="title" placeholder="Título"></ion-input>
+        </ion-item>
+        <br>
+        <ion-item class="price">
+          <ion-input type="text" name="price" placeholder="Precio"></ion-input>
+        </ion-item>
+        <br>
+        <ion-item class="category">
+          <ion-input type="text" name="category" placeholder="Categoria"></ion-input>
+        </ion-item>
+        <br>
+        <ion-item class="location">
+          <ion-input type="text" name="location" placeholder="Ubicación"></ion-input>
+        </ion-item>
+        <br>
+        <ion-item class="description">
+          <ion-textarea name="description" placeholder="Descripción" rows="4"></ion-textarea>
+        </ion-item>
+        <br>
+        <ion-label class="envio">Envío</ion-label>
+          <ion-item class="disponible">
+            <!-- Default Toggle -->
+            <ion-toggle default=""></ion-toggle>
+            <ion-label>Disponible</ion-label>
+          </ion-item>
+
+          <ion-item class="free">
+            <!-- Checked Toggle -->
+            <ion-toggle default=""></ion-toggle>
+            <ion-label>Disponible (gratis)</ion-label>
+          </ion-item>
+
+          <ion-item class="nodisponible">
+            <!-- Checked Toggle -->
+            <ion-toggle default=""></ion-toggle>
+            <ion-label>No disponible</ion-label>
+          </ion-item>
+
+          <div class="btnPublic">
+            <ion-button color="primary" shape="round" class="btn-vender" style="float: center;" routerLink="/sell">
+              <ion-text>
+                <p>Publicar</p>
+              </ion-text>
+            </ion-button>
+          </div>
+
+      </form>
+      
+    </ion-card-content>
+  </ion-card>
+</ion-content>

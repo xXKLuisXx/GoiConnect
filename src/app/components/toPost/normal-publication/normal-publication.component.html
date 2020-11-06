@@ -1,0 +1,23 @@
+
+<ion-item lines="full">
+  <ion-icon name="text-outline" slot="start"></ion-icon>
+  <ion-label position="floating">Título</ion-label>
+  <ion-input type="text" [(ngModel)]='publication.title' name="title" required ngDefaultControl></ion-input>
+</ion-item>
+
+<ion-item>
+  <ion-icon name="document-text-outline" slot="start"></ion-icon>
+  <ion-textarea [(ngModel)]='publication.description' 
+                name="description" 
+                required 
+                style="height: 400px;"
+                ngDefaultControl
+                placeholder="¿Qué estás pensando?"
+                (ionChange)="changeTextArea()"></ion-textarea>
+</ion-item>
+
+<ion-item lines="full">
+  <ion-icon name="cash-outline" slot="start" style="color: green;"></ion-icon>
+  <ion-toggle  [(ngModel)]="publication.monetized" name="monetized" ngDefaultControl></ion-toggle><ion-label>Monetizar</ion-label>
+</ion-item>
+

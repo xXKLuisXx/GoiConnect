@@ -1,0 +1,40 @@
+<ion-content > 
+
+  <div *ngIf="div_loading == true" class="background-app">
+    <div style="height: 100%; display: flex; align-items: center; place-content: center;">
+      <ion-avatar style="--border-radius: 0px; width: 20%; height: 10%;"> 
+        <img src="assets/LOGOS/logo.png">
+      </ion-avatar>
+
+      <ion-spinner name="crescent" style="bottom: 20%; position: fixed;"></ion-spinner>
+      <ion-item style="bottom: 10%; position: fixed; --background: none; --border-style: none;">
+        <ion-label>
+          Loading...
+        </ion-label>
+      </ion-item>
+    </div>
+  </div>
+
+  <div *ngIf="div_selector == true" class="background-app">
+    <div style="height: 100%; display: flex; align-items: center; place-content: center; text-align: center;">
+      <ion-grid style="width: 85%;">
+        <ion-row style>
+          <ion-col size="12">
+            <ion-button style="width: 85%;" class="white-buttons" (click)="login_button()">
+              Iniciar sesión
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+        <ion-row style>
+          <ion-col size="12">
+            <ion-button style="width: 85%;" class="white-buttons" (click)="register_button()">
+              Registrarme
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+</ion-content>

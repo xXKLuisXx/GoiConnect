@@ -1,0 +1,63 @@
+
+  <form (ngSubmit)="logForm()">
+
+    <ion-item lines="full">
+      <ion-icon name="text-outline" slot="start"></ion-icon>
+      <ion-label position="floating">Título</ion-label>
+      <ion-input type="text" [(ngModel)]='publication.title' name="title" ngDefaultControl required></ion-input>
+    </ion-item>
+    
+
+    <ion-item>
+      <ion-icon name="document-text-outline" slot="start"></ion-icon>
+      <ion-textarea [(ngModel)]='publication.description' 
+                    name="description" 
+                    required
+                    ngDefaultControl
+                    autoGrow="true"
+                    placeholder="¿Qué estás pensando?"></ion-textarea>
+    </ion-item>
+
+    <ion-row>
+        <ion-col>
+            <ion-item lines="full">
+                <ion-icon name="calendar-outline" slot="start"></ion-icon>
+                <ion-label position="floating">Llegada</ion-label>
+                <ion-datetime displayFormat="D MMM YYYY" min="2020" max="2030"></ion-datetime>
+              </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item lines="full">
+                <ion-icon name="calendar-outline" slot="start"></ion-icon>
+                <ion-label position="floating">Salida</ion-label>
+                <ion-datetime displayFormat="D MMM YYYY" min="2020" max="2030"></ion-datetime>
+              </ion-item>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+          <ion-item lines="full">
+            <ion-icon name="time-outline" slot="start"></ion-icon>
+            <ion-label position="floating">Check In</ion-label>
+            <ion-datetime displayFormat="HH:mm"></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item lines="full">
+                <ion-icon name="time-outline" slot="start"></ion-icon>
+                <ion-label position="floating">Check Out</ion-label>
+                <ion-datetime displayFormat="HH:mm"></ion-datetime>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+            <ion-item lines="full">
+                <ion-icon name="cash-outline" slot="start"></ion-icon>
+                <ion-label position="floating">Precio $</ion-label>
+                <ion-input type="number"></ion-input>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+    </form>
+  

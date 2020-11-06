@@ -1,0 +1,43 @@
+.itempic {
+    width:  48%;
+    height : 167px !important;
+    max-width: 300px !important;  //any size
+    max-height: 167px !important; //any 
+    position: absolute;
+    text-align: center;
+    margin-left: 25%;
+    border-radius: 50%;
+    border: 5px solid;
+    margin-top: -95px;
+    border-color: #4E776F !important;
+}
+
+.name {
+    margin-top: 90px;
+    text-align: center;
+}
+
+.itemHead{
+    --ion-background-color: black;
+}
+
+.btnSocial {
+    --background: #4E776F !important;
+    width: 45%;
+}
+
+.btnProf {
+    --background: #858080 !important;
+    width: 45%;
+}
+
+.btnsProfile {
+    text-align: center;
+}
+
+.btnAdd {
+    --border-radius: 60%;
+    --background: #37564f !important;
+    position: absolute;
+    text-align: center;
+}

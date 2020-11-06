@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Nueva Publicación</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" disabled="{{postPublication}}" (click)="post()">
+        PUBLICAR
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div *ngIf="!multimediaSelected">
+    <div *ngIf="isVideo" width="320" height="240" controls class="videoPlayer">
+      <video controls preload="metadata" class="videoPlayer" width="100%" height="240">
+        <source [src]="getImgContent()" type="video/mp4">
+        </video>
+    </div>
+    <div *ngIf="!isVideo">
+      <img [src]="getImgContent()"/>
+    </div>
+  </div>
+
+  
+
+  
+ <!-- <ion-item>
+    <ion-label>Tipo de publicación</ion-label>
+    <ion-select [(ngModel)]='typePublication' [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Seleccionar" (ionChange)="presentModal()">
+      <ion-select-option value="8">Hospedaje</ion-select-option>
+      <ion-select-option value="9">Evento</ion-select-option>
+      <ion-select-option value="10">Viaje</ion-select-option>
+      <ion-select-option value="2">Estado</ion-select-option>
+    </ion-select>
+  </ion-item>-->
+
+  <div [ngSwitch]="typePublication">
+    
+    <div *ngSwitchCase="1">
+      <app-normal-publication [publication]="publication" [postPublication]="postPublication" (enablePost)="postChange($event)"></app-normal-publication>
+    </div>
+
+    <div *ngSwitchCase="2" >
+      <app-lodging-publication [publication]="publication"></app-lodging-publication>
+    </div>
+
+    <div *ngSwitchCase="10">
+      <app-entertainment [publication]="publication" [typePublication]="typePublication"></app-entertainment>
+    </div>
+
+    <div *ngSwitchDefault>
+    </div>
+  </div>
+
+  <!--<div *ngIf="multimediaSelected">
+    <ion-item lines="full">
+      <ion-icon name="images-outline" slot="start"></ion-icon>
+      <ion-label>Imagen / Video</ion-label>
+      <ion-input type="text" readonly name="image" (click)="menuMultimedia()"></ion-input>
+    </ion-item>
+  
+    <ion-item lines="full">
+      <ion-icon name="camera-outline" slot="start"></ion-icon>
+      <ion-label>Cámara</ion-label>
+      <ion-input type="text" readonly name="camera" (click)="menuCamera()"></ion-input>
+    </ion-item>
+  </div>
+  
+  <ion-item lines="full">
+    <ion-icon name="cash-outline" slot="start"></ion-icon>
+    <ion-toggle  [(ngModel)]="publication.monetized" name="monetized"></ion-toggle><ion-label>Monetizar</ion-label>
+  </ion-item>-->
+
+ 
+
+
+  <!--<ion-button type="submit" color="primary" expand="block" (click)="post()">Publicar</ion-button>-->
+
+ <!-- <app-normal-publication></app-normal-publication>-->
+</ion-content>
+
+<ion-footer class="ion-no-border" (click)="addMultimedia()">
+  <ion-toolbar>
+    <ion-row>
+      <ion-col>
+        <ion-title>Agregar a tu publicación</ion-title>
+      </ion-col>
+      <ion-col>
+        <ion-icon name="image" style="font-size: 30px;"></ion-icon>
+        <ion-icon name="camera" style="font-size: 30px;"></ion-icon>
+        <ion-icon name="videocam" style="font-size: 30px;"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
+
+
