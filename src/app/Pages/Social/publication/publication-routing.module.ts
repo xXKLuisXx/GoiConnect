@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PublicationPage } from './publication.page';
 
+
 const routes: Routes = [
   {
     path: '',

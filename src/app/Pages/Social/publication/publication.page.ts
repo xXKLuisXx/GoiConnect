@@ -32,6 +32,7 @@ export class PublicationPage implements OnInit {
 	private checkIn: string; 
 	private checkOut: string;
 	private multimediaSelected: boolean;
+	public postPublication:boolean;
 		
 	constructor(
 		private router: Router,
@@ -49,18 +50,26 @@ export class PublicationPage implements OnInit {
 		this.publication = new Publication();
 	}
 
-	async ngOnInit() {		
-		/*this.src = this.publication.multimedia[0].base;
-		if(this.publication.multimedia[0].ext != 'mp4') this.isVideo = false;
-		else this.isVideo = true;*/
+	async ngOnInit() {	
 
-		/*this.platform.backButton.subscribeWithPriority(10, () => {
-			this.router.navigate(['social']);
-		});*/
 		this.multimediaSelected = true;
+		this.postPublication = true;
 
 		await this.utils.getAccessData();
+
+		this.route.queryParams.subscribe(params=>{
+			if(params){
+				let queryParams = params;
+				this.typePublication = queryParams.type;
+			}
+		})
 	}
+
+	postChange(event) {
+		this.postPublication = event;
+		console.log(this.postPublication);
+	}
+
 	public getImgContent():SafeUrl {
         return this.sanitizer.bypassSecurityTrustUrl(this.src);
 	}
@@ -264,8 +273,8 @@ export class PublicationPage implements OnInit {
 		this.publicationService.updatePublications();
 	}
 
-	showData(){
-		console.log(this.typePublication);
+	showMessage(){
+		console.log(this.publication);
 	}
 	
 
@@ -292,4 +301,32 @@ export class PublicationPage implements OnInit {
 		});
 		await actionSheet.present();
 	}
+
+	async addMultimedia() {
+		const actionSheet = await this.actionSheetController.create({
+		  header: 'Publicaciones',
+		  cssClass: 'my-custom-class',
+		  buttons: [{
+			text: 'Imagen / Video',
+			icon: 'image',
+			handler: () => {
+			  this.menuMultimedia();
+			}
+		  }, {
+			text: 'Cámara',
+			icon: 'camera',
+			handler: () => {
+			  this.menuCamera();
+			}
+		  }, {
+			text: 'Cancel',
+			icon: 'close',
+			role: 'cancel',
+			handler: () => {
+			  console.log('Cancel clicked');
+			}
+		  }]
+		});
+		await actionSheet.present();
+	  }
 }
