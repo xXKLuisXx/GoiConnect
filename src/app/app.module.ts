@@ -35,9 +35,9 @@ import { User } from './Models/Classes/user';
     IonicModule.forRoot(),
     AppRoutingModule,
     IonicStorageModule.forRoot(),
-    FormsModule,
     HttpClientModule,
     SuperTabsModule.forRoot(),
+    FormsModule,
     ReactiveFormsModule,
   ],
   providers: [

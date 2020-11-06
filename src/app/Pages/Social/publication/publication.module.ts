@@ -6,15 +6,14 @@ import { PublicationPageRoutingModule } from './publication-routing.module';
 import { PublicationPage } from './publication.page';
 import { ComponentsModule } from '../../../components/components.module';
 
-
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ComponentsModule,
-    PublicationPageRoutingModule
+    PublicationPageRoutingModule,
+    ComponentsModule
   ],
-  declarations: [PublicationPage]
+  declarations: [PublicationPage, ]
 })
 export class PublicationPageModule {}
