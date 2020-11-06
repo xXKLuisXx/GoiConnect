@@ -1,167 +1,82 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, AlertController } from '@ionic/angular';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { User } from  '../user';
-import { AuthResponse } from '../auth-response';
-import { AuthService } from '../auth.service';
+import { AuthService } from 'src/app/services/Auth/auth.service';
+import { User } from 'src/app/Models/Classes/user';
+import { Utils } from 'src/app/Models/Classes/utils';
+import { FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-login-page',
-  templateUrl: './login-page.page.html',
-  styleUrls: ['./login-page.page.scss'],
+    selector: 'app-login-page',
+    templateUrl: './login-page.page.html',
+    styleUrls: ['./login-page.page.scss'],
 })
 export class LoginPagePage implements OnInit {
-  private UserData: User = {
-    name: "",
-    email: "",
-    password:"",
-    password_confirmation: ""
-  };
-  private authResponse : AuthResponse;
-  constructor(
-    private router : Router,
-    private nativeStorage : NativeStorage,
-    public loadingController : LoadingController,
-    public alertController : AlertController,
-    public authService : AuthService
-  ) { }
 
-  ngOnInit(){
-    this.initializeAuthResponse();
-    this.getAccessDataUser();
-  }
+    /* VARIABLES DEL FORMULARIO */
+    get email(){   return this.LoginForm.get("email"); }
+    get pass(){     return this.LoginForm.get('pass');   }
 
-  ionViewWillEnter(){
-    
-  }
-
-  private initializeAuthResponse() {
-    this.authResponse = {
-      response :{
-        name: "",
-        status: 0,
-        statusText: "",
-        accessUserData : {
-          token_type:"",
-          expires_in:0,
-          access_token:"",
-          refresh_token:""
-        },
-        errors : {
-          formErrors : {
-            name : [],
-            email : [],
-            password : []
-          },
-          dbErrors : {
-            error : "",
-            message : ""
-          }
-        }
-      }
+    /* MENSAJES DE ERROR DURANTE LLENADO DE DATOS */
+    public errorMessages = {
+        email: [
+            { type: 'required', message: 'Debes añadir un correo'},
+            { type: 'pattern', message: 'El texto ingresado no parece ser un correo electrónico' }
+            ],
+        pass: [
+            { type: 'required', message: 'Debes añadir una contraseña'},
+            { type: 'maxlength', message: 'Tu contraseña no puede exceder los 50 carácteres' },
+            { type: 'minlength', message: 'Debes de ingresar al menos 8 carácteres' },
+            ]
     };
-  }
 
-  private async getAccessDataUser(){
-    await this.nativeStorage.getItem('AccessDataUser').then(
-      data => {
-        this.authResponse.response.accessUserData = data;
-      },
-      error => console.error(error)
-    );
-  }
-
-  private printAccessDataUser(){
-    console.log(this.authResponse.response.accessUserData);
-  }
-  async presentAlertConfirm(messageAlert) {
-    const alert = await this.alertController.create({
-      header: 'Errors',
-      message: messageAlert,
-      buttons: [
-        {
-          text: 'Okay',
-          handler: () => {
-            console.log('Confirm Okay');
-          }
-        }
-      ]
+    /* REGLAS DEL FORMULARIO */
+    LoginForm = this.formBuilder.group({
+        email:['', [Validators.required, Validators.pattern('^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$')]],
+        pass: ['', [Validators.required, Validators.maxLength(50), Validators.minLength(8),]],
     });
 
-    await alert.present();
-  }
-  async presentLoading(loading) {
-    await loading.present();
-  }
+     /* CONSTRUCTOR */
+    constructor(
+        private router: Router,
+        private UserData: User,
+        private authService: AuthService,
+        private utils: Utils,
+        private formBuilder: FormBuilder
+    ) { }
 
-  async loginForm(){
-    this.initializeAuthResponse();
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...'
-    }); 
-    await this.presentLoading(loading);
+    ngOnInit() {
+    }
 
-    this.authService.login(this.UserData).subscribe(
-      async ( Response : (any) ) => {
-        this.authResponse.response.name = "";
-        this.authResponse.response.status = 200;
-        this.authResponse.response.statusText = "Ok";
-        this.authResponse.response.accessUserData = Response;
-        console.log(this.authResponse);
-        
-        await this.nativeStorage.setItem('AccessDataUser', this.authResponse.response.accessUserData ).then(
-          () => console.log('Stored item!'),
-          error => console.error('Error storing item', error)
-        );
-        loading.dismiss();
-      },
-      ( Errors : (any) ) => {
-        var ErrorsHTML = "";
-        loading.dismiss();
-        console.log(Errors);
-        this.authResponse.response.name = Errors.name;
-        this.authResponse.response.status = Errors.status;
-        this.authResponse.response.statusText = Errors.statusText;
-        if(Errors.error.error != null && Errors.error.error == "invalid_grant"){
-          this.authResponse.response.errors.dbErrors = Errors.error;
-          ErrorsHTML = ErrorsHTML + "<li>"+ "Invalid credentials" +"</li>";
-        }else {
-          this.authResponse.response.errors.formErrors = Errors.error;
-          if(this.authResponse.response.errors.formErrors.name != null){
-            this.authResponse.response.errors.formErrors.name.forEach(element => {
-              ErrorsHTML = ErrorsHTML + "<li>"+ element +"</li>";
-              //console.log(element);
-            });
-          }
-          if(this.authResponse.response.errors.formErrors.email != null){
-            this.authResponse.response.errors.formErrors.email.forEach(element => {
-              ErrorsHTML = ErrorsHTML + "<li>"+ element +"</li>";
-              //console.log(element);
-            });
-          }
-          if(this.authResponse.response.errors.formErrors.password != null){
-            this.authResponse.response.errors.formErrors.password.forEach(element => {
-              ErrorsHTML = ErrorsHTML + "<li>"+ element +"</li>";
-              //console.log(element);
-            });
-          }
-        }
-        //ErrorsHTML = ErrorsHTML + "<br>" + "<strong> Error Request: </strong>" + response['statusText'];
-        this.presentAlertConfirm(ErrorsHTML);
-        console.log(this.authResponse);
-      },
-      () => {
-        loading.dismiss();
-        console.log("Termino")
-      } 
-    );
-  }
+    /* FUNCIÓN SUBMIT Se activa para enviar los datos en el formulario */
+    public async submit() {
 
-  public RegisterPage(){
-    this.router.navigate(['/register-page']);
-  }
+        /* Loading Mensaje */
+        await this.utils.loadingPresent();
+        this.UserData.email =  this.LoginForm.get('email').value;
+        this.UserData.password =  this.LoginForm.get('pass').value;
+
+        this.authService.login(this.UserData).then((subscriber) => {
+            subscriber.subscribe(
+                async (Response: (any)) => {
+                    console.log(Response);
+                    await this.utils.storeItem('AccessDataUser', JSON.stringify(this.utils.buildAccessData(Response))).then((data)=> {
+                        this.router.navigate(['/social']);
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+                },
+                (Errors: (any)) => {
+                    console.log(Errors);
+                    this.utils.alertPresent('Errors', this.utils.buildErrors(Errors), 'OK');
+                },
+                () => {
+                    this.utils.loadingDismiss();
+                }
+            );
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 
 }

@@ -1,0 +1,52 @@
+<ion-content overflow-scroll="true">
+
+	<ion-toolbar color="secondary">
+		<ion-buttons slot="primary">
+			<ion-button shape="round" style="background-color:#a1a1a1; border-radius:50%; margin-top: -35px;">
+				<ion-icon name="settings"></ion-icon>
+			</ion-button>
+			<ion-button shape="round" style="background-color:#a1a1a1; border-radius:50%; margin-top: -35px;">
+				<ion-icon name="options"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+		<ion-avatar slot="start" style="margin-top: 20px; margin-left: 5px;">
+			<img src="https://www.aconsciousrethink.com/wp-content/uploads/2019/05/reserved-person-line.jpg"
+				style="width: 100%; height:100%">
+		</ion-avatar>
+		<ion-input placeholder="¿Qué estás pensando?" readonly class="inppost" (click)="presentActionSheet()" name="description"></ion-input>
+	</ion-toolbar>
+	<br>
+
+	<ion-slides>
+		<ion-slide *ngFor="let i of [1,1,1,1]">
+			<ion-avatar slot="start" class="avatarHistory">
+				<ion-icon name="reload"></ion-icon>
+			</ion-avatar>
+			<ion-avatar slot="start" *ngFor="let i of [1,1,1,1,1]" class="avatarHistory">
+				<img src="https://www.aconsciousrethink.com/wp-content/uploads/2019/05/reserved-person-line.jpg"
+					style="width: 100%; height:100%">
+			</ion-avatar>
+		</ion-slide>
+	</ion-slides>
+
+	<div *ngFor="let publication of publications$ | async">
+		
+			<app-publication-template [publication] = "publication"></app-publication-template>
+
+	</div>
+
+	<ion-fab *ngIf="scrollEnd" vertical="bottom" horizontal="end" slot="fixed">
+		<ion-fab-button (click)="scrollToTop()">
+		  <ion-icon name="arrow-up-circle"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
+
+
+	<ion-infinite-scroll threshold="20px" (ionInfinite)="loadData($event)">
+		<ion-infinite-scroll-content
+		  loadingSpinner="crescent"
+		  loadingText="Loading more data...">
+		</ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+	
+</ion-content>

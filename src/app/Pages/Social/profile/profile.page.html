@@ -1,0 +1,63 @@
+<ion-content color="dark">
+  <ion-card style="height: 30%;">
+
+    <ion-button class="btnAdd">
+      <ion-icon name="add-outline" slot="start" size="small"></ion-icon>
+    </ion-button>
+
+    <img src="https://joyvacationsclub.com/wp-content/uploads/2019/07/NY-1140x530.jpg" width="120%" height="100%">
+
+  </ion-card>
+
+  <div class="itempic" color="primary">
+    <img src="https://image.freepik.com/free-photo/girl-smiling-making-auto-photo-with-her-friends-around_1139-593.jpg" width="100%" height="100%" style="border-radius: 50%;">
+  </div>
+
+  <div class="name">
+    <ion-text color="light">
+      <h1>Nombre Apellido</h1>
+    </ion-text>
+    <p>Hola soy NOMBRE</p>
+  </div>
+  
+  <div class="btnsProfile">
+    <ion-button class="btnSocial">Social</ion-button>
+  
+    <ion-button class="btnProf">
+      <ion-text color="light">
+        Profesional
+      </ion-text>
+    </ion-button>
+  </div>
+        <br><br>
+
+    <!--><ion-fab-button (click)="takePhoto()" vertical="top" horizontal="center" slot="fixed">
+    <ion-icon name="camera"></ion-icon>
+  </ion-fab-button> <-->
+
+  <img *ngIf="myphoto" src="myphoto">
+  
+    <ion-card style="width:98%;" color="dark">
+      <ion-item class="itemHead">
+        <ion-avatar slot="start">
+          <img src="https://image.freepik.com/free-photo/girl-smiling-making-auto-photo-with-her-friends-around_1139-593.jpg">
+        </ion-avatar>
+        <ion-label color="light">
+          <h3>John Doe</h3>
+          <p>Dec 10, 2019</p>
+        </ion-label>
+      </ion-item>
+      <img src="https://www.tasteofhome.com/wp-content/uploads/2020/02/young-happy-family-talking-while-having-lunch-GettyImages-1132278686.jpg" alt="ion">
+      <ion-card-header>
+        <ion-card-title>Hotel Panama Garden</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus iaculis mollis ligula sed ultrices.
+      </ion-card-content>
+      <ion-footer>
+        <ion-row>
+          <ion-icon name="heart" slot="start"></ion-icon>
+        </ion-row>
+      </ion-footer>
+    </ion-card>
+</ion-content>

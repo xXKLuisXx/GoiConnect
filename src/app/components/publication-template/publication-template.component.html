@@ -1,0 +1,38 @@
+
+<ion-card class="cardHome">
+  <ion-item color="dark">
+    <ion-avatar slot="start">
+      <img src="https://img.mobiscroll.com/demos/card_2.png">
+    </ion-avatar>
+    <ion-label>
+      <h3>John Doe</h3>
+      <p>New York City</p>
+    </ion-label>
+  </ion-item>
+
+  <div [ngSwitch]="typeContent">
+    
+    <div *ngSwitchCase="7">
+      <app-normal-publication-template [publication]="publication"></app-normal-publication-template>
+    </div>
+
+    <div *ngSwitchCase="8">
+      <app-entertainment-template [publication]="publication"></app-entertainment-template>
+    </div>
+      
+    <div *ngSwitchCase="9">
+      <app-entertainment-template [publication]="publication"></app-entertainment-template>
+    </div>  
+
+    <div *ngSwitchDefault></div>
+  </div>
+
+  <ion-card-content>
+    <ion-icon name="heart-outline" size="large" class="heartBtn"></ion-icon>
+
+    <ion-icon name="chatbubble-ellipses-sharp" size="large" class="chatIcon"></ion-icon>
+
+    <ion-icon name="bookmark-outline" size="large" style="float: right;" class="bookBtn"></ion-icon>
+  </ion-card-content>
+
+</ion-card>
