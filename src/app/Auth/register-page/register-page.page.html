@@ -1,48 +1,90 @@
-<ion-header>
+<ion-header [translucent]="true">
 	<ion-toolbar>
-		<ion-title>RegisterPage</ion-title>
+		<ion-buttons slot="start">
+		<ion-back-button text="Regresar" >
+		</ion-back-button>
+		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
-<ion-content>
-	<ion-card>
-		<form (ngSubmit)="registerForm()">
-			
-			<ion-item lines="full">
-				<ion-icon name="person-circle-outline" slot="start"></ion-icon>
-				<ion-label position="floating">Name</ion-label>
-				<ion-input type="text" [(ngModel)]='UserData.name' name="name" required></ion-input>
-			</ion-item>
-			<ion-item lines="full">
-				<ion-icon name="mail-outline" slot="start"></ion-icon>
-				<ion-label position="floating">Email</ion-label>
-				<ion-input type="text" [(ngModel)]='UserData.email' name="email" required></ion-input>
-			</ion-item>
-			<ion-item lines="full">
-				<ion-icon name="key-outline" slot="start"></ion-icon>
-				<ion-label position="floating">Password</ion-label>
-				<ion-input type="password" [(ngModel)]='UserData.password' name="password" required></ion-input>
-			</ion-item>
-			<ion-item lines="full">
-				<ion-icon name="key-outline" slot="start"></ion-icon>
-				<ion-label position="floating">Confirm Password</ion-label>
-				<ion-input type="password" [(ngModel)]='UserData.password_confirmation' name="password_confirmation" required></ion-input>
-			</ion-item>
+<ion-content  class="background-app">
 
+	<div style="height: 100%; ">
 
-			<ion-card-content>
-				<ion-row>
-					<ion-col>
-						<ion-button type="submit" color="primary" expand="block">Sing Up</ion-button>
-						<a [routerLink]="['/forgot-password']" class="small-text">Forgot Password?</a>
+		<form [formGroup]="RegisterForm" (ngSubmit)="submit()" style="width: 100%; height: 100%; top: 20%; position: fixed;">
+
+			<ion-grid style="width: 85%;">
+
+				<ion-row class="white-input" >
+					<ion-col size="12" >
+
+						<ion-item class="item-without-color">
+							<ion-label  position="floating" > Correo </ion-label>
+							<ion-input formControlName="email" inputmode="email"></ion-input>
+						</ion-item>
 					</ion-col>
 				</ion-row>
-				<ion-row>
-					<ion-col>
-						<ion-button color="danger" expand="block" (click)="LoginPage()">Login</ion-button>
+
+				<ion-row class="row-error">
+					<div *ngFor="let error of errorMessages.email">
+						<ng-container *ngIf="email.hasError(error.type) && (email.dirty || email.touched)">
+							<small class="error-message">{{error.message}}</small>
+						</ng-container>
+					</div>
+				</ion-row>
+
+				<ion-row class="white-input">
+					<ion-col size="12">
+
+						<ion-item class="item-without-color">
+							<ion-label  position="floating" > Contraseña </ion-label>
+							<ion-input formControlName="pass" inputmode="password" type="password"></ion-input>
+						</ion-item>
 					</ion-col>
 				</ion-row>
-			</ion-card-content>
+
+				<ion-row class="row-error">
+					<div *ngFor="let error of errorMessages.pass">
+						<ng-container *ngIf="pass.hasError(error.type) && (pass.dirty || pass.touched)">
+							<small class="error-message">{{error.message}}</small>
+						</ng-container>
+					</div>
+				</ion-row>
+
+				<ion-row class="white-input">
+					<ion-col size="12">
+
+						<ion-item class="item-without-color">
+							<ion-label  position="floating" > Confirmación de Contraseña </ion-label>
+							<ion-input formControlName="pass2" inputmode="password" type="password"></ion-input>
+						</ion-item>
+					</ion-col>
+				</ion-row>
+
+				<ion-row class="row-error">
+					<div *ngFor="let error of errorMessages.pass2">
+						<ng-container *ngIf="pass2.hasError(error.type) && (pass2.dirty || pass2.touched)">
+							<small class="error-message">{{error.message}}</small>
+						</ng-container>
+					</div>
+				</ion-row>
+				  
+		
+				<ion-row style>
+					<ion-col size="12" style="padding-bottom: 5%;">
+					<ion-button 
+						style="width: 100%;" 
+						[disabled]="!RegisterForm.valid" 
+						type="submit" 
+						class="buttons-color-rounded" 
+						name="create">
+						REGISTRARME
+					</ion-button>
+					</ion-col>
+				</ion-row>
+
+			</ion-grid>
 		</form>
-	</ion-card>
+	</div>
+	
 </ion-content>

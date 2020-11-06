@@ -1,15 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from  'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from 'src/app/Models/Classes/user';
 import { RequestService } from '../request.service';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
+
 export class AuthService {
 
-  authSubject = new BehaviorSubject(false);
+	authSubject = new BehaviorSubject(false);
 	authResponse: Response;
 
 	constructor(
@@ -17,11 +18,25 @@ export class AuthService {
 		private request: RequestService
 	) { }
 
-	register(user: User): Observable<any>{
-		return this.request.createRequest(user, 'register');
+	public register(user: User): Promise<Observable<any>> {
+		return new Promise((resolve, reject) => {
+			this.request.createRequestPost('register', user).then((client) => {
+				resolve(client);
+			}).catch((error)=> {
+				reject(error)
+			})
+		});
+		//return this.request.createRequestPost('register', user);
 	}
 
-	login(user: User): Observable<any> {
-		return this.request.createRequest(user, 'login');
+	public login(user: User): Promise<Observable<any>> {
+		return new Promise((resolve, reject) => {
+			this.request.createRequestPost('login', user).then((client) => {
+				resolve(client);
+			}).catch((error) => {
+				reject(error);
+			});
+		});
+		//return this.request.createRequestPost('login', user);
 	}
 }

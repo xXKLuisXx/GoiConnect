@@ -1,28 +1,23 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AccessUserData } from '../Models/Classes/access-user-data';
+import { Utils } from '../Models/Classes/utils';
 
 @Injectable({
 	providedIn: 'root'
 })
+
 export class RequestService {
-	private AUTH_SERVER_ADDRESS : string;
-	private HEADERS : Array<Array<string>>;
-	private END_POINTS : Array<string>;
-	private PARAMETERS : Array<string>;
-	private headers : HttpHeaders;
-
+	private AUTH_SERVER_ADDRESS = 'http://18.216.139.199/api/';
+	private HEADERS = [['Content-Type', 'application/json'], ['Authorization', '']];
+	private END_POINTS = [['login', '0'], ['register', '0'], ['publications', '1'], ['assist', '1'], ['join', '1'], ['joined', '1'], ['lodgings', '1']];
 	constructor(
-		public httpClient : HttpClient
-	) { 
-		this.AUTH_SERVER_ADDRESS = 'http://192.168.0.10:8000/api/';
-		this.HEADERS = [['Content-Type', 'application/json'], ['Authorization', ''], ['responseType','text']];
-		this.END_POINTS = ['login', 'register', 'publications', 'assist', 'join', 'joined','lodgings'];
-		this.PARAMETERS = ['?page=', '?id_detail=', '/'];
-		this.headers = new HttpHeaders();
-	}
+		private httpClient: HttpClient,
+		private utils: Utils
+	) { }
 
-	private selectEnpoint(endPoint:string){
+	private selectEnpoint(endPoint: string): Array<string> {
 		switch (endPoint) {
 			case 'login':
 				return this.END_POINTS[0];
@@ -37,75 +32,72 @@ export class RequestService {
 			case 'joined':
 				return this.END_POINTS[5];
 			case 'lodgings':
-				return this.END_POINTS[6];	
+				return this.END_POINTS[6];
 			default:
 				break;
 		}
-		return 
+		return null
 	}
 
-	private selectParameters(parameters:string){
-		switch (parameters) {
-			case 'page':
-				return this.PARAMETERS[0];
-			case 'id_detail':
-				return this.PARAMETERS[1];
-			case 'id':
-				return this.PARAMETERS[2];
-			default:
-				break;
-		}
-		return 
+	private createHeaders(endPoint: string): Promise<HttpHeaders> {
+		return new Promise(async (resolve, reject) => {
+			let headers = new HttpHeaders();
+			let endPointArray = this.selectEnpoint(endPoint);
+			headers = headers.set(this.HEADERS[0][0], this.HEADERS[0][1]);
+
+			if(endPointArray[1] == '1'){
+				await this.utils.getAccessData().then((AccessUserData: AccessUserData) => {
+					this.HEADERS[1][1] = AccessUserData.getAuthorization();
+					headers = headers.set(this.HEADERS[1][0], this.HEADERS[1][1]);
+				}).catch((error) => {
+					reject(error);
+				});
+			}
+			resolve(headers);
+		});
 	}
 
-	private getParameters( parameters: Array<any>){
-		parameters.forEach((value, index, parameters)=>{
-			
-		})
+	private parseObjectToQueryParams(object: any): string {
+		let queryParams;
+		Object.keys(object).forEach((key, index) => {
+			if (index == 0) {
+				queryParams = "?"
+			} else {
+				queryParams = "&"
+			}
+			queryParams += key + "=" + object[key];
+		});
+
+		return queryParams;
 	}
 
-	private createHeaders( token?: string ) : HttpHeaders {
-		if(token){
-			this.HEADERS.forEach(Header => {
-				if ( Header[0] === "Authorization"){
-					if(token != null ){
-						this.headers = this.headers.set(Header[0], token);
-					}
-				}
-				else {
-					this.headers = this.headers.set(Header[0], Header[1]);
-				}	
-			});
-		} 
-		else{
-			this.headers = this.headers.set(this.HEADERS[0][0], this.HEADERS[0][1]);
-		}
-		return this.headers;
+	public createRequestPost(endPoint: string, object?: any): Promise<Observable<any>> {
+		return new Promise((resolve, reject) => {
+			this.createHeaders(endPoint).then((headers) => {
+				resolve(this.httpClient.post<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint)[0], object, { headers }));
+			}).catch((error) => {
+				reject(error);
+			})
+		});
 	}
 
-	public createRequest(object: any, endPoint: string, token?: string) : Observable<any> {
-		let headers:any;
-		if(token != null){
-			headers = this.createHeaders(token);
-		}
-		else{
-			headers = this.createHeaders();
-		}
-		return this.httpClient.post<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint), object, { headers } );
+	public createRequestGet(endPoint: string, object?: any): Promise<Observable<any>> {
+		return new Promise((resolve, reject) => {
+			this.createHeaders(endPoint).then((headers) => {
+				resolve(this.httpClient.get<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint)[0] + this.parseObjectToQueryParams(object), { headers }));
+			}).catch((error) => {
+				reject(error);
+			})
+		});
 	}
 
-	public createRequestGet(endPoint: string, token?: string, parameters?:number, typeParameter?:string) : Observable<any> {
-		const headers = this.createHeaders(token);
-		if(parameters){
-			return this.httpClient.get<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint)+ this.selectParameters(typeParameter) + parameters, { headers } );
-		}else{
-			return this.httpClient.get<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint), { headers } );
-		}
-	}
-
-	public createRequestUpdate(endPoint: string, token?: string, id?:number) : Observable<any> {
-		const headers = this.createHeaders(token);
-		console.log(headers);
-		return this.httpClient.put<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint), id, { headers } );
+	public createRequestUpdate(endPoint: string, object?: any): Promise<Observable<any>> {
+		return new Promise((resolve, reject) => {
+			this.createHeaders(endPoint).then((headers) => {
+				resolve(this.httpClient.put<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint)[0], object, { headers }));
+			}).catch((error) => {
+				reject(error);
+			})
+		});
 	}
 }

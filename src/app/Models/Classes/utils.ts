@@ -1,25 +1,22 @@
+import { Injectable } from '@angular/core';
 import { SecureStorage } from '@ionic-native/secure-storage/ngx';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { AccessUserData } from './access-user-data';
 import { RequestResponse } from './request-response';
 
+@Injectable({
+    providedIn: 'root'
+})
+
 export class Utils {
-    private secureStorage: SecureStorage;
-    private loadingController: LoadingController;
-    private alertController: AlertController;
     private loading: HTMLIonLoadingElement;
     private alert: HTMLIonAlertElement;
-    private requestResponse: RequestResponse;
-    public accessUserData: AccessUserData;
-    public stor: any;
-
-    constructor() {
-        this.secureStorage = new SecureStorage();
-        this.loadingController = new LoadingController();
-        this.alertController = new AlertController();
-        this.requestResponse = new RequestResponse();
-        this.accessUserData = new AccessUserData();
-    }
+    constructor(
+        private secureStorage: SecureStorage,
+        private loadingController: LoadingController,
+        private alertController: AlertController,
+        private requestResponse: RequestResponse
+    ) { }
 
     public buildErrors(Errors: any): string {
         let ErrorsHTML = '';
@@ -71,54 +68,54 @@ export class Utils {
             cssClass: 'my-custom-class',
             message: 'Please wait...'
         });
+
         return loading;
     }
 
-   public getItem(key: string){ 
-         return new Promise((resolve, reject)=> {
-            this.secureStorage.create('private_storage')
-            .then((storage) => {
-                 storage.get(key)
-                    .then((data) => {
-                       resolve(data);    
-                    })
-                    .catch((error) => {
-                        reject(error);
-                    });
-            })
-            .catch((error) => {
-                console.log(error);
-                reject(error);
-            });
-         });      
-    }
-    
-    public getAccessData(){
+    public getItem(key: string) {
         return new Promise((resolve, reject) => {
-            this.getItem('AccessDataUser').then((data:string) => {
-                this.accessUserData = this.buildAccessData(JSON.parse(data));
-                resolve();
+            this.secureStorage.create('private_storage')
+                .then((storage) => {
+                    storage.get(key)
+                        .then((data) => {
+                            resolve(data);
+                        })
+                        .catch((error) => {
+                            reject(error);
+                        });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    reject(error);
+                });
+        });
+    }
+
+    public getAccessData() {
+        return new Promise((resolve, reject) => {
+            this.getItem('AccessDataUser').then((data: string) => {
+                resolve(this.buildAccessData(JSON.parse(data)));
             }).catch((error) => {
                 reject(error);
             });
         });
     }
-        
+
     public storeItem(key: string, data: any) {
         return new Promise((resolve, reject) => {
             this.secureStorage.create('private_storage')
-            .then((storage) => {
-                storage.set(key, data)
-                    .then((data) => {
-                        resolve(data);
-                    })
-                    .catch((error) => {
-                        reject(error);
-                    });
-            })
-            .catch((error) => {
-                reject(error);
-            });
+                .then((storage) => {
+                    storage.set(key, data)
+                        .then((data) => {
+                            resolve(data);
+                        })
+                        .catch((error) => {
+                            reject(error);
+                        });
+                })
+                .catch((error) => {
+                    reject(error);
+                });
         })
     }
 

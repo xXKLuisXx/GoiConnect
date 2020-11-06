@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
-import { IonicModule, IonicRouteStrategy, IonTabs } from '@ionic/angular';
+import { AlertController, IonicModule, IonicRouteStrategy, IonTabs, LoadingController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -22,6 +22,8 @@ import { Utils } from './Models/Classes/utils';
 import { SecureStorage, SecureStorageObject } from '@ionic-native/secure-storage/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { MediaCapture } from '@ionic-native/media-capture/ngx';
+import { RequestResponse } from './Models/Classes/request-response';
+import { User } from './Models/Classes/user';
 
 
 @NgModule({
@@ -35,14 +37,22 @@ import { MediaCapture } from '@ionic-native/media-capture/ngx';
     IonicStorageModule.forRoot(),
     HttpClientModule,
     SuperTabsModule.forRoot(),
+<<<<<<< HEAD
     FormsModule,
     ReactiveFormsModule
     
+=======
+    ReactiveFormsModule,
+>>>>>>> newPages
   ],
   providers: [
     Utils,
+    User,
     SecureStorage,
     NativeStorage,
+    LoadingController,
+    AlertController,
+    RequestResponse,
     StatusBar,
     SplashScreen,
     NativeStorage,

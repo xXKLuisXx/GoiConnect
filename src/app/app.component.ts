@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { ActionSheetController, Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +12,7 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
-    private router: Router,
-    public actionSheetController: ActionSheetController
+    private statusBar: StatusBar
   ) {
     this.initializeApp();
   }
@@ -26,31 +23,4 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
-
-  goToLodging(){
-    this.router.navigate(['social/lodging']);
-  }
-
-  async goTo() {
-		const actionSheet = await this.actionSheetController.create({
-			header: "Select",
-			buttons: [{
-				text: 'Mis Hospedajes',
-				handler: () => {
-					this.router.navigate(['social/lodging']);
-				}
-			},
-			{
-				text: 'Mis Eventos',
-				handler: () => {
-				}
-			},
-			{
-				text: 'Cancel',
-				role: 'cancel'
-			}
-			]
-		});
-		await actionSheet.present();
-	}
 }
