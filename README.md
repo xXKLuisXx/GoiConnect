@@ -100,4 +100,10 @@ With this command, the platforms that the app has added (Android or IOS) and the
 
 `$ npx cap sync android`
 
-`$ npm cap run android -l --external`
+`$ ionic cap run android -l --external`
+
+- Sincronizar gradle en android studio
+
+- Instalar SDK Api 28 Android Pie con google apis
+
+- Correr la aplicacion desde android studio
