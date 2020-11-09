@@ -91,11 +91,25 @@ const routes: Routes = [
 				path: 'lodging',
 				loadChildren: () => import('./Pages/Social/lodging/lodging.module').then( m => m.LodgingPageModule)
 			},
+			{
+				path: 'friendship',
+				loadChildren: () => import('./Pages/Social/friendship/friendship.module').then( m => m.FriendshipPageModule)
+			},
+			{
+				path: 'allfriends',
+				loadChildren: () => import('./Pages/Social/allfriends/allfriends.module').then( m => m.AllfriendsPageModule)
+			},
 		]
-	},  {
+	},
+  {
     path: 'profile',
     loadChildren: () => import('./Auth/profile/profile.module').then( m => m.ProfilePageModule)
   },
+  {
+    path: 'allfriends',
+    loadChildren: () => import('./Pages/Social/allfriends/allfriends.module').then( m => m.AllfriendsPageModule)
+  },
+
 
   
 

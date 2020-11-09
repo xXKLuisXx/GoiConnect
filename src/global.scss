@@ -107,3 +107,9 @@ ion-searchbar{
     --background: none; 
     color: black;
 }
+
+.myModal .modal-wrapper{
+    --height: 30%;
+    margin-top:120%;
+    display: block;
+}

@@ -9,9 +9,9 @@ import { Utils } from '../Models/Classes/utils';
 })
 
 export class RequestService {
-	private AUTH_SERVER_ADDRESS = 'http://18.216.139.199/api/';
+	private AUTH_SERVER_ADDRESS = 'http://192.168.100.100:8000/api/';
 	private HEADERS = [['Content-Type', 'application/json'], ['Authorization', '']];
-	private END_POINTS = [['login', '0'], ['register', '0'], ['publications', '1'], ['assist', '1'], ['join', '1'], ['joined', '1'], ['lodgings', '1']];
+	private END_POINTS = [['login', '0'], ['register', '0'], ['publications', '1'], ['assist', '1'], ['join', '1'], ['joined', '1'], ['lodgings', '1'], ['friends', '1'], ['add', '1'], ['userFollow', '1'], ['addFriendSuper', '1'], ['blockFriend', '1'], ['blockNotFriend', '1'], ['listRequestF', '1'], ['acceptFriend', '1'], ['allfriends', '1']];
 	constructor(
 		private httpClient: HttpClient,
 		private utils: Utils
@@ -33,6 +33,24 @@ export class RequestService {
 				return this.END_POINTS[5];
 			case 'lodgings':
 				return this.END_POINTS[6];
+			case 'friends':
+				return this.END_POINTS[7];
+			case 'add':
+				return this.END_POINTS[8];
+			case 'userFollow':
+				return this.END_POINTS[9];
+			case 'addFriendSuper':
+				return this.END_POINTS[10];
+			case 'blockFriend':
+				return this.END_POINTS[11];
+			case 'blockNotFriend':
+				return this.END_POINTS[12];
+			case 'listRequestF':
+				return this.END_POINTS[13];
+			case 'acceptFriend':
+				return this.END_POINTS[14];
+			case 'allfriends':
+				return this.END_POINTS[15];
 			default:
 				break;
 		}

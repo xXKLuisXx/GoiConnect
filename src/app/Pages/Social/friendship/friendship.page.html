@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>friends</ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-button routerLink="/allfriends">
+    Todos los amigos
+  </ion-button>
+  <h1>Solicitudes de amistad</h1>
+  <ion-list>
+    <ion-item *ngFor="let request of pending_request">
+      <ion-avatar slot="start">
+        <img src="https://www.aconsciousrethink.com/wp-content/uploads/2019/05/reserved-person-line.jpg" style="width: 100%; height:100%">
+      </ion-avatar>
+
+      <ion-label>
+        <ion-text color="dark">
+          {{ request.name }}
+        </ion-text>
+      </ion-label>
+
+      <ion-button (click)="acceptFriend(request.id)">
+        Confirmar
+      </ion-button>
+
+      <ion-button color="secondary">
+        Eliminar
+      </ion-button>
+
+
+    </ion-item>
+  </ion-list>
+  <h1>Personas que quizá conozcas</h1>
+
+  <ion-list>
+    <ion-item *ngFor="let user of users">
+      <ion-avatar slot="start">
+        <img src="https://www.aconsciousrethink.com/wp-content/uploads/2019/05/reserved-person-line.jpg" style="width: 100%; height:100%">
+      </ion-avatar>
+
+      <ion-label>
+        <ion-text color="dark">
+          {{ user.name }}
+        </ion-text>
+      </ion-label>
+
+      <!--
+      <ion-button color="primary" (click)="addFriend(user.id)">
+        <ion-text>
+          Agregar
+        </ion-text>
+      </ion-button>-->
+
+      <ion-button (click)="presentActionSheet(user)">
+        <ion-icon name="ellipsis-horizontal"></ion-icon>
+      </ion-button>
+
+
+    </ion-item>
+  </ion-list>
+
+</ion-content>

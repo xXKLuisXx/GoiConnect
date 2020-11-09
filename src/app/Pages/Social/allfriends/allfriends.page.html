@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>allfriends</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let friends of allFriends">
+      <ion-avatar slot="start">
+        <img src="https://www.aconsciousrethink.com/wp-content/uploads/2019/05/reserved-person-line.jpg" style="width: 100%; height:100%">
+      </ion-avatar>
+
+      <ion-label>
+        <ion-text color="dark">
+          {{ friends.name }}
+        </ion-text>
+      </ion-label>
+
+      
+      <ion-icon name="ellipsis-horizontal"></ion-icon>
+
+
+    </ion-item>
+  </ion-list>
+</ion-content>
