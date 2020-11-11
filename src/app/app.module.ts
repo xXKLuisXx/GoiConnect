@@ -25,7 +25,6 @@ import { MediaCapture } from '@ionic-native/media-capture/ngx';
 import { RequestResponse } from './Models/Classes/request-response';
 import { User } from './Models/Classes/user';
 
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

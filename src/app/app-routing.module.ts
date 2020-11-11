@@ -95,10 +95,6 @@ const routes: Routes = [
 				path: 'friendship',
 				loadChildren: () => import('./Pages/Social/friendship/friendship.module').then( m => m.FriendshipPageModule)
 			},
-			{
-				path: 'allfriends',
-				loadChildren: () => import('./Pages/Social/allfriends/allfriends.module').then( m => m.AllfriendsPageModule)
-			},
 		]
 	},
   {
@@ -106,17 +102,11 @@ const routes: Routes = [
     loadChildren: () => import('./Auth/profile/profile.module').then( m => m.ProfilePageModule)
   },
   {
-    path: 'allfriends',
-    loadChildren: () => import('./Pages/Social/allfriends/allfriends.module').then( m => m.AllfriendsPageModule)
+	path: 'allfriends',
+	loadChildren: () => import('./Pages/Social/allfriends/allfriends.module').then( m => m.AllfriendsPageModule)
   },
 
-
-  
-
-
-  
-
-	/*
+  /*
 	
 	{
 	  path: 'cart-modal',

@@ -11,7 +11,7 @@ import { Utils } from '../Models/Classes/utils';
 export class RequestService {
 	private AUTH_SERVER_ADDRESS = 'http://192.168.100.100:8000/api/';
 	private HEADERS = [['Content-Type', 'application/json'], ['Authorization', '']];
-	private END_POINTS = [['login', '0'], ['register', '0'], ['publications', '1'], ['assist', '1'], ['join', '1'], ['joined', '1'], ['lodgings', '1'], ['friends', '1'], ['add', '1'], ['userFollow', '1'], ['addFriendSuper', '1'], ['blockFriend', '1'], ['blockNotFriend', '1'], ['listRequestF', '1'], ['acceptFriend', '1'], ['allfriends', '1']];
+	private END_POINTS = [['login', '0'], ['register', '0'], ['publications', '1'], ['assist', '1'], ['join', '1'], ['joined', '1'], ['lodgings', '1'], ['friends', '1'], ['add', '1'], ['userFollow', '1'], ['addFriendSuper', '1'], ['blockFriend', '1'], ['blockNotFriend', '1'], ['listrequest', '1'], ['acceptFriend', '1'], ['allfriends', '1']];
 	constructor(
 		private httpClient: HttpClient,
 		private utils: Utils
@@ -45,7 +45,7 @@ export class RequestService {
 				return this.END_POINTS[11];
 			case 'blockNotFriend':
 				return this.END_POINTS[12];
-			case 'listRequestF':
+			case 'listrequest':
 				return this.END_POINTS[13];
 			case 'acceptFriend':
 				return this.END_POINTS[14];
@@ -102,6 +102,7 @@ export class RequestService {
 	public createRequestGet(endPoint: string, object?: any): Promise<Observable<any>> {
 		return new Promise((resolve, reject) => {
 			this.createHeaders(endPoint).then((headers) => {
+				// tslint:disable-next-line: max-line-length
 				resolve(this.httpClient.get<any>(this.AUTH_SERVER_ADDRESS + this.selectEnpoint(endPoint)[0] + this.parseObjectToQueryParams(object), { headers }));
 			}).catch((error) => {
 				reject(error);

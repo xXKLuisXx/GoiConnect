@@ -22,9 +22,7 @@ export class FriendshipPage implements OnInit {
   private accessdata: AccessUserData;
   public searchTerm: string = "";
   public users: any;
-  // tslint:disable-next-line: variable-name
-  public pending_request: any;
-  usuarioSeleccionado: User;
+  public pendingrequest: any;
 
   constructor(private router: Router, private route: ActivatedRoute,
               public friendshipService: FriendshipService,
@@ -34,7 +32,7 @@ export class FriendshipPage implements OnInit {
 
   async ngOnInit() {
     this.fetchUsers();
-    this.listRequestFriend();
+    this.getRequestFriend();
   }
 
 
@@ -154,15 +152,15 @@ export class FriendshipPage implements OnInit {
   /** list Request Friend
    *
    */
-  public listRequestFriend() {
-    this.friendshipService.getRequestFriend().then((subscriber) => {
-        subscriber.subscribe(
-          async (Response: (any)) => {
-            console.log(Response);
-            this.pending_request = Response.pending_request;
-          }, err => {
-            console.log(err);
-          });
+  public async getRequestFriend(){
+    this.friendshipService.listRequestFriend().then((subscriber) => {
+      subscriber.subscribe(
+        async (Response: (any)) => {
+          console.log(Response);
+          this.pendingrequest = Response.solicitudes_pendientes;
+        }, err => {
+          console.log(err);
+        });
     });
   }
 

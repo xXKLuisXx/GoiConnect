@@ -23,11 +23,11 @@ export class AllfriendsPage implements OnInit {
   public searchTerm: string = "";
   public allFriends: any;
 
-  constructor(private router: Router, private route: ActivatedRoute,
-    public friendshipService: FriendshipService,
-    private sanitizer: DomSanitizer) { this.friends = new Relation(); }
+  // tslint:disable-next-line: max-line-length
+  constructor(private router: Router, private route: ActivatedRoute, public friendshipService: FriendshipService, private sanitizer: DomSanitizer) { this.friends = new Relation(); }
 
   ngOnInit() {
+    this.fetchFriends();
   }
 
   public fetchFriends() {

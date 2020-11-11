@@ -79,10 +79,10 @@ export class FriendshipService {
     });
   }
 
-  public async getRequestFriend(): Promise<Observable<RequestResponse>> {
+  public async listRequestFriend(): Promise<Observable<RequestResponse>> {
     return new Promise((resolve, reject) => {
-      this.request.createRequestGet('listRequestF', { key : 'vale' } ).then((client) => {
-        console.log('listRequestF');
+      this.request.createRequestGet('listrequest', { key: 'vale' } ).then((client) => {
+        console.log('listrequest');
         resolve(client);
       }).catch((error) => {
         reject(error);
